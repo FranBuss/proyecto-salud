@@ -2,12 +2,10 @@ package com.equipoUno.proyectoSalud.entities;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "patient")
 public class Patient {
 
     @Id
@@ -15,7 +13,7 @@ public class Patient {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Column(name = "nombre")
+    @Column(name = "name")
     private String nombre;
     @Column(name = "email")
     private String email;
