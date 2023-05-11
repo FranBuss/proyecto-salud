@@ -25,7 +25,6 @@ public class ProfessionalServiceImplement implements ProfessionalService{
     public void deleteProfessional(String id) {
 
     }
-
     @Override
     public void updateDropOut(String id) {
 

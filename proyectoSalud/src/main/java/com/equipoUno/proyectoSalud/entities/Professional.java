@@ -1,6 +1,7 @@
 package com.equipoUno.proyectoSalud.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -11,6 +12,7 @@ import java.time.LocalTime;
 @Table(name = "professional")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @SuperBuilder
 public class Professional extends User{
 

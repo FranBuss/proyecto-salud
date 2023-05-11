@@ -14,8 +14,8 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+//    @Autowired
+//    private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public String login(){
