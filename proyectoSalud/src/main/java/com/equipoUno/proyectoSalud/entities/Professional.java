@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class Professional extends User{
+public class Professional extends User {
 
     @Column(name = "drop_out")
     private boolean dropOut;
@@ -31,5 +31,5 @@ public class Professional extends User{
 
     @Column(name = "qualification")
     private float qualification = 0f;
-
 }
+
