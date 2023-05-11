@@ -1,18 +1,14 @@
 package com.equipoUno.proyectoSalud.entities;
 
-import com.equipoUno.proyectoSalud.enumerations.Rol;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "professional")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -30,6 +26,10 @@ public class Professional extends User{
     @Column(name = "exit_time")
     private LocalTime exitTime;
 
+    @Column(name = "charge")
+    private float charge;
 
+    @Column(name = "qualification")
+    private float qualification = 0f;
 
 }
