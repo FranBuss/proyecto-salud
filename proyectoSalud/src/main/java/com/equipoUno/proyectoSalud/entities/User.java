@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Table(name = "user")
@@ -19,19 +21,21 @@ public class User {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "id")
-    private String id;
+    protected String id;
 
     @Column(name = "name")
-    private String name;
+    protected String name;
 
     @Column(name = "email")
-    private String email;
+    protected String email;
 
     @Column(name = "password")
-    private String password;
+    protected String password;
 
     @Enumerated(EnumType.STRING)
-    private Rol rol;
+    protected Rol rol;
 
+    @Column(name="created_at")
+    protected LocalDateTime createdAt = LocalDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
 
 }
