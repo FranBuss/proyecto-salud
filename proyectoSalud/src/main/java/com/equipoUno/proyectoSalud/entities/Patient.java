@@ -1,6 +1,7 @@
 package com.equipoUno.proyectoSalud.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "patient")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @SuperBuilder
 public class Patient extends User{
 
