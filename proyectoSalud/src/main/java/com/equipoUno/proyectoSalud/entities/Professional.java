@@ -1,6 +1,7 @@
 package com.equipoUno.proyectoSalud.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -11,11 +12,12 @@ import java.time.LocalTime;
 @Table(name = "professional")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @SuperBuilder
 public class Professional extends User {
 
     @Column(name = "drop_out")
-    private boolean dropOut;
+    private boolean dropOut = false;
 
     @Column(name = "specialization")
     private String specialization;
