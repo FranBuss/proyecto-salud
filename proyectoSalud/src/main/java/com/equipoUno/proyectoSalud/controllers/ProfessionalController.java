@@ -36,7 +36,6 @@ public class ProfessionalController {
         }
     }
 
-
     //Revisar esta parte de codigo que no estaria funcionando
     @PostMapping("/")
     public ResponseEntity<ProfessionalDTO> createProfessional(@RequestBody ProfessionalDTO professionalDTO){

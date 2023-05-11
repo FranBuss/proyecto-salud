@@ -1,8 +1,10 @@
 package com.equipoUno.proyectoSalud.entities;
 
+import com.equipoUno.proyectoSalud.enumerations.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,27 +15,21 @@ import java.time.LocalTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Professional {
+@SuperBuilder
+public class Professional extends User{
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "id")
-    private String id;
-
-    @Column(name = "name")
-    private String name;
+    @Column(name = "drop_out")
+    private boolean dropOut;
 
     @Column(name = "specialization")
     private String specialization;
-
-    @Column(name = "email")
-    private String email;
 
     @Column(name = "entry_time")
     private LocalTime entryTime;
 
     @Column(name = "exit_time")
     private LocalTime exitTime;
+
+
 
 }
