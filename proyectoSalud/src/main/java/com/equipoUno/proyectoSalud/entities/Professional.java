@@ -15,7 +15,7 @@ import java.time.LocalTime;
 public class Professional extends User{
 
     @Column(name = "drop_out")
-    private boolean dropOut;
+    private boolean dropOut = false;
 
     @Column(name = "specialization")
     private String specialization;
