@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -18,7 +20,9 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserServiceImplement {
+@Service
+public class UserServiceImplement implements UserService, UserDetailsService {
+
 
     @Autowired
     private UserRepository userRepository;
@@ -37,7 +41,7 @@ public class UserServiceImplement {
         userRepository.save(user);
     }
 
-    private void validate(String name, String email, String password, String password2) throws MiException {
+    public void validate(String name, String email, String password, String password2) throws MiException {
         if (name.isEmpty() || name == null ) {
             throw new MiException("El nombre no puede ser nulo o estar vacio");
         }
@@ -53,7 +57,7 @@ public class UserServiceImplement {
         }
     }
 
-/*
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -72,12 +76,14 @@ public class UserServiceImplement {
 
             session.setAttribute("usersession", user);
 
-            return new User(user.getEmail(), user.getPassword(), permits);
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), permits);
         } else {
             return null;
         }
     }
 
- */
+
+
+
 
 }

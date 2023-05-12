@@ -1,13 +1,14 @@
 package com.equipoUno.proyectoSalud.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.equipoUno.proyectoSalud.enumerations.Rol;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "patient")
@@ -15,6 +16,8 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Getter
 @SuperBuilder
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Patient extends User{
 
     @Column(name = "health_insurance")
@@ -22,5 +25,6 @@ public class Patient extends User{
 
     @Column(name = "contact")
     private String contact;
+
 
 }

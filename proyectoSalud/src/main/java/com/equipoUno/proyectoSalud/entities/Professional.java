@@ -1,8 +1,7 @@
 package com.equipoUno.proyectoSalud.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.equipoUno.proyectoSalud.enumerations.Specialization;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -14,13 +13,15 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Getter
 @SuperBuilder
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Professional extends User {
 
     @Column(name = "drop_out")
     private boolean dropOut = false;
 
     @Column(name = "specialization")
-    private String specialization;
+    private Specialization specialization;
 
     @Column(name = "entry_time")
     private LocalTime entryTime;
