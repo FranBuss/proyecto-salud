@@ -24,13 +24,13 @@ public class ProfessionalServiceImplement implements ProfessionalService{
     }
 
     @Override
-    public void createProfessional(ProfessionalDTO dto) {
-
+    public ProfessionalDTO createProfessional(ProfessionalDTO dto) {
+        return null;
     }
 
     @Override
-    public void updateProfessional(String id) {
-
+    public ProfessionalDTO updateProfessional(String id) {
+        return null;
     }
 
     @Override
