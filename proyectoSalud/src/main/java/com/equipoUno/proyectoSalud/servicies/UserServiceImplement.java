@@ -19,8 +19,13 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+
+@Service
+public class UserServiceImplement {
+
 @Service
 public class UserServiceImplement implements UserService, UserDetailsService {
+
 
     @Autowired
     private UserRepository userRepository;
