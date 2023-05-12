@@ -28,6 +28,7 @@ public class PatientController {
         }
     }
 
+    //Comment prueba
     @PostMapping
     public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
         PatientDTO createdPatient = patientService.createPatient(patientDTO);
