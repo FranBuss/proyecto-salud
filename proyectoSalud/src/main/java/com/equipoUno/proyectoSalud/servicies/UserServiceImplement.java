@@ -21,9 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImplement {
-
-@Service
 public class UserServiceImplement implements UserService, UserDetailsService {
 
 
