@@ -1,24 +1,26 @@
 package com.equipoUno.proyectoSalud.entities;
 
-import org.hibernate.annotations.GenericGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Patient {
+@Table(name = "patient")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@SuperBuilder
+public class Patient extends User{
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    @Column(name = "health_insurance")
+    private String healthInsurance;
 
-    @Column(name = "nombre")
-    private String nombre;
-    @Column(name = "email")
-    private String email;
-
+    @Column(name = "contact")
+    private String contact;
 
 }
