@@ -3,18 +3,24 @@ package com.equipoUno.proyectoSalud.entities;
 import com.equipoUno.proyectoSalud.enumerations.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@SuperBuilder
 public class User {
 
     @Id
@@ -37,5 +43,6 @@ public class User {
 
     @Column(name="created_at")
     protected LocalDateTime createdAt = LocalDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
+
 
 }

@@ -8,9 +8,9 @@ import java.util.List;
 public interface ProfessionalService {
     List<Professional> searchProfessionals();
 
-    void createProfessional(ProfessionalDTO dto);
+    ProfessionalDTO createProfessional(ProfessionalDTO dto);
 
-    void updateProfessional(String id);
+    ProfessionalDTO updateProfessional(String id);
 
     void deleteProfessional(String id);
 
