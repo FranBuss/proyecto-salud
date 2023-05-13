@@ -10,9 +10,9 @@ public interface ProfessionalService {
 
     ProfessionalDTO createProfessional(ProfessionalDTO dto);
 
-    ProfessionalDTO updateProfessional(String id);
+    ProfessionalDTO updateProfessional(ProfessionalDTO dto);
 
     void deleteProfessional(String id);
 
-    void updateDropOut(String id);
+    ProfessionalDTO updateDropOut(String id);
 }
