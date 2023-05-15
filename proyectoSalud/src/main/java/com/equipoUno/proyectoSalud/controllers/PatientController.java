@@ -34,7 +34,7 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
     }
 
-    @PostMapping(value = "/patients/{id}", params = "_method=put")
+    @PostMapping(value = "/update/{id}", params = "_method=put")
     public ResponseEntity<PatientDTO> updatePatient(@PathVariable String id, @RequestBody PatientDTO patientDTO) {
         patientDTO.setId(id);
         PatientDTO updatedPatient = patientService.updatePatient(patientDTO);
@@ -45,7 +45,7 @@ public class PatientController {
         }
     }
 
-    @PostMapping(value = "/patients/{id}", params = "_method=delete")
+    @PostMapping(value = "/delete/{id}", params = "_method=delete")
     public ResponseEntity<Void> deletePatient(@PathVariable String id) {
         patientService.deletePatient(id);
         return ResponseEntity.noContent().build();
