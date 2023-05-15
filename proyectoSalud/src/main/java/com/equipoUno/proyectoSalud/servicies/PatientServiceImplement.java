@@ -11,13 +11,13 @@ import org.springframework.ui.ModelMap;
 import java.util.Optional;
 
 @Service
-public class PatientServiceImplement implements PatientService{
+public class PatientServiceImplement implements PatientService {
 
     private final PatientRepository patientRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public PatientServiceImplement(PatientRepository patientRepository, ModelMapper modelMapper){
+    public PatientServiceImplement(PatientRepository patientRepository, ModelMapper modelMapper) {
         this.patientRepository = patientRepository;
         this.modelMapper = modelMapper;
     }
@@ -42,7 +42,7 @@ public class PatientServiceImplement implements PatientService{
     @Override
     public PatientDTO updatePatient(PatientDTO dto) {
         Optional<Patient> optionalPatient = patientRepository.findById(dto.getId());
-        if (optionalPatient.isPresent()){
+        if (optionalPatient.isPresent()) {
             Patient patient = optionalPatient.get();
             patient.setHealthInsurance(dto.getHealthInsurance());
             patient.setContact(dto.getContact());
