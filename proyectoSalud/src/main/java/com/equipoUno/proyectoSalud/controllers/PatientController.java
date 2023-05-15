@@ -28,7 +28,7 @@ public class PatientController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/createPatient")
     public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
         PatientDTO createdPatient = patientService.createPatient(patientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
@@ -50,6 +50,5 @@ public class PatientController {
         patientService.deletePatient(id);
         return ResponseEntity.noContent().build();
     }
-
 
 }
