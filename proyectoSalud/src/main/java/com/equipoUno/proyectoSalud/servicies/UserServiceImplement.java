@@ -1,5 +1,6 @@
 package com.equipoUno.proyectoSalud.servicies;
 
+import com.equipoUno.proyectoSalud.entities.Image;
 import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.enumerations.Rol;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -26,8 +28,11 @@ public class UserServiceImplement implements UserService, UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ImageService imageService;
     @Transactional
-    public void register( String name, String email, String password, String password2) throws MiException{
+    public void register(MultipartFile file, String name, String email, String password, String password2) throws MiException{
 
         validate(name, email, password, password2);
 
@@ -37,6 +42,9 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         user.setEmail(email);
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         user.setRol(Rol.PATIENT);
+
+        Image image = imageService.save(file);
+        user.setImage(image);
 
         userRepository.save(user);
     }

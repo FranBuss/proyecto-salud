@@ -41,6 +41,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     protected Rol rol;
 
+    @OneToOne
+    @Column(name = "image")
+    protected Image image;
+
     @Column(name="created_at")
     protected LocalDateTime createdAt = LocalDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
 
