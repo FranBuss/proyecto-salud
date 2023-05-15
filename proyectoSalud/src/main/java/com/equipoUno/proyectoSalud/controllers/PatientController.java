@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/patients")
+@RequestMapping("/api/patients")
 public class PatientController {
 
     private final PatientServiceImplement patientService;
@@ -28,13 +28,13 @@ public class PatientController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/createPatient")
     public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
         PatientDTO createdPatient = patientService.createPatient(patientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
     }
 
-    @PostMapping(value = "/patients/{id}", params = "_method=put")
+    @PostMapping(value = "/update/{id}", params = "_method=put")
     public ResponseEntity<PatientDTO> updatePatient(@PathVariable String id, @RequestBody PatientDTO patientDTO) {
         patientDTO.setId(id);
         PatientDTO updatedPatient = patientService.updatePatient(patientDTO);
@@ -45,11 +45,10 @@ public class PatientController {
         }
     }
 
-    @PostMapping(value = "/patients/{id}", params = "_method=delete")
+    @PostMapping(value = "/delete/{id}", params = "_method=delete")
     public ResponseEntity<Void> deletePatient(@PathVariable String id) {
         patientService.deletePatient(id);
         return ResponseEntity.noContent().build();
     }
-
 
 }
