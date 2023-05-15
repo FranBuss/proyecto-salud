@@ -1,17 +1,15 @@
 package com.equipoUno.proyectoSalud.entities;
 
-import com.equipoUno.proyectoSalud.enumerations.Rol;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name = "patient")
+@Table(name = "patients")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
