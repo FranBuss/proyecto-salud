@@ -1,10 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>TEST</h1>
-</body>
-</html>>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Proyecto Salud</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/css/index.css">
+        <script src="static/css/js/index.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+    <body>
+        
+        <header class="header" id="inicio">
+          
+            <nav class="menu-navegacion">
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#reservar">Reservar</a></li>
+                    <li><a href="#registrarse">Registarse</a></li>
+                    <li><a href="../../../../../../../Salud/proyectoSalud2/src/main/resources/templates/login.html">Ingresar</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+
+        </header>
+
+        
+        <div class="carousel-container">
+            <div id="carousel" class="carousel slide" data-ride="carousel">
+              
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="static/css/img/gemte-feliz.jpg">
+                </div>
+                <div class="carousel-item">
+                  <img src="/static/css/img/hablar-con-su-medico.jpg">
+                </div>
+                <div class="carousel-item">
+                  <img src="/static/css/img/medico-de-familia.jpg">
+                </div>
+                <div class="carousel-item">
+                  <img src="/static/css/img//0-11-696x464.jpg">
+                </div>
+                <div class="carousel-item">
+                  <img src="/static/css/img/hospitales.jpg">
+                </div>
+                <div class="carousel-item">
+                  <img src="/static/css/img/salud.png">
+                </div>
+                <div class="carousel-item">
+                  <img src="/static/css/img/notebook.jpg">
+                </div>
+              </div>
+            </div>
+          </div>
+        
+
+        <main>
+            
+        </main>
+        
+          
+             
+        
+        
+        <footer id="contacto">
+            <div class="contenedor footer-content">
+                <div class="contact-us">
+                    <h2 class="brand">Proyecto Salud</h2>
+                    <p>"Juntos por una vida saludable en manos confiables"</p>
+                </div>
+                <div class="social-media">
+                    <a href="../../../../../../../../Desktop/Salud" class="social-media-icon">
+                        <i class='bx bxl-facebook'></i>
+                    </a>
+                    <a href="../../../../../../../../Desktop/Salud" class="social-media-icon">
+                        <i class='bx bxl-twitter' ></i>
+                    </a>
+                    <a href="../../../../../../../../Desktop/Salud" class="social-media-icon">
+                        <i class='bx bxl-instagram' ></i>
+                    </a>
+                       
+                </div>
+            </div>
+            <div class="line"></div>
+        </footer>
+
+    </body>    
+    
+   
+
+</html>
+

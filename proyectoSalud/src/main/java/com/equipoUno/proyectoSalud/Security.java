@@ -30,7 +30,7 @@ public class Security extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/admin/*").hasAnyRole("ADMIN, PATIENT, PROFESSIONAL")
-                    .antMatchers("/css/*", "/js/*", "/img/*", "/**")
+                    .antMatchers("/css/*", "/static/css/js/*", "/img/*", "/**")
                     .permitAll()
                 .and().formLogin()
                     .loginPage("/login")
