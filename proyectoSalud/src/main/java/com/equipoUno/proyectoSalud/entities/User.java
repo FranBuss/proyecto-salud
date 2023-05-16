@@ -37,11 +37,11 @@ public class User {
     @Column(name = "password")
     protected String password;
 
+    @Column(name = "rol")
     @Enumerated(EnumType.STRING)
     protected Rol rol;
 
     @OneToOne
-    @Column(name = "image")
     protected Image image;
 
     @Column(name="created_at")
