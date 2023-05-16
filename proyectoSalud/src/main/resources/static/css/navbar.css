@@ -1,0 +1,9 @@
+.navbar {
+    background-color: var(--celeste);
+    border-bottom: 1px solid var(--azul-oscuro);
+    height: 80px;
+}
+
+.navbar a {
+    color: var(--blanco);
+}

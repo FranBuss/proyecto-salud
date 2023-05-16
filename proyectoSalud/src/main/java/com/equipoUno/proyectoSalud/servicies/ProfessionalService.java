@@ -8,7 +8,7 @@ import java.util.List;
 public interface ProfessionalService {
     List<Professional> searchProfessionals();
 
-//    List<Professional> searchProfessionalBySpecialization();
+    List<Professional> searchProfessionalsBySpecialization(String specializationString);
 
     ProfessionalDTO createProfessional(ProfessionalDTO dto);
 
