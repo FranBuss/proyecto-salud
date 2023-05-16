@@ -24,13 +24,13 @@ public class AuthController {
 //    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping ("/registrar")
-    public String registrar() {
+    public String register() {
         return "";
     }
 
     //falta completar
     @PostMapping("/registro")
-    public String registro(MultipartFile file, @RequestParam String name, @RequestParam String email, @RequestParam String password, @RequestParam String password2, ModelMap modelo){
+    public String register(MultipartFile file, @RequestParam String name, @RequestParam String email, @RequestParam String password, @RequestParam String password2, ModelMap modelo){
         try {
             userService.register(file, name, email, password, password2);
             modelo.put("exito", "Usuario registrado correctamente");
