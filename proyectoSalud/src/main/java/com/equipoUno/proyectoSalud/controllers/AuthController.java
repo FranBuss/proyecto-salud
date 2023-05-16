@@ -23,7 +23,7 @@ public class AuthController {
 //    @Autowired
 //    private BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping ("/registrar")
+    @GetMapping ("/register")
     public String register() {
         return "";
     }
