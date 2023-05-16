@@ -29,8 +29,8 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ImageService imageService;
+//    @Autowired
+//    private ImageService imageService;
     @Transactional
     public void register(MultipartFile file, String name, String email, String password, String password2) throws MiException{
 
@@ -43,8 +43,8 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         user.setRol(Rol.PATIENT);
 
-        Image image = imageService.save(file);
-        user.setImage(image);
+//        Image image = imageService.save(file);
+//        user.setImage(image);
 
         userRepository.save(user);
     }

@@ -42,7 +42,6 @@ public class User {
     protected Rol rol;
 
     @OneToOne
-    @Column(name = "image")
     protected Image image;
 
     @Column(name="created_at")
