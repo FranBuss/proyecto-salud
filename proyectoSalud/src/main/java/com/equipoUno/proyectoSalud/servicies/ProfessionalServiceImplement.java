@@ -2,8 +2,10 @@ package com.equipoUno.proyectoSalud.servicies;
 
 import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
 import com.equipoUno.proyectoSalud.entities.Professional;
+import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.repositories.ProfessionalRepository;
+import com.equipoUno.proyectoSalud.utils.ProfessionalUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,12 @@ public class ProfessionalServiceImplement implements ProfessionalService {
         } catch (MiException e) {
             return null;
         }
+    }
+
+    @Override
+    public List<Professional> searchProfessionalsBySpecialization(String specializationString) {
+        Specialization specialization = ProfessionalUtil.getSpecialization(specializationString);
+        return this.professionalRepository.searchBySpecialization(specialization);
     }
 
     @Override
