@@ -1,5 +1,6 @@
 package com.equipoUno.proyectoSalud.dto;
 
+import com.equipoUno.proyectoSalud.enumerations.Rol;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,8 @@ public class UserDTO {
     private String id;
     private String name;
     private String email;
+    @JsonIgnore
+    private Rol rol;
     @JsonIgnore
     private String password;
 

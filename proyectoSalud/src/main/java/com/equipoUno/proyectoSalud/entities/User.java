@@ -37,6 +37,7 @@ public class User {
     @Column(name = "password")
     protected String password;
 
+    @Column(name = "rol")
     @Enumerated(EnumType.STRING)
     protected Rol rol;
 
