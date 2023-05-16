@@ -1,0 +1,15 @@
+:root {
+    --azul-oscuro: #191D23;
+    --celeste-oscuro: #57707A;
+    --celeste: #7B919C;
+    --gris-oscuro: #989DAA;
+    --gris: #C5BAC4;
+    --blanco: #DEDCDC;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}

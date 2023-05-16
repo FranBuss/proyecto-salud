@@ -1,139 +1,80 @@
-
-/*barra navegacion*/
-
-.menu-navegacion {
-  background-color: #7B919C;
-  height: 50px;
-  border-top: 1px solid #ccc;
+/* Carousel Bootstrap */
+.carousel {
+    background-color: var(--gris);
+    border-bottom: 1px solid var(--azul-oscuro);
 }
 
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.carousel-item {
+    height: 550px;
 }
 
-
-li {
-  float: left;
-}
-
-
-a {
-  display: block;
-  color: #fff;
-  text-align: center;
-  padding: 16px;
-  text-decoration: none;
-}
-
-a:hover {
-  background-color: #54547c;
-}
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root{
-    scroll-behavior: smooth;
-}
-
-
-
-
-header{
-    height: 100vh;
-    background-image: linear-gradient(to top, rgba(118, 160, 223, 0.5) 0%, rgba(251, 194, 235, 0.5) 100%), url(imagenes/portada.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    height: auto;
-}
-
-
-/*carousel*/
-
-.carousel-container {
-    position: relative;
-    margin-top: -50px;
-   
-  }
-
-.carousel { 
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    top: 0;
-    height: 600px   
-  }
-  
-  .carousel-inner {
+.carousel-cont-item {
     display: flex;
-    transition: transform 5s;
-  }
-  
-  .carousel-item {
-    flex: 0 0 100%;
-  }
-  
-  .carousel-item img {
-    width: 80%;
-    height: 80%;
-  }
-  
-  .carousel-inner.move {
-    transform: translateX(-100%);
-  }
-  
-  
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
 
+.carousel-img {
+    width: 50%;
+}
 
+/* middle-page */
+.marketing {
+    padding-bottom: 100px;
+}
+.cont-access-link {
+    padding-top: 100px;
+}
+
+.access-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.access-link p {
+    min-height: 75px;
+}
+
+.main {
+    background-image: linear-gradient(var(--blanco), var(--gris), var(--celeste));
+}
 
 /* footer */
-
-footer{
-    background: #7B919C;
-    padding-bottom: 1px;
-    border-top: 1px solid #ccc;
-    
-   
+footer {
+    background: var(--celeste);
+    border-top: 1px solid var(--azul-oscuro);
 }
 
-.footer-content{
+.footer-content {
+    color: var(--blanco);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
     padding-top: 60px;
     padding-bottom: 60px;
 }
 
-.contact-us{
-    width: 40%;
-    color: #fff;
+.footer-text {
+    color: var(--blanco);
 }
 
-.brand{
+.brand {
     font-weight: 500;
     font-size: 40px;
 }
 
-.brad+p{
-    font-weight: 500;
-}
-
-.social-media{
+.social-media {
     width: 50%;
     display: flex;
     justify-content: flex-end;
     max-width: 300px;
 }
 
-.social-media-icon{
+.social-media-icon {
     display: inline-block;
     margin-left: 20px;
     width: 60px;
@@ -142,113 +83,112 @@ footer{
     text-align: center;
     color: #fff;
 }
-.social-media-icon:hover{
+
+.social-media-icon:hover {
     background: #fff;
-    color: #764ba2;
+    color: var(--azul-oscuro);
+}
+
+.social-media-icon i {
+    font-size: 30px;
+    line-height: 60px;
+}
+
+.line {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 2px;
+    background: #fff;
+    margin-bottom: 60px;
+}
+
+@media screen and (max-width:800px) {
+    .menu-navegacion {
+        width: 50vw;
     }
 
-    .social-media-icon i{
+    .titulo {
+        font-size: 40px;
+    }
+
+    .contenedor-servicio img {
+        width: 80%;
+        margin-bottom: 40px;
+    }
+
+    .lista-servicio {
+        width: 80%;
+    }
+
+    .agregar-imagen {
+        width: 80%;
+    }
+
+    .img-galeria {
+        width: 45%;
+    }
+
+    .cont-experts {
+        width: 80%;
+    }
+
+    .footer-content {
+        justify-content: center;
+    }
+
+    .social-media {
+        width: 80%;
+        justify-content: space-evenly;
+    }
+
+    .social-media-icon {
+        margin-left: 0;
+    }
+
+    .social-media i {
+        margin-left: 0;
+    }
+
+    .contact-us {
+        text-align: center;
+        width: 80%;
+        margin-bottom: 40px;
+    }
+}
+
+@media screen and (max-width:500ps) {
+    .menu-navegacion {
+        width: 65vw;
+    }
+
+    .hamburguesa {
+        top: 20px;
+        right: 20px;
+    }
+
+    .titulo {
         font-size: 30px;
-        line-height: 60px;
     }
 
-.line{
+    .subtitulo {
+        font-size: 30px;
+    }
+
+    .agregar-imagen {
+        width: 95%;
+    }
+
+    .img-galeria {
+        width: 95%;
+    }
+
+    .social-media {
+        width: 100%;
+    }
+
+    .contact-us {
         width: 90%;
-        max-width: 1200px;
-        margin: 0 auto;
-        height: 2px;
-        background: #fff;
-        margin-bottom: 60px;
     }
 
-    @media screen and (max-width:800px){
-        .menu-navegacion{
-            width: 50vw;
-        }
-        .titulo{
-            font-size: 40px;
-        }
-
-        .contenedor-servicio img{
-            width: 80%;
-            margin-bottom: 40px;
-        }
-
-        .lista-servicio{
-            width: 80%;
-        }
-
-        .agregar-imagen{
-            width: 80%;
-        }
-
-        .img-galeria{
-            width: 45%;
-        }
-
-        .cont-experts{
-            width: 80%;
-        }
-
-        .footer-content{
-            justify-content: center;
-        }
-
-        .social-media{
-            width: 80%;
-            justify-content: space-evenly;
-        }
-
-        .social-media-icon{
-            margin-left: 0;
-        }
-
-        .social-media i{
-            margin-left: 0;
-        }
-
-        .contact-us{
-            text-align: center;
-            width: 80%;
-            margin-bottom: 40px;
-        }
-     
-    }
-
-    @media screen and (max-width:500ps) {
-        .menu-navegacion{
-            width: 65vw;
-        }
-
-        .hamburguesa{
-            top: 20px;
-            right: 20px;
-        }
-
-        .titulo{
-            font-size: 30px;
-        }
-
-        .subtitulo{
-            font-size: 30px;
-        }
-
-        .agregar-imagen{
-            width: 95%;
-        }
-
-        .img-galeria{
-            width: 95%;
-        }
-
-        .social-media{
-            width: 100%;
-        }
-
-        .contact-us{
-            width: 90%;
-        }
-
-         }
-
-
+}

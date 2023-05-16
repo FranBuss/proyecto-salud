@@ -1,24 +1,8 @@
-:root {
-    --azul-oscuro: #191D23;
-    --celeste-oscuro: #57707A;
-    --celeste: #7B919C;
-    --gris-oscuro: #989DAA;
-    --gris: #C5BAC4;
-    --blanco: #DEDCDC;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 .cont-form {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-image: linear-gradient(
         var(--blanco), var(--gris), var(--celeste));
 }
