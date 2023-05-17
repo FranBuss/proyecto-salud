@@ -1,11 +1,14 @@
 package com.equipoUno.proyectoSalud.controllers;
 
+import com.equipoUno.proyectoSalud.dto.UserDTO;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.repositories.UserRepository;
 import com.equipoUno.proyectoSalud.servicies.UserService;
 import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,35 +17,28 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    @Autowired
-    private UserRepository userRepository;
+
+    private final UserRepository userRepository;
+
+    private final UserServiceImplement userServiceImplement;
 
     @Autowired
-    private UserService userService;
-
-//    @Autowired
-//    private BCryptPasswordEncoder passwordEncoder;
-
-    @GetMapping ("/register")
-    public String register() {
-        return "";
+    public AuthController(UserRepository userRepository, UserServiceImplement userServiceImplement){
+        this.userRepository = userRepository;
+        this.userServiceImplement = userServiceImplement;
     }
 
-    //falta completar
-    @PostMapping("/registro")
-    public String register(MultipartFile file, @RequestParam String name, @RequestParam String email, @RequestParam String password, @RequestParam String password2, ModelMap modelo){
-        try {
-            userService.register(file, name, email, password, password2);
-            modelo.put("exito", "Usuario registrado correctamente");
-            return "index.html";
-        } catch (MiException ex) {
-            modelo.put("error", ex.getMessage());
-            modelo.put("nombre", name);
-            modelo.put("email", email);
-            return ".html";  //registro.html?
-        }
 
+    @GetMapping ("/register")
+    public String register(Model model) {
+        model.addAttribute("userDTO", new UserDTO());
+        return "register";
+    }
 
+    @PostMapping("/register")
+    public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO) {
+        UserDTO registeredUserDTO = userServiceImplement.registerUser(userDTO);
+        return ResponseEntity.ok(registeredUserDTO);
     }
 
     @PostMapping("/login")
