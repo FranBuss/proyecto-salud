@@ -1,6 +1,7 @@
 package com.equipoUno.proyectoSalud.entities;
 
 import com.equipoUno.proyectoSalud.enumerations.Rol;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class User {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "id")
+    @JsonIgnore
     protected String id;
 
     @Column(name = "name")
@@ -35,10 +37,16 @@ public class User {
     protected String email;
 
     @Column(name = "password")
+    @JsonIgnore
     protected String password;
 
+    @Column(name = "rol")
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     protected Rol rol;
+
+    @OneToOne
+    protected Image image;
 
     @Column(name="created_at")
     protected LocalDateTime createdAt = LocalDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));

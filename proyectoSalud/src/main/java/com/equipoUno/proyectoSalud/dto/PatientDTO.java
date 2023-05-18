@@ -7,7 +7,6 @@ import lombok.experimental.SuperBuilder;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @SuperBuilder
 public class PatientDTO extends UserDTO {
 

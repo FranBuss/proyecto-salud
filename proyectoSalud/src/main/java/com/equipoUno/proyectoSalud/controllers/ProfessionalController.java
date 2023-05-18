@@ -2,6 +2,7 @@ package com.equipoUno.proyectoSalud.controllers;
 
 import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
 import com.equipoUno.proyectoSalud.entities.Professional;
+import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,8 +43,7 @@ public class ProfessionalController {
     //Update a Professional
     @PostMapping(value = "/update/{id}", params = "_method=put")
     public ResponseEntity<ProfessionalDTO> update(@RequestBody @PathVariable String id, ProfessionalDTO professionalDTO) {
-        professionalDTO.setId(id);
-        ProfessionalDTO professionalUpdate = professionalService.updateProfessional(professionalDTO);
+        ProfessionalDTO professionalUpdate = professionalService.updateProfessional(id, professionalDTO);
         if (professionalUpdate != null) {
             return ResponseEntity.ok(professionalUpdate);
         } else {

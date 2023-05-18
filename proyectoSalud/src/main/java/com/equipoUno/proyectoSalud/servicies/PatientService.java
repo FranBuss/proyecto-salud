@@ -7,7 +7,7 @@ public interface PatientService {
 
     PatientDTO getPatient(String id);
 
-    PatientDTO updatePatient(PatientDTO dto);
+    PatientDTO updatePatient(String id, PatientDTO dto);
 
     void deletePatient(String id);
 
