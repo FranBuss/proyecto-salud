@@ -1,6 +1,7 @@
 package com.equipoUno.proyectoSalud.controllers;
 
 
+import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalService;
@@ -30,7 +31,9 @@ public class RouteController {
     }
 
     @GetMapping("/register")
-    public String register(){
+    public String register(Model model){
+        PatientDTO patientDTO = new PatientDTO();
+        model.addAttribute("patientDTO", patientDTO);
         return "register";
     }
 

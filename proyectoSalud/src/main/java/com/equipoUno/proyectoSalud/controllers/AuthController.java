@@ -18,7 +18,7 @@ public class AuthController {
     PatientService patientService;
 
     @PostMapping ("/register")
-    public String register(@Validated @RequestBody PatientDTO patientDTO, BindingResult bindingResult, Model model) {
+    public String register(@Validated @ModelAttribute("patientDTO") PatientDTO patientDTO, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()){
             model.addAttribute("patientDTO",patientDTO);
