@@ -30,6 +30,7 @@ public class Professional extends User {
     private boolean dropOut = false;
 
     @Column(name = "specialization")
+    @Enumerated(EnumType.STRING)
     private Specialization specialization;
 
     @Column(name = "entry_time")
