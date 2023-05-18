@@ -36,8 +36,7 @@ public class PatientController {
 
     @PostMapping(value = "/update/{id}", params = "_method=put")
     public ResponseEntity<PatientDTO> updatePatient(@PathVariable String id, @RequestBody PatientDTO patientDTO) {
-        patientDTO.setId(id);
-        PatientDTO updatedPatient = patientService.updatePatient(patientDTO);
+        PatientDTO updatedPatient = patientService.updatePatient(id, patientDTO);
         if (updatedPatient != null) {
             return ResponseEntity.ok(updatedPatient);
         } else {

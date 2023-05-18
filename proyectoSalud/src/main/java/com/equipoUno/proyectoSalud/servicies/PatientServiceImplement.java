@@ -40,8 +40,8 @@ public class PatientServiceImplement implements PatientService {
     }
 
     @Override
-    public PatientDTO updatePatient(PatientDTO dto) {
-        Optional<Patient> optionalPatient = patientRepository.findById(dto.getId());
+    public PatientDTO updatePatient(String id, PatientDTO dto) {
+        Optional<Patient> optionalPatient = patientRepository.findById(id);
         if (optionalPatient.isPresent()) {
             Patient patient = optionalPatient.get();
             patient.setHealthInsurance(dto.getHealthInsurance());

@@ -54,8 +54,8 @@ public class ProfessionalServiceImplement implements ProfessionalService {
     }
 
     @Override
-    public ProfessionalDTO updateProfessional(ProfessionalDTO dto) {
-        Optional<Professional> professionalInfo = professionalRepository.findById(dto.getId());
+    public ProfessionalDTO updateProfessional(String id,ProfessionalDTO dto) {
+        Optional<Professional> professionalInfo = professionalRepository.findById(id);
         if (professionalInfo.isPresent()) {
             Professional professional = professionalInfo.get();
             professional.setEntryTime(dto.getEntryTime());

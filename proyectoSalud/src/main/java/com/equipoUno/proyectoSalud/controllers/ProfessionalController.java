@@ -43,8 +43,7 @@ public class ProfessionalController {
     //Update a Professional
     @PostMapping(value = "/update/{id}", params = "_method=put")
     public ResponseEntity<ProfessionalDTO> update(@RequestBody @PathVariable String id, ProfessionalDTO professionalDTO) {
-        professionalDTO.setId(id);
-        ProfessionalDTO professionalUpdate = professionalService.updateProfessional(professionalDTO);
+        ProfessionalDTO professionalUpdate = professionalService.updateProfessional(id, professionalDTO);
         if (professionalUpdate != null) {
             return ResponseEntity.ok(professionalUpdate);
         } else {

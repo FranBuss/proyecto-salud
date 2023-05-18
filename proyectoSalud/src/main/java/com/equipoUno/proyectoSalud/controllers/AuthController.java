@@ -1,55 +1,45 @@
 package com.equipoUno.proyectoSalud.controllers;
 
-import com.equipoUno.proyectoSalud.dto.UserDTO;
-import com.equipoUno.proyectoSalud.exceptions.MiException;
-import com.equipoUno.proyectoSalud.repositories.UserRepository;
-import com.equipoUno.proyectoSalud.servicies.UserService;
-import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-@RestController
+import com.equipoUno.proyectoSalud.dto.PatientDTO;
+import com.equipoUno.proyectoSalud.servicies.PatientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
 @RequestMapping("/api/auth")
 public class AuthController {
 
-
-    private final UserRepository userRepository;
-
-    private final UserServiceImplement userServiceImplement;
-
     @Autowired
-    public AuthController(UserRepository userRepository, UserServiceImplement userServiceImplement){
-        this.userRepository = userRepository;
-        this.userServiceImplement = userServiceImplement;
-    }
+    PatientService patientService;
 
+    @PostMapping ("/register")
+    public String register(@Validated @RequestBody PatientDTO patientDTO, BindingResult bindingResult, Model model) {
 
-    @GetMapping ("/register")
-    public String register(Model model) {
-        model.addAttribute("userDTO", new UserDTO());
-        return "register";
-    }
+        if(bindingResult.hasErrors()){
+            model.addAttribute("patientDTO",patientDTO);
+            return "register";
+        }
 
-    @PostMapping("/register")
-    public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO) {
-        UserDTO registeredUserDTO = userServiceImplement.registerUser(userDTO);
-        return ResponseEntity.ok(registeredUserDTO);
+        try {
+            patientService.createPatient(patientDTO);
+            return "redirect:/register";
+        }catch(RuntimeException e){
+            model.addAttribute("error","Se produjo un error durante el registro.");
+            model.addAttribute("patientDTO",patientDTO);
+            return "register";
+        }
+
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam(required = false) String error, ModelMap modelo){
-
-        if(error != null) {
-            modelo.put("error", "Usuario o contraseña invalidos!");
-        }
-        return "login.html";
+    public String login(@RequestBody String email, String password){
+        return "redirect:/login";
     }
-
 
 
 }

@@ -41,7 +41,7 @@ public class Security extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and().formLogin()
                     .loginPage("/login")
-                    .loginProcessingUrl("/logincheck")
+                    .loginProcessingUrl("/api/auth/login")
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/index")
