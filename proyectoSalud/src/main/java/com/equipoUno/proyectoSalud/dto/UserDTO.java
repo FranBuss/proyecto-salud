@@ -9,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @SuperBuilder
 public class UserDTO {
 
