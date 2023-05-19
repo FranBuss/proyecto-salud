@@ -1,5 +1,6 @@
 package com.equipoUno.proyectoSalud.dto;
 
+import com.equipoUno.proyectoSalud.enumerations.HealthInsurance;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -10,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class PatientDTO extends UserDTO {
 
-    private String healthInsurance;
+    private HealthInsurance healthInsurance;
     private String contact;
 
 }
