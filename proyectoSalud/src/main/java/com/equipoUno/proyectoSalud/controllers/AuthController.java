@@ -61,7 +61,7 @@ public class AuthController {
     @GetMapping("/index")
     public String index(HttpSession session){
 
-        PatientDTO loggedPatient = (PatientDTO) session.getAttribute("pattientSession");
+        PatientDTO loggedPatient = (PatientDTO) session.getAttribute("patientSession");
 
         if (loggedPatient.getRoles().equals("ADMIN")){
             return "redirect:api/admin/dashboard";

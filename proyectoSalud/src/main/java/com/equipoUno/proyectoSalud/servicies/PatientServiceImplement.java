@@ -11,7 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,11 +72,19 @@ public class PatientServiceImplement implements PatientService{
                 .map(this::converToDTO)
                 .orElseThrow(()-> new UsernameNotFoundException("Patient not found"));
 
+        setPatientSessionAttribute(patientDTO);
+
         return buildUserDetails(patientDTO);
     }
 
     private PatientDTO converToDTO(Patient patient){
         return modelMapper.map(patient, PatientDTO.class);
+    }
+
+    private void setPatientSessionAttribute(PatientDTO patientDTO){
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession(true);
+        session.setAttribute("patientSession", patientDTO);
     }
 
     private UserDetails buildUserDetails(PatientDTO patientDTO){
