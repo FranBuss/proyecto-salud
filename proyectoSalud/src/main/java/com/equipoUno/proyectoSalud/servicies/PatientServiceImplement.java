@@ -5,13 +5,22 @@ import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.repositories.PatientRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class PatientServiceImplement implements PatientService {
+public class PatientServiceImplement implements PatientService{
 
     private final PatientRepository patientRepository;
     private final ModelMapper modelMapper;
@@ -55,5 +64,39 @@ public class PatientServiceImplement implements PatientService {
     @Override
     public void deletePatient(String id) {
         patientRepository.deleteById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        PatientDTO patientDTO = patientRepository.findByEmail(email)
+                .map(this::converToDTO)
+                .orElseThrow(()-> new UsernameNotFoundException("Patient not found"));
+
+        setPatientSessionAttribute(patientDTO);
+
+        return buildUserDetails(patientDTO);
+    }
+
+    private PatientDTO converToDTO(Patient patient){
+        return modelMapper.map(patient, PatientDTO.class);
+    }
+
+    private void setPatientSessionAttribute(PatientDTO patientDTO){
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession(true);
+        session.setAttribute("patientSession", patientDTO);
+    }
+
+    private UserDetails buildUserDetails(PatientDTO patientDTO){
+        List<SimpleGrantedAuthority> authorities = patientDTO.getRoles()
+                .stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
+        return User.withUsername(patientDTO.getEmail()) //si no funciona intentar .getUsername()
+                .password(patientDTO.getPassword())
+                .authorities(authorities)
+                .build();
+
     }
 }
