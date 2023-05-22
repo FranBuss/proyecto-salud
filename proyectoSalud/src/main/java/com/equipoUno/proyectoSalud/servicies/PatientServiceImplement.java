@@ -101,6 +101,13 @@ public class PatientServiceImplement implements PatientService, UserDetailsServi
 
     }
 
+    @Override
+    public List<PatientDTO> findAllPatients(){
+        List<Patient> patients = patientRepository.findAll();
+        return patients.stream().map(patient -> modelMapper.map(patient, PatientDTO.class))
+                .collect(Collectors.toList());
+    }
+
 //    private PatientDTO converToDTO(Patient patient){
 //        return modelMapper.map(patient, PatientDTO.class);
 //    }

@@ -52,9 +52,9 @@ public class RouteController {
             return "redirect:api/admin/dashboard";
         }
 
-//        if (loggedPatient.getRoles().equals("PROFESSIONAL")){
-//            return "redirect:api/professional/index";
-//        }
+        if (loggedPatient.getRol().toString().equals("PROFESSIONAL")){
+            return "redirect:api/professional/index";
+        }
 
         return "index";
 
