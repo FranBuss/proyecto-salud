@@ -2,23 +2,34 @@ package com.equipoUno.proyectoSalud.controllers;
 
 
 import com.equipoUno.proyectoSalud.dto.PatientDTO;
+import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.servicies.PatientService;
+import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/api/auth")
 public class AuthController {
 
+
+    private final PatientServiceImplement patientService;
+
     @Autowired
-    PatientService patientService;
+    public AuthController(PatientServiceImplement patientService){
+        this.patientService = patientService;
+    }
 
     @PostMapping ("/register")
-    public String register(@Validated @RequestBody PatientDTO patientDTO, BindingResult bindingResult, Model model) {
+    public String register(@Validated @ModelAttribute("patientDTO") PatientDTO patientDTO, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()){
             model.addAttribute("patientDTO",patientDTO);
@@ -27,7 +38,7 @@ public class AuthController {
 
         try {
             patientService.createPatient(patientDTO);
-            return "redirect:/register";
+            return "redirect:api/auth/login";
         }catch(RuntimeException e){
             model.addAttribute("error","Se produjo un error durante el registro.");
             model.addAttribute("patientDTO",patientDTO);
@@ -35,10 +46,46 @@ public class AuthController {
         }
 
     }
+    @GetMapping("/login")
+    public String login(@RequestParam(required = false) String error, Model model){
 
-    @PostMapping("/login")
-    public String login(@RequestBody String email, String password){
-        return "redirect:/login";
+        if (error != null) {
+            model.addAttribute("error", "Usuario o Contraseña invalidos");
+        }
+
+        return "index";
+
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
+    @GetMapping("/index")
+    public String index(HttpSession session){
+
+        Patient loggedPatient = (Patient) session.getAttribute("patientSession");
+
+        if (loggedPatient.getRol().equals("ADMIN")){
+            return "redirect:api/admin/dashboard";
+        }
+
+//        if (loggedPatient.getRoles().equals("PROFESSIONAL")){
+//            return "redirect:api/professional/index";
+//        }
+
+        return "index";
+
+    }
+
+    @GetMapping("/patient/{email}")
+    public String getUserDetails(@PathVariable String email, Model model) {
+        UserDetails userDetails = patientService.loadUserByUsername(email);
+
+        if (userDetails == null) {
+            return "error-page";
+        }
+
+        model.addAttribute("userDetails", userDetails);
+
+        return "user-details";
     }
 
 

@@ -1,5 +1,6 @@
 package com.equipoUno.proyectoSalud.entities;
 
+import com.equipoUno.proyectoSalud.enumerations.HealthInsurance;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
@@ -26,7 +27,8 @@ public class Patient extends User{
     })
 
     @Column(name = "health_insurance")
-    private String healthInsurance;
+    @Enumerated(EnumType.STRING)
+    private HealthInsurance healthInsurance;
 
     @Column(name = "contact")
     private String contact;

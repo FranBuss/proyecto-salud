@@ -5,6 +5,8 @@
     --gris-oscuro: #989DAA;
     --gris: #C5BAC4;
     --blanco: #DEDCDC;
+    --error: rgb(201, 0, 0);
+    --bg-error: rgb(255, 190, 190);
 }
 
 * {
