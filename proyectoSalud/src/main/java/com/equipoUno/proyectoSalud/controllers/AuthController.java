@@ -57,7 +57,7 @@ public class AuthController {
 
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
     @GetMapping("/index")
     public String index(HttpSession session){
 
@@ -66,6 +66,10 @@ public class AuthController {
         if (loggedPatient.getRoles().equals("ADMIN")){
             return "redirect:api/admin/dashboard";
         }
+
+//        if (loggedPatient.getRoles().equals("PROFESSIONAL")){
+//            return "redirect:api/professional/index";
+//        }
 
         return "index";
 
