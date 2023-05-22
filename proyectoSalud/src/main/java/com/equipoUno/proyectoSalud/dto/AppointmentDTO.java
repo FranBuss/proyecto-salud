@@ -7,12 +7,11 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@SuperBuilder
+@Builder
 public class AppointmentDTO {
 
     private Patient patient;

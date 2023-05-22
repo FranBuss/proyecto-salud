@@ -1,5 +1,7 @@
 package com.equipoUno.proyectoSalud;
 
+import com.equipoUno.proyectoSalud.servicies.PatientService;
+import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,25 +11,34 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class Security extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    public UserService userService;
-//
-//
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private PatientServiceImplement patientServiceImplement;
+
 //    @Autowired
 //    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
 //        auth.userDetailsService(userService).
 //                passwordEncoder(new BCryptPasswordEncoder());
 //    }
 
+//    @Bean
+//    public BCryptPasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
@@ -48,9 +59,18 @@ public class Security extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and().logout()
                     .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login")
+                    .logoutSuccessUrl("/")
                     .permitAll()
                 .and().csrf()
                     .disable();
     }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(patientServiceImplement)
+                .passwordEncoder(passwordEncoder());
+    }
+
+
 }

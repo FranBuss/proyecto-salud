@@ -1,4 +1,4 @@
-package com.equipoUno.proyectoSalud.servicies;
-
-public interface AppointmentService {
-}
+//package com.equipoUno.proyectoSalud.servicies;
+//
+//public interface AppointmentService {
+//}
