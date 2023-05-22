@@ -26,17 +26,6 @@ public class Security extends WebSecurityConfigurerAdapter {
     @Autowired
     private PatientServiceImplement patientServiceImplement;
 
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-//        auth.userDetailsService(userService).
-//                passwordEncoder(new BCryptPasswordEncoder());
-//    }
-
-//    @Bean
-//    public BCryptPasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
     @Bean
     public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -47,7 +36,8 @@ public class Security extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/admin/*").hasRole("ADMIN")
+                    .antMatchers("/admin/*", "/api/professional/*").hasRole("ADMIN")
+                    .antMatchers("/api/professional/*").hasRole("PROFESSIONAL")
                     .antMatchers("/css/*", "/static/css/js/*", "/img/*", "/**")
                     .permitAll()
                 .and().formLogin()
