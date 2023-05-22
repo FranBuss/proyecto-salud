@@ -22,7 +22,7 @@
                     <p class="form-register__email">Email</p>
                     <div class="form-register__cont-email-inp">
                         <input type="text" th:field="*{email}" id="form_email" name="email_inp" class="form-register__email-inp">
-                        <select name="email_select" class="form-register__email-select">
+                        <select th:field="*{emailDom}" name="email_select" class="form-register__email-select">
                             <option value="@gmail.com">@gmail.com</option>
                             <option value="@gmail.com.ar">@gmail.com.ar</option>
                             <option value="@outlook.com">@outlook.com</option>
