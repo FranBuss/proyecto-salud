@@ -53,19 +53,23 @@ public class AuthController {
             model.addAttribute("error", "Usuario o Contraseña invalidos");
         }
 
-        return "login";
+        return "index";
 
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
     @GetMapping("/index")
     public String index(HttpSession session){
 
-        PatientDTO loggedPatient = (PatientDTO) session.getAttribute("patientSession");
+        Patient loggedPatient = (Patient) session.getAttribute("patientSession");
 
-        if (loggedPatient.getRoles().equals("ADMIN")){
+        if (loggedPatient.getRol().equals("ADMIN")){
             return "redirect:api/admin/dashboard";
         }
+
+//        if (loggedPatient.getRoles().equals("PROFESSIONAL")){
+//            return "redirect:api/professional/index";
+//        }
 
         return "index";
 

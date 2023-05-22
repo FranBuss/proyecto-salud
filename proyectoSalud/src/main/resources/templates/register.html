@@ -22,7 +22,7 @@
                     <p class="form-register__email">Email</p>
                     <div class="form-register__cont-email-inp">
                         <input type="text" th:field="*{email}" id="form_email" name="email_inp" class="form-register__email-inp">
-                        <select th:field="*{emailDom}" name="email_select" class="form-register__email-select">
+                        <select name="email_select" th:field="*{emailSuffix}" class="form-register__email-select">
                             <option value="@gmail.com">@gmail.com</option>
                             <option value="@gmail.com.ar">@gmail.com.ar</option>
                             <option value="@outlook.com">@outlook.com</option>
@@ -36,12 +36,13 @@
                 <div class="form-register__cont-insurance">
                     <p class="form-register__insurance">Obra Social</p>
                     <select th:field="*{healthInsurance}" name="obra_social" class="form-register__insurance-select">
-                        <option value="Osde">Osde</option>
-                        <option value="Ioma">Ioma</option>
-                        <option value="Pami">Pami</option>
-                        <option value="Ospatca">Ospatca</option>
-                        <option value="Swiss Medical">Swiss Medical</option>
-                        <option value="Avalian">Avalian</option>
+                        <option value="OSDE">Osde</option>
+                        <option value="IOMA">Ioma</option>
+                        <option value="PAMI">Pami</option>
+                        <option value="OSPATCA">Ospatca</option>
+                        <option value="SWISS_MEDICAL">Swiss Medical</option>
+                        <option value="AVALIAN">Avalian</option>
+                        <option value="NONE">No tengo</option>
                     </select>
                 </div>
                 <div class="form-register__cont-contact">
