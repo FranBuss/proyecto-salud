@@ -35,7 +35,13 @@
                 <a href="/register" class="form-login__reg-a">registrate</a>.
             </p>
         </form>
+
+        <th:block th:replace="/fragments/error :: error"></th:block>
+
     </div>
+
+
+
     <script>
         document.getElementById("cont-eye").addEventListener("click", () => {
             let eye = document.getElementById("eye");
