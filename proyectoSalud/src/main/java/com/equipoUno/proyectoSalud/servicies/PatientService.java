@@ -4,7 +4,7 @@ import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 
-public interface PatientService extends UserDetailsService {
+public interface PatientService {
     PatientDTO createPatient(PatientDTO dto);
     PatientDTO getPatient(String id);
 
