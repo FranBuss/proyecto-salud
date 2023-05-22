@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Profesional</title>
+</head>
+<body>
+    <th:block th:replace="/fragments/navbar :: navbar"></th:block>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Contacto</th>
+                <th>Obra Social</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="patient : ${patients}">
+                <td th:text="${patient.name}"></td>
+                <td th:text="${patient.email}"></td>
+                <td th:text="${patient.contact}"></td>
+                <td th:text="${patient.healthInsurance}"></td>
+                <td><a href="#">Editar</a></td>
+                <td><a href="#">Eliminar</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <th:block th:replace="/fragments/footer :: footer"></th:block>
+</body>
+</html>

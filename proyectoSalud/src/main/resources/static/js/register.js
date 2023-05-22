@@ -1,18 +1,27 @@
 "use strict";
 
 let validateName = false;
-let validateEmail = true;
+let validateEmail = false;
 let validatePass = false;
 let validateConfPass = false;
+
+let inpNameWrited = false;
 const form_name = document.getElementById("form_name");
 form_name.addEventListener("input", () => {
-    let value = form_name.value;
-    if (value.length >= 3) {
-        validateName = true;
-        errorCheck();
+    if (!inpNameWrited) {
+        if (form_name.value.length >= 3) {
+            validateName = true;
+            inpNameWrited = true;
+            errorCheck();
+        }
     } else {
-        validateName = false;
-        errorCheck();
+        if (form_name.value.length >= 3) {
+            validateName = true;
+            errorCheck();
+        } else {
+            validateName = false;
+            errorCheck();
+        }
     }
 })
 
@@ -28,14 +37,23 @@ form_email.addEventListener("input", () => {
     }
 })
 
+let inpPassWrited = false;
 const form_pass = document.getElementById("pass-inp");
 form_pass.addEventListener("input", () => {
-    if (form_pass.value.length < 6) {
-        validatePass = false;
-        errorCheck();
+    if (!inpPassWrited) {
+        if (form_pass.value.length >= 6) {
+            validatePass = true;
+            inpPassWrited = true;
+            errorCheck();
+        }
     } else {
-        validatePass = true;
-        errorCheck();
+        if (form_pass.value.length < 6) {
+            validatePass = false;
+            errorCheck();
+        } else {
+            validatePass = true;
+            errorCheck();
+        }
     }
 })
 
@@ -59,22 +77,25 @@ function errorCheck() {
     let cont_error = document.getElementById("cont-error");
     let error = document.getElementById("form-error");
     if (validateName) {
+        cont_error.classList.add("form-register__cont-error--hidden");
         if (validateEmail) {
+            cont_error.classList.add("form-register__cont-error--hidden");
             if (validatePass) {
+                cont_error.classList.add("form-register__cont-error--hidden");
                 if (validatePass && validateConfPass) {
                     cont_error.classList.add("form-register__cont-error--hidden");
                     removeDisabled();
-                } else {
+                } else if (!form_confirmPass.value == "") {
                     cont_error.classList.remove("form-register__cont-error--hidden");
                     error.innerHTML = "Las contraseñas deben coincidir."
                     addDisabled();
                 }
-            } else {
+            } else if (!form_pass.value == "") {
                 addDisabled();
                 cont_error.classList.remove("form-register__cont-error--hidden");
                 error.innerHTML = "La contraseña debe ser de al menos 6 caracteres.";
             }
-        } else {
+        } else if (!form_email.value == "") {
             addDisabled();
             cont_error.classList.remove("form-register__cont-error--hidden");
             error.innerHTML = "El mail no puede contener un arroba.";

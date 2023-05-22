@@ -10,7 +10,7 @@
 .form-login {
     border-radius: 15%;
     width: 20%;
-    height: 40%;
+    height: 41%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,6 +87,25 @@
 
 .form-login__eye {
     font-size: 20px;
+}
+
+.form-login__cont-error {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--error);
+    background-color: var(--bg-error);
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-login__error {
+    text-align: center;
+}
+
+.form-login__cont-error--hidden {
+    display: none;
 }
 
 .form-login__cont-submit {
