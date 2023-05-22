@@ -1,50 +1,91 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/css/register.css" />
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/register.css">
+    <script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>
     <title>Register</title>
 </head>
 <body>
-<form action="/api/auth/register" method="POST" id="form-register">
-    <div class="form">
-        <h1>Registro</h1>
-        <div class="grupo">
-            <input type="text" name="name" id="name" required="required" />
-            <span class="barra"></span>
-            <label for="name">Nombre:</label>
-        </div>
-        <div class="grupo">
-            <input type="email" name="email" id="email" required="required" />
-            <span class="barra"></span>
-            <label for="email">Email:</label>
-        </div>
-
-        <div class="grupo">
-            <input type="password" name="password" id="password" required="required" />
-            <span class="barra"></span>
-            <label for="password">Contraseña:</label>
-        </div>
-
-        <div class="grupo">
-            <input type="text" name="obra_social" id="obra_social" required="required" />
-            <span class="barra"></span>
-            <label for="obra_social">Obra Social:</label>
-        </div>
-
-        <div class="grupo">
-            <input type="tel" name="phone" id="phone" required="required" />
-            <span class="barra"></span>
-            <label for="phone">Teléfono:</label>
-        </div>
-
-        <button type="submit" value="send">Registrar</button>
+    <div class="cont-form">
+        <form action="/api/auth/register" method="POST" th:object="${patientDTO}" class="form-register">
+            <p class="form-register__ini">REGISTRO</p>
+            <div class="form-register__cont-inp">
+                <div class="form-register__cont-name">
+                    <p class="form-register__name">Nombre</p>
+                    <input type="text" th:field="*{name}" id="form_name" name="name" class="form-register__name-inp">
+                </div>
+                <div class="form-register__cont-email">
+                    <p class="form-register__email">Email</p>
+                    <div class="form-register__cont-email-inp">
+                        <input type="text" th:field="*{email}" id="form_email" name="email_inp" class="form-register__email-inp">
+                        <select name="email_select" class="form-register__email-select">
+                            <option value="@gmail.com">@gmail.com</option>
+                            <option value="@gmail.com.ar">@gmail.com.ar</option>
+                            <option value="@outlook.com">@outlook.com</option>
+                            <option value="@outlook.com.ar">@outlook.com.ar</option>
+                            <option value="@hotmail.com">@hotmail.com</option>
+                            <option value="@yahoo.com">@yahoo.com</option>
+                            <option value="@yahoo.com.ar">@yahoo.com.ar</option>
+                        </select>
+                    </div> 
+                </div>
+                <div class="form-register__cont-insurance">
+                    <p class="form-register__insurance">Obra Social</p>
+                    <select th:field="*{healthInsurance}" name="obra_social" class="form-register__insurance-select">
+                        <option value="Osde">Osde</option>
+                        <option value="Ioma">Ioma</option>
+                        <option value="Pami">Pami</option>
+                        <option value="Ospatca">Ospatca</option>
+                        <option value="Swiss Medical">Swiss Medical</option>
+                        <option value="Avalian">Avalian</option>
+                    </select>
+                </div>
+                <div class="form-register__cont-contact">
+                    <p class="form-register__contact">Contacto</p>
+                    <input type="text" th:field="*{contact}" name="telefono" class="form-register__contact-inp">
+                </div>
+                <div class="form-register__cont-pass">
+                    <p class="form-register__pass">Contraseña</p>
+                    <div class="form-register__cont-pass-inp">
+                        <input type="password" th:field="*{password}" name="password"
+                            class="form-register__pass-inp form-register__pass-inp--eye" id="pass-inp">
+                        <div class="form-register__cont-eye" id="cont-pass-eye">
+                            <i class="fa-regular fa-eye-slash form-register__eye" id="pass-eye"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-register__cont-pass">
+                    <p class="form-register__pass">Confirma contraseña</p>
+                    <div class="form-register__cont-pass-inp">
+                        <input type="password" th:field="*{confpassword}" name="password"
+                            class="form-register__pass-inp form-register__pass-inp--eye" id="confirmPass-inp">
+                        <div class="form-register__cont-eye" id="cont-confirmPass-eye">
+                            <i class="fa-regular fa-eye-slash form-register__eye" id="confirmPass-eye"></i>
+                        </div>
+                    </div>
+                </div>
+                <div id="cont-error" class="form-register__cont-error form-register__cont-error--hidden">
+                    <p id="form-error" class="form-register__error"></p>
+                </div>
+                <div class="form-register__cont-submit">
+                    <button type="submit" id="form_submit" class="form-register__submit--disabled" disabled>Registrarse</button>
+                </div>
+            </div>
+            <p class="form-register__log">Si ya tenes cuenta podes
+                <a href="/login" class="form-register__log-a">ingresar</a>.
+            </p>
+        </form>
     </div>
-</form>
+
+    <script src="/static/js/register.js"></script>
+
 
 <th:block th:replace="/fragments/error :: error"></th:block>
+
 
 </body>
 </html>
