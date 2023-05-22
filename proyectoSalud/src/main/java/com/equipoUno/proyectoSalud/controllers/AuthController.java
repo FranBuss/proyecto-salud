@@ -1,56 +1,88 @@
 package com.equipoUno.proyectoSalud.controllers;
 
-import com.equipoUno.proyectoSalud.exceptions.MiException;
-import com.equipoUno.proyectoSalud.repositories.UserRepository;
-import com.equipoUno.proyectoSalud.servicies.UserService;
-import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
+
+import com.equipoUno.proyectoSalud.dto.PatientDTO;
+import com.equipoUno.proyectoSalud.entities.Patient;
+import com.equipoUno.proyectoSalud.servicies.PatientService;
+import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    @Autowired
-    private UserRepository userRepository;
+
+    private final PatientServiceImplement patientService;
 
     @Autowired
-    private UserService userService;
-
-//    @Autowired
-//    private BCryptPasswordEncoder passwordEncoder;
-
-    @GetMapping ("/register")
-    public String register(@RequestBody String name,String email, String password, String confirmpassword) {
-        return "redirect:/register";
+    public AuthController(PatientServiceImplement patientService){
+        this.patientService = patientService;
     }
 
-    //falta completar
-//    @PostMapping("/registro")
-//    public String register(MultipartFile file, @RequestParam String name, @RequestParam String email, @RequestParam String password, @RequestParam String password2, ModelMap modelo){
-//        try {
-//            userService.register(file, name, email, password, password2);
-//            modelo.put("exito", "Usuario registrado correctamente");
-//            return "index.html";
-//        } catch (MiException ex) {
-//            modelo.put("error", ex.getMessage());
-//            modelo.put("nombre", name);
-//            modelo.put("email", email);
-//            return ".html";  //registro.html?
-//        }
-//
-//
-//    }
+    @PostMapping ("/register")
+    public String register(@Validated @ModelAttribute("patientDTO") PatientDTO patientDTO, BindingResult bindingResult, Model model) {
 
-    @PostMapping("/login")
-    public String login(@RequestBody String email, String password){
-        return "redirect:/login";
+        if(bindingResult.hasErrors()){
+            model.addAttribute("patientDTO",patientDTO);
+            return "register";
+        }
+
+        try {
+            patientService.createPatient(patientDTO);
+            return "redirect:api/auth/login";
+        }catch(RuntimeException e){
+            model.addAttribute("error","Se produjo un error durante el registro.");
+            model.addAttribute("patientDTO",patientDTO);
+            return "register";
+        }
+
+    }
+    @GetMapping("/login")
+    public String login(@RequestParam(required = false) String error, Model model){
+
+        if (error != null) {
+            model.addAttribute("error", "Usuario o Contraseña invalidos");
+        }
+
+        return "login";
+
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/index")
+    public String index(HttpSession session){
+
+        PatientDTO loggedPatient = (PatientDTO) session.getAttribute("patientSession");
+
+        if (loggedPatient.getRoles().equals("ADMIN")){
+            return "redirect:api/admin/dashboard";
+        }
+
+        return "index";
+
+    }
+
+    @GetMapping("/patient/{email}")
+    public String getUserDetails(@PathVariable String email, Model model) {
+        UserDetails userDetails = patientService.loadUserByUsername(email);
+
+        if (userDetails == null) {
+            return "error-page";
+        }
+
+        model.addAttribute("userDetails", userDetails);
+
+        return "user-details";
+    }
 
 
 }
