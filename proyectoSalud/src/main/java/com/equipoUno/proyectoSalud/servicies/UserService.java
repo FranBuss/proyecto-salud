@@ -7,9 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface UserService extends UserDetailsService {
+public interface UserService{
 
-    UserDetails loadUserByUsername(String email) throws UsernameNotFoundException;
 
 //    void register(MultipartFile file, String name, String email, String password, String password2) throws MiException;
 
