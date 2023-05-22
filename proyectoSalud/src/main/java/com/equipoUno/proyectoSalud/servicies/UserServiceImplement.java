@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImplement implements UserService, UserDetailsService {
+public class UserServiceImplement implements UserService{
 
     private  final UserRepository userRepository;
     private final ModelMapper modelMapper;
@@ -63,81 +63,6 @@ public class UserServiceImplement implements UserService, UserDetailsService {
             throw new MiException("User Not Found");
         }
     }
-
-//    @Autowired
-//    private ImageService imageService;
-//    @Transactional
-//    public void register(MultipartFile file, String name, String email, String password, String password2) throws MiException{
-//
-//        validate(name, email, password, password2);
-//
-//        User user = new User();
-//
-//        user.setName(name);
-//        user.setEmail(email);
-//        user.setPassword(new BCryptPasswordEncoder().encode(password));
-//        user.setRol(Rol.PATIENT);
-//
-////        Image image = imageService.save(file);
-////        user.setImage(image);
-//
-//        userRepository.save(user);
-//    }
-//
-//
-//
-//    public void validate(String name, String email, String password, String password2) throws MiException {
-//        if (name.isEmpty() || name == null ) {
-//            throw new MiException("El nombre no puede ser nulo o estar vacio");
-//        }
-//        if (email.isEmpty() || email == null ) {
-//            throw new MiException("El email no puede ser nulo o estar vacio");
-//        }
-//        if (password.isEmpty() || password == null || password.length() <= 5) {
-//            throw new MiException("La contraseña no puede estar vacia, y debe tener más de 5 digitos");
-//        }
-//
-//        if (!password.equals(password2)) {
-//            throw new MiException("Las contraseñas ingresadas deben ser iguales");
-//        }
-//    }
-//
-//
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-
-        if (user != null) {
-
-            List<GrantedAuthority> permits = new ArrayList();
-
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + user.getRol().toString());
-
-            permits.add(p);
-
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-
-            HttpSession session = attr.getRequest().getSession(true);
-
-            session.setAttribute("usersession", user);
-
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), permits);
-        } else {
-            return null;
-        }
-    }
-//
-//    @Override
-//    public void updateUser(String id ,String name, String email, String password, String password2) throws MiException{
-//
-//        validate(name, email, password, password2);
-//
-//        Optional<User> response = userRepository.findById(id);
-//        if (response.isPresent()){
-//
-//        }
-//    }
-
 
 
 }

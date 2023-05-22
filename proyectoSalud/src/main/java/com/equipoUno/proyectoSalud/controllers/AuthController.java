@@ -53,7 +53,7 @@ public class AuthController {
             model.addAttribute("error", "Usuario o Contraseña invalidos");
         }
 
-        return "login";
+        return "index";
 
     }
 
@@ -61,9 +61,9 @@ public class AuthController {
     @GetMapping("/index")
     public String index(HttpSession session){
 
-        PatientDTO loggedPatient = (PatientDTO) session.getAttribute("patientSession");
+        Patient loggedPatient = (Patient) session.getAttribute("patientSession");
 
-        if (loggedPatient.getRoles().equals("ADMIN")){
+        if (loggedPatient.getRol().equals("ADMIN")){
             return "redirect:api/admin/dashboard";
         }
 

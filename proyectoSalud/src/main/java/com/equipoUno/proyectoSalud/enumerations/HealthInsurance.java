@@ -4,7 +4,7 @@ public enum HealthInsurance {
 
     OSDE,
 
-    LOMA,
+    IOMA,
 
     PAMI,
 
@@ -12,5 +12,7 @@ public enum HealthInsurance {
 
     SWISS_MEDICAL,
 
-    AVALIAN;
+    AVALIAN,
+
+    NONE;
 }

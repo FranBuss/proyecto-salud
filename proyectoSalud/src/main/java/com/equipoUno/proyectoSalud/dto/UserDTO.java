@@ -1,5 +1,6 @@
 package com.equipoUno.proyectoSalud.dto;
 
+import com.equipoUno.proyectoSalud.enumerations.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -18,9 +19,9 @@ public class UserDTO {
 
     private String email;
 
-    private String password;
+    private String emailSuffix;
 
-    private List<String> roles;
+    private String password;
 
     private String confpassword;
 
