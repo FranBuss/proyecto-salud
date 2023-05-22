@@ -38,7 +38,7 @@ public class AuthController {
 
         try {
             patientService.createPatient(patientDTO);
-            return "redirect:api/auth/login";
+            return "redirect:/login";
         }catch(RuntimeException e){
             model.addAttribute("error","Se produjo un error durante el registro.");
             model.addAttribute("patientDTO",patientDTO);
@@ -53,27 +53,10 @@ public class AuthController {
             model.addAttribute("error", "Usuario o Contraseña invalidos");
         }
 
-        return "index";
+        return "login";
 
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
-    @GetMapping("/index")
-    public String index(HttpSession session){
-
-        Patient loggedPatient = (Patient) session.getAttribute("patientSession");
-
-        if (loggedPatient.getRol().equals("ADMIN")){
-            return "redirect:api/admin/dashboard";
-        }
-
-//        if (loggedPatient.getRoles().equals("PROFESSIONAL")){
-//            return "redirect:api/professional/index";
-//        }
-
-        return "index";
-
-    }
 
     @GetMapping("/patient/{email}")
     public String getUserDetails(@PathVariable String email, Model model) {
@@ -87,6 +70,5 @@ public class AuthController {
 
         return "user-details";
     }
-
 
 }

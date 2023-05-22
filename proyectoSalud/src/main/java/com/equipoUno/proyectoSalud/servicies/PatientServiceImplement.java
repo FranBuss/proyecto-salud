@@ -10,8 +10,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -24,14 +26,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class PatientServiceImplement implements PatientService{
+public class PatientServiceImplement implements PatientService, UserDetailsService {
 
     private final PatientRepository patientRepository;
     private final ModelMapper modelMapper;
 
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     @Autowired
-    public PatientServiceImplement(PatientRepository patientRepository, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder) {
+    public PatientServiceImplement(PatientRepository patientRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.patientRepository = patientRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -42,8 +44,7 @@ public class PatientServiceImplement implements PatientService{
         Patient patient = modelMapper.map(dto, Patient.class);
         patient.setRol(Rol.PATIENT);
         patient.setEmail(dto.getEmail().concat(dto.getEmailSuffix()));
-        String encryptedPassword = passwordEncoder.encode(patient.getPassword());
-        patient.setPassword(encryptedPassword);
+        patient.setPassword(passwordEncoder.encode(dto.getPassword()));
         patient = patientRepository.save(patient);
         return modelMapper.map(patient, PatientDTO.class);
     }
@@ -83,7 +84,7 @@ public class PatientServiceImplement implements PatientService{
         if (patient != null){
             List<GrantedAuthority> auths = new ArrayList();
 
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE" + patient.getRol().toString());
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + patient.getRol().toString());
 
             auths.add(p);
 
