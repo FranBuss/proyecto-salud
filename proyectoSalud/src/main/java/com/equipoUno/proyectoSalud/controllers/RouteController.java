@@ -41,6 +41,14 @@ public class RouteController {
 
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/admin/professionals")
+    public String professionals(Model model){
+        List<Professional> professionals = professionalService.searchProfessionals();
+        model.addAttribute("professionals",professionals);
+        return "professionals";
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
     @GetMapping("/index")
     public String index(HttpSession session){
