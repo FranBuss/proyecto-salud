@@ -3,6 +3,7 @@ package com.equipoUno.proyectoSalud;
 import com.equipoUno.proyectoSalud.servicies.PatientService;
 import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.UserService;
+import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,7 @@ public class Security extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private PatientServiceImplement patientServiceImplement;
+    private UserServiceImplement userServiceImplement;
 
     @Bean
     public static PasswordEncoder passwordEncoder(){
@@ -58,7 +59,7 @@ public class Security extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(patientServiceImplement)
+                .userDetailsService(userServiceImplement)
                 .passwordEncoder(passwordEncoder());
     }
 

@@ -2,8 +2,10 @@ package com.equipoUno.proyectoSalud.controllers;
 
 
 import com.equipoUno.proyectoSalud.dto.PatientDTO;
+import com.equipoUno.proyectoSalud.dto.UserDTO;
 import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
+import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,14 +55,13 @@ public class RouteController {
     @GetMapping("/index")
     public String index(HttpSession session){
 
-        Patient loggedPatient = (Patient) session.getAttribute("patientSession");
+        User loggedUser = (User) session.getAttribute("userSession");
 
-
-        if (loggedPatient.getRol().toString().equals("ADMIN")){
+        if (loggedUser.getRol().toString().equals("ADMIN")){
             return "redirect:api/admin/dashboard";
         }
 
-        if (loggedPatient.getRol().toString().equals("PROFESSIONAL")){
+        if (loggedUser.getRol().toString().equals("PROFESSIONAL")){
             return "redirect:api/professional/index";
         }
 
@@ -70,8 +71,8 @@ public class RouteController {
 
     @GetMapping("/register")
     public String register(Model model){
-        PatientDTO patientDTO = new PatientDTO();
-        model.addAttribute("patientDTO", patientDTO);
+        UserDTO userDTO = new UserDTO();
+        model.addAttribute("userDTO", userDTO);
         return "register";
     }
 

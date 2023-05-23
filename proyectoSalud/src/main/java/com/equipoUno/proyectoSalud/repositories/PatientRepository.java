@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient,String> {
-    @Query("SELECT u FROM Patient u WHERE u.email = :email")
-    public Patient findByEmail(String email);
-
+//    @Query("SELECT u FROM Patient u WHERE u.email = :email")
+//    public Patient findByEmail(String email);
 }
