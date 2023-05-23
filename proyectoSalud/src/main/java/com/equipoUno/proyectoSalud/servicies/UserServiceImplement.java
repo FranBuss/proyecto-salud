@@ -90,19 +90,6 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         professional.setUser(user);
         Professional saveProfessional = professionalRepository.save(professional);
         return modelMapper.map(saveProfessional, ProfessionalDTO.class);
-
-//        if (user != null) {
-//            Professional professional = new Professional();
-//
-//            professional.setSpecialization(professionalDTO.getSpecialization());
-//            professional.setEntryTime(professionalDTO.getEntryTime());
-//            professional.setExitTime(professionalDTO.getExitTime());
-//            professional.setCharge(professional.getCharge());
-//            professional.setQualification(professional.getQualification());
-//
-//            professional.setUser(user);
-//            professionalRepository.save(professional);
-//        }
     }
 
     @Override
