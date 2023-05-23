@@ -59,7 +59,7 @@ public class PatientController {
     public String listPatients(ModelMap model) {
         List<PatientDTO> patients = patientService.findAllPatients();
         model.addAttribute("patients", patients);
-        return "patients";
+        return "patient_list";
     }
 
 }
