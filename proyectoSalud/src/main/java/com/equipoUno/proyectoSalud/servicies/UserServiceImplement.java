@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -27,14 +28,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImplement implements UserService{
+public class UserServiceImplement implements UserService, UserDetailsService {
 
     private  final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImplement(UserRepository userRepository, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder){
+    public UserServiceImplement(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -44,8 +45,8 @@ public class UserServiceImplement implements UserService{
     public UserDTO registerUser(UserDTO userDTO){
         User user = modelMapper.map(userDTO, User.class);
         user.setRol(Rol.PATIENT);
-        String encryptedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encryptedPassword);
+        user.setEmail(userDTO.getEmail().concat(userDTO.getEmailSuffix()));
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDTO.class);
     }
@@ -62,6 +63,30 @@ public class UserServiceImplement implements UserService{
         } else {
             throw new MiException("User Not Found");
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
+
+        if (user != null){
+            List<GrantedAuthority> auths = new ArrayList();
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + user.getRol().toString());
+
+            auths.add(p);
+
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+            HttpSession session = attr.getRequest().getSession(true);
+
+            session.setAttribute("userSession", user);
+
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), auths);
+        } else {
+            return null;
+        }
+
     }
 
 
