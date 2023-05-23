@@ -59,7 +59,6 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     @Override
     public UserDTO updateUser(String id, UserDTO userDTO) throws MiException{
         Optional<User> optionalUser = userRepository.findById(id);
-
         if (optionalUser.isPresent()){
             User user = optionalUser.get();
             modelMapper.map(userDTO, user);
@@ -85,11 +84,12 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         if (user.getRol().toString().equals("PATIENT")){
             user.setRol(Rol.PROFESSIONAL);
             userRepository.save(user);
+            Professional professional = modelMapper.map(professionalDTO, Professional.class);
+            professional.setUser(user);
+            Professional saveProfessional = professionalRepository.save(professional);
+            return modelMapper.map(saveProfessional, ProfessionalDTO.class);
         }
-        Professional professional = modelMapper.map(professionalDTO, Professional.class);
-        professional.setUser(user);
-        Professional saveProfessional = professionalRepository.save(professional);
-        return modelMapper.map(saveProfessional, ProfessionalDTO.class);
+        return null;
     }
 
     @Override
