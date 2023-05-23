@@ -57,6 +57,10 @@
     margin: 10px 0;
 }
 
+.form-register__name-inp:-webkit-autofill {
+    background-color: white;
+}
+
 .form-register__cont-email-inp {
     display: flex;
 }

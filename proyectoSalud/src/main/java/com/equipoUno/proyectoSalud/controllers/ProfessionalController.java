@@ -1,5 +1,6 @@
 package com.equipoUno.proyectoSalud.controllers;
 
+import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
@@ -20,6 +21,16 @@ public class ProfessionalController {
     @Autowired
     public ProfessionalController(ProfessionalService professionalService) {
         this.professionalService = professionalService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProfessionalDTO> getPatient(@PathVariable String id) {
+        ProfessionalDTO professionalDTO = professionalService.getProfessional(id);
+        if (professionalDTO != null) {
+            return ResponseEntity.ok(professionalDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     //List all Professionals
