@@ -3,6 +3,8 @@ package com.equipoUno.proyectoSalud.entities;
 import com.equipoUno.proyectoSalud.enumerations.HealthInsurance;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 
@@ -10,20 +12,18 @@ import javax.persistence.*;
 @Table(name = "patient")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@SuperBuilder
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class Patient extends User{
+public class Patient{
 
-    @AttributeOverrides({
-            @AttributeOverride(name = "id", column = @Column(name = "patient_id")),
-            @AttributeOverride(name = "name", column = @Column(name = "patient_name")),
-            @AttributeOverride(name = "email", column = @Column(name = "patient_email")),
-            @AttributeOverride(name = "password", column = @Column(name = "patient_password")),
-            @AttributeOverride(name = "rol", column = @Column(name = "rol")),
-            @AttributeOverride(name = "createdAt", column = @Column(name = "created_at"))
-    })
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "id")
+    private String id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "health_insurance")
     @Enumerated(EnumType.STRING)

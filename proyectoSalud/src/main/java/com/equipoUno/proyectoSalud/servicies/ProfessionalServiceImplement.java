@@ -64,9 +64,6 @@ public class ProfessionalServiceImplement implements ProfessionalService{
     @Override
     public ProfessionalDTO createProfessional(ProfessionalDTO dto) {
         Professional professional = modelMapper.map(dto, Professional.class);
-        professional.setRol(Rol.PROFESSIONAL);
-        professional.setEmail(dto.getEmail().concat(dto.getEmailSuffix()));
-        professional.setPassword(passwordEncoder.encode(dto.getPassword()));
         professional = professionalRepository.save(professional);
         return modelMapper.map(professional, ProfessionalDTO.class);
     }

@@ -25,9 +25,6 @@ public class Security extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private PatientServiceImplement patientServiceImplement;
-
-    @Autowired
     private UserServiceImplement userServiceImplement;
 
     @Bean

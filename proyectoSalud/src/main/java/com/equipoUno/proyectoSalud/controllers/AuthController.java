@@ -2,12 +2,14 @@ package com.equipoUno.proyectoSalud.controllers;
 
 
 import com.equipoUno.proyectoSalud.dto.PatientDTO;
+import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
 import com.equipoUno.proyectoSalud.dto.UserDTO;
 import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.servicies.PatientService;
 import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -50,6 +52,20 @@ public class AuthController {
         }
 
     }
+
+    @PostMapping("/{userId}/patients")
+    public ResponseEntity<String> asignarPacienteAUser(@PathVariable String userId, @RequestBody PatientDTO patientDTO) {
+        userService.assignPatientUser(userId, patientDTO);
+        return ResponseEntity.ok("Paciente asignado correctamente");
+    }
+
+    @PostMapping("/{userId}/professionals")
+    public ResponseEntity<String> asignarProfesionalAUser(@PathVariable String userId, @RequestBody ProfessionalDTO professionalDTO) {
+        userService.assignProfessionalUser(userId, professionalDTO);
+        return ResponseEntity.ok("Profesional asignado correctamente");
+    }
+
+
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, Model model){
 
