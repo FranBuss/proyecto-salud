@@ -19,12 +19,10 @@ public class AdminController {
 
     private final UserServiceImplement userServiceImplement;
 
-    private final PatientServiceImplement patientServiceImplement;
 
     @Autowired
-    public AdminController(UserServiceImplement userServiceImplement, PatientServiceImplement patientServiceImplement){
+    public AdminController(UserServiceImplement userServiceImplement){
         this.userServiceImplement = userServiceImplement;
-        this.patientServiceImplement = patientServiceImplement;
     }
 
     @GetMapping("/dashboard")
@@ -32,12 +30,7 @@ public class AdminController {
         return "dashboard.html";
     }
 
-    @GetMapping ("/patients")
-    public String listPatients(ModelMap model) {
-        List<PatientDTO> patients = patientServiceImplement.findAllPatients();
-        model.addAttribute("patients", patients);
-        return "patients";
-    }
+
 
 
 }
