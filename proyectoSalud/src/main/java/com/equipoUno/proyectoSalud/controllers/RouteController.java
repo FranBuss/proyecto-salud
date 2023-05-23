@@ -87,4 +87,13 @@ public class RouteController {
         return "searcher";
     }
 
+    @GetMapping("/patient/appointments")
+    public String adminAppointments() {
+        return "appointments";
+    }
+
+    @GetMapping("/patient/getAppointment")
+    public String getAppointments() {
+        return "getAppointment";
+    }
 }
