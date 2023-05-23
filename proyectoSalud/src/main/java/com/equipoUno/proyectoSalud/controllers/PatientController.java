@@ -5,7 +5,11 @@ import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/patients")
@@ -48,6 +52,14 @@ public class PatientController {
     public ResponseEntity<Void> deletePatient(@PathVariable String id) {
         patientService.deletePatient(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping ("/allPatients")
+    public String listPatients(ModelMap model) {
+        List<PatientDTO> patients = patientService.findAllPatients();
+        model.addAttribute("patients", patients);
+        return "patient_list";
     }
 
 }

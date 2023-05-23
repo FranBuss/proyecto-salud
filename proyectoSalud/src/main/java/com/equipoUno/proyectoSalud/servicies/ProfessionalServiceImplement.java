@@ -1,30 +1,45 @@
 package com.equipoUno.proyectoSalud.servicies;
 
+import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
+import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
+import com.equipoUno.proyectoSalud.enumerations.Rol;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.repositories.ProfessionalRepository;
 import com.equipoUno.proyectoSalud.utils.ProfessionalUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
-public class ProfessionalServiceImplement implements ProfessionalService {
+public class ProfessionalServiceImplement implements ProfessionalService{
 
     private final ProfessionalRepository professionalRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ProfessionalServiceImplement(ProfessionalRepository professionalRepository, ModelMapper modelMapper) {
+    public ProfessionalServiceImplement(ProfessionalRepository professionalRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.professionalRepository = professionalRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public ProfessionalDTO getProfessional(String id){
+        Optional<Professional> optionalProfessional = professionalRepository.findById(id);
+        if (optionalProfessional.isPresent()){
+            Professional professional = optionalProfessional.get();
+            return modelMapper.map(professional, ProfessionalDTO.class);
+        }
+        return null;
     }
 
     @Override

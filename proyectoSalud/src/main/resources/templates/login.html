@@ -25,6 +25,9 @@
                         </div>
                     </div>
                 </div>
+                <div id="cont-error" class="form-login__cont-error form-login__cont-error--hidden">
+                    <p id="form-error" class="form-login__error">Hola</p>
+                </div>
                 <div class="form-login__cont-submit">
                     <button type="submit" class="form-login__submit">Ingresar</button>
                 </div>
@@ -33,7 +36,13 @@
                 <a href="/register" class="form-login__reg-a">registrate</a>.
             </p>
         </form>
+
+        <th:block th:replace="/fragments/error :: error"></th:block>
+
     </div>
+
+
+
     <script>
         document.getElementById("cont-eye").addEventListener("click", () => {
             let eye = document.getElementById("eye");

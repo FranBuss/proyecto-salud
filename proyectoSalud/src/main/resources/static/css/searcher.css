@@ -1,16 +1,30 @@
 .cont-form {
-    height: 100vh;
+    height: 640px;
+    width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
     background-image: linear-gradient(
         var(--blanco), var(--gris), var(--celeste));
 }
 
-.form-login {
+/* tabla */
+.cont-table {
+    margin-top: 100px;
+    width: 50%;
+}
+
+.table__thead-col,
+.table__tbody-col {
+    text-align: center;
+}
+
+/* fin tabla */
+
+.form-searcher {
     border-radius: 15%;
     width: 20%;
-    height: 41%;
+    height: 45%;
+    margin-top: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,15 +35,15 @@
     background-color: var(--gris);
 }
 
-.form-login__ini {
+.form-searcher__ini {
     text-align: center;
     font-size: 30px;
     width: 90%;
     height: 100%;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
-.form-login__cont-inp {
+.form-searcher__cont-inp {
     width: 90%;
     display: flex;
     justify-content: center;
@@ -37,45 +51,45 @@
     flex-direction: column;
 }
 
-.form-login__cont-pass,
-.form-login__cont-email {
+.form-searcher__cont-pass,
+.form-searcher__cont-email {
     width: 80%;
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin-bottom: 50px;
 }
 
-.form-login__email,
-.form-login__pass {
+.form-searcher__email,
+.form-searcher__pass {
     font-weight: 600;
     margin: 10px 0;
 }
 
-.form-login__cont-pass-inp {
+.form-searcher__cont-pass-inp {
     display: flex;
     width: 100%;
 }
 
-.form-login__email-inp,
-.form-login__pass-inp {
+.form-searcher__email-inp,
+.form-searcher__pass-inp {
     height: 35px;
     padding: 8px 10px;
-    font-size: 20px;
+    font-size: 15px;
     border: 1px solid var(--gris-oscuro);
-    
+
 }
 
-.form-login__email-inp:focus,
-.form-login__pass-inp:focus {
+.form-searcher__email-inp:focus,
+.form-searcher__pass-inp:focus {
     border: 1px solid var(--azul-oscuro);
     outline: none;
 }
 
-.form-login__pass-inp--eye {
+.form-searcher__pass-inp--eye {
     width: 88%;
 }
 
-.form-login__cont-eye {
+.form-searcher__cont-eye {
     width: 12%;
     display: flex;
     justify-content: center;
@@ -85,37 +99,18 @@
     cursor: pointer;
 }
 
-.form-login__eye {
+.form-searcher__eye {
     font-size: 20px;
 }
 
-.form-login__cont-error {
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--error);
-    background-color: var(--bg-error);
-    width: 80%;
+.form-searcher__cont-submit {
     display: flex;
     justify-content: center;
-    align-items: center;
-}
-
-.form-login__error {
-    text-align: center;
-}
-
-.form-login__cont-error--hidden {
-    display: none;
-}
-
-.form-login__cont-submit {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0 10px 0;
+    margin: 10px 0 40px 0;
     width: 100%;
 }
 
-.form-login__submit {
+.form-searcher__submit {
     width: 80%;
     height: 35px;
     font-size: 20px;
@@ -126,68 +121,68 @@
     cursor: pointer;
 }
 
-.form-login__reg {
+.form-searcher__reg {
     margin-top: 0;
     margin-bottom: 50px;
     text-align: center;
     width: 80%;
 }
 
-.form-login__reg-a {
+.form-searcher__reg-a {
     font-weight: bold;
     color: var(--azul-oscuro);
 }
 
 @media screen and (max-width: 1500px) {
-    .form-login {
+    .form-searcher {
         width: 30%;
     }
 }
 
 @media screen and (max-width: 1200px) {
-    .form-login {
+    .form-searcher {
         width: 35%;
     }
 }
 
 @media screen and (max-width: 1000px) {
-    .form-login {
+    .form-searcher {
         width: 40%;
     }
 }
 
 @media screen and (max-width: 800px) {
-    .form-login {
+    .form-searcher {
         width: 50%;
     }
 }
 
 @media screen and (max-width: 650px) {
-    .form-login {
+    .form-searcher {
         width: 60%;
     }
 }
 
 @media screen and (max-width: 450px) {
-    .form-login {
+    .form-searcher {
         width: 70%;
     }
 }
 
 @media screen and (max-height: 850px) {
-    .form-login {
+    .form-searcher {
         height: 45%;
     }
 }
 
 @media screen and (max-height: 750px) {
-    .form-login {
+    .form-searcher {
         height: 50%;
     }
 }
 
 @media screen and (max-height: 700px) {
-    .form-login {
+    .form-searcher {
         height: 55%;
     }
 }

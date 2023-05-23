@@ -2,7 +2,8 @@ package com.equipoUno.proyectoSalud.entities;
 
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.time.LocalTime;
 
@@ -10,21 +11,18 @@ import java.time.LocalTime;
 @Table(name = "professional")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@SuperBuilder
 @Data
-@EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "id")
-public class Professional extends User {
+public class Professional {
 
-    @AttributeOverrides({
-            @AttributeOverride(name = "id", column = @Column(name = "user_id")),
-            @AttributeOverride(name = "name", column = @Column(name = "name")),
-            @AttributeOverride(name = "email", column = @Column(name = "email")),
-            @AttributeOverride(name = "password", column = @Column(name = "password")),
-            @AttributeOverride(name = "rol", column = @Column(name = "rol")),
-            @AttributeOverride(name = "createdAt", column = @Column(name = "created_at"))
-    })
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "id")
+    private String id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "drop_out")
     private boolean dropOut = false;
@@ -45,4 +43,3 @@ public class Professional extends User {
     @Column(name = "qualification")
     private float qualification = 0f;
 }
-
