@@ -59,17 +59,6 @@ public class AuthController {
         return ResponseEntity.ok("Profesional asignado correctamente");
     }
 
-    @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, Model model) {
-
-        if (error != null) {
-            model.addAttribute("error", "Usuario o Contraseña invalidos");
-        }
-
-        return "login";
-
-    }
-
     @GetMapping("/user/{email}")
     public String getUserDetails(@PathVariable String email, Model model) {
         UserDetails userDetails = userService.loadUserByUsername(email);
