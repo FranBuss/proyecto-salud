@@ -1,6 +1,7 @@
 package com.equipoUno.proyectoSalud.controllers;
 
 import com.equipoUno.proyectoSalud.dto.PatientDTO;
+import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,19 +40,19 @@ public class PatientController {
     }
 
     @PostMapping(value = "/update/{id}", params = "_method=put")
-    public ResponseEntity<PatientDTO> updatePatient(@PathVariable String id, @RequestBody PatientDTO patientDTO) {
-        PatientDTO updatedPatient = patientService.updatePatient(id, patientDTO);
+    public String updatePatient(@PathVariable String id) {
+        Patient updatedPatient = patientService.updatePatient(id);
         if (updatedPatient != null) {
-            return ResponseEntity.ok(updatedPatient);
+            return "/professionals/patients";
         } else {
-            return ResponseEntity.notFound().build();
+            return "/error";
         }
     }
 
     @PostMapping(value = "/delete/{id}", params = "_method=delete")
-    public ResponseEntity<Void> deletePatient(@PathVariable String id) {
+    public String deletePatient(@PathVariable String id) {
         patientService.deletePatient(id);
-        return ResponseEntity.noContent().build();
+        return "/professionals/patients";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

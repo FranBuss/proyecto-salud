@@ -4,6 +4,7 @@ import com.equipoUno.proyectoSalud.dto.UserDTO;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
+import com.equipoUno.proyectoSalud.servicies.PatientService;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +24,9 @@ public class RouteController {
 
     @Autowired
     private ProfessionalService professionalService;
+
+    @Autowired
+    private PatientService patientService;
 
     @GetMapping("/")
     public String home() {
@@ -46,6 +50,14 @@ public class RouteController {
         List<Professional> professionals = professionalService.searchProfessionals();
         model.addAttribute("professionals", professionals);
         return "professionals";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_PROFESSIONAL')")
+    @GetMapping("/professionals/patients")
+    public String patients(Model model){
+        List<PatientDTO> patients = patientService.findAllPatients();
+        model.addAttribute("patients",patients);
+        return "patients";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
