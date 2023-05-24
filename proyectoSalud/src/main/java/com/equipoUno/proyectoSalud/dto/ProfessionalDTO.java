@@ -15,7 +15,6 @@ public class ProfessionalDTO{
     private LocalTime entryTime;
     private LocalTime exitTime;
     private float charge;
-    private float qualification;
 
     public String getSpecializationName(){
         return specialization.getDisplayName();

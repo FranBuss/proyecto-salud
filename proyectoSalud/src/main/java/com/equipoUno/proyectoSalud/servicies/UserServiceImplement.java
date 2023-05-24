@@ -81,6 +81,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     @Override
     public ProfessionalDTO assignProfessionalUser(String userId, ProfessionalDTO professionalDTO) {
         User user = userRepository.findById(userId).orElse(null);
+        assert user != null;
         if (user.getRol().toString().equals("PATIENT")){
             user.setRol(Rol.PROFESSIONAL);
             userRepository.save(user);
