@@ -1,9 +1,8 @@
 package com.equipoUno.proyectoSalud.controllers;
 
-
-import com.equipoUno.proyectoSalud.dto.PatientDTO;
-import com.equipoUno.proyectoSalud.entities.Patient;
+import com.equipoUno.proyectoSalud.dto.UserDTO;
 import com.equipoUno.proyectoSalud.entities.Professional;
+import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.servicies.PatientService;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalService;
@@ -24,18 +23,18 @@ import java.util.Map;
 public class RouteController {
 
     @Autowired
-    private  ProfessionalService professionalService;
+    private ProfessionalService professionalService;
 
     @Autowired
     private PatientService patientService;
 
     @GetMapping("/")
-    public String home(){
+    public String home() {
         return "index";
     }
 
     @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, Model model){
+    public String login(@RequestParam(required = false) String error, Model model) {
 
         if (error != null) {
             model.addAttribute("error", "Usuario o Contraseña invalidos");
@@ -47,9 +46,9 @@ public class RouteController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/admin/professionals")
-    public String professionals(Model model){
+    public String professionals(Model model) {
         List<Professional> professionals = professionalService.searchProfessionals();
-        model.addAttribute("professionals",professionals);
+        model.addAttribute("professionals", professionals);
         return "professionals";
     }
 
@@ -63,16 +62,15 @@ public class RouteController {
 
     @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
     @GetMapping("/index")
-    public String index(HttpSession session){
+    public String index(HttpSession session) {
 
-        Patient loggedPatient = (Patient) session.getAttribute("patientSession");
+        User loggedUser = (User) session.getAttribute("userSession");
 
-
-        if (loggedPatient.getRol().toString().equals("ADMIN")){
+        if (loggedUser.getRol().toString().equals("ADMIN")) {
             return "redirect:api/admin/dashboard";
         }
 
-        if (loggedPatient.getRol().toString().equals("PROFESSIONAL")){
+        if (loggedUser.getRol().toString().equals("PROFESSIONAL")) {
             return "redirect:api/professional/index";
         }
 
@@ -81,22 +79,31 @@ public class RouteController {
     }
 
     @GetMapping("/register")
-    public String register(Model model){
-        PatientDTO patientDTO = new PatientDTO();
-        model.addAttribute("patientDTO", patientDTO);
+    public String register(Model model) {
+        UserDTO userDTO = new UserDTO();
+        model.addAttribute("userDTO", userDTO);
         return "register";
     }
 
     @GetMapping("/searcher")
-    public String searcher(Model model,  @RequestParam Map<String, String> queryParams){
+    public String searcher(Model model, @RequestParam Map<String, String> queryParams) {
         Specialization[] specializations = Specialization.values();
-        model.addAttribute("specializations",specializations);
-        if(!queryParams.isEmpty()){
+        model.addAttribute("specializations", specializations);
+        if (!queryParams.isEmpty()) {
             String specialization = queryParams.get("specialization").toString();
             List<Professional> professionals = professionalService.searchProfessionalsBySpecialization(specialization);
-            model.addAttribute("professionals",professionals);
+            model.addAttribute("professionals", professionals);
         }
         return "searcher";
     }
 
+    @GetMapping("/patient/appointments")
+    public String adminAppointments() {
+        return "appointments";
+    }
+
+    @GetMapping("/patient/getAppointment")
+    public String getAppointments() {
+        return "getAppointment";
+    }
 }

@@ -1,13 +1,11 @@
 package com.equipoUno.proyectoSalud.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "appointments")
@@ -35,8 +33,8 @@ public class Appointment {
     @Column(name = "appointment")
     private LocalDateTime appointment;
 
-    //@Temporal(TemporalType.TIMESTAMP)
-    //private Date alta;
+    // @Temporal(TemporalType.TIMESTAMP)
+    // private Date alta;
 
     @Column(name = "duration")
     private int duration = 30;
@@ -46,7 +44,5 @@ public class Appointment {
 
     @Column(name = "comments")
     private String comments;
-
-
 
 }

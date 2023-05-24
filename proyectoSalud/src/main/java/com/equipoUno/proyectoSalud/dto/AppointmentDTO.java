@@ -3,7 +3,6 @@ package com.equipoUno.proyectoSalud.dto;
 import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +19,5 @@ public class AppointmentDTO {
     private int duration;
     private String state;
     private String comments;
-
-
 
 }

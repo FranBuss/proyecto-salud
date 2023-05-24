@@ -26,25 +26,20 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class PatientServiceImplement implements PatientService, UserDetailsService {
+public class PatientServiceImplement implements PatientService {
 
     private final PatientRepository patientRepository;
     private final ModelMapper modelMapper;
 
-    private final PasswordEncoder passwordEncoder;
     @Autowired
-    public PatientServiceImplement(PatientRepository patientRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public PatientServiceImplement(PatientRepository patientRepository, ModelMapper modelMapper) {
         this.patientRepository = patientRepository;
         this.modelMapper = modelMapper;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public PatientDTO createPatient(PatientDTO dto) {
         Patient patient = modelMapper.map(dto, Patient.class);
-        patient.setRol(Rol.PATIENT);
-        patient.setEmail(dto.getEmail().concat(dto.getEmailSuffix()));
-        patient.setPassword(passwordEncoder.encode(dto.getPassword()));
         patient = patientRepository.save(patient);
         return modelMapper.map(patient, PatientDTO.class);
     }
@@ -74,29 +69,6 @@ public class PatientServiceImplement implements PatientService, UserDetailsServi
         patientRepository.deleteById(id);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Patient patient = patientRepository.findByEmail(email);
-
-        if (patient != null){
-            List<GrantedAuthority> auths = new ArrayList();
-
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + patient.getRol().toString());
-
-            auths.add(p);
-
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-
-            HttpSession session = attr.getRequest().getSession(true);
-
-            session.setAttribute("patientSession", patient);
-
-            return new User(patient.getEmail(), patient.getPassword(), auths);
-        } else {
-            return null;
-        }
-
-    }
 
     @Override
     public List<PatientDTO> findAllPatients(){
@@ -104,29 +76,6 @@ public class PatientServiceImplement implements PatientService, UserDetailsServi
         return patients.stream().map(patient -> modelMapper.map(patient, PatientDTO.class))
                 .collect(Collectors.toList());
     }
-
-//    private PatientDTO converToDTO(Patient patient){
-//        return modelMapper.map(patient, PatientDTO.class);
-//    }
-
-//    private void setPatientSessionAttribute(PatientDTO patientDTO){
-//        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-//        HttpSession session = attr.getRequest().getSession(true);
-//        session.setAttribute("patientSession", patientDTO);
-//    }
-
-//    private UserDetails buildUserDetails(PatientDTO patientDTO){
-//        List<SimpleGrantedAuthority> authorities = patientDTO.getRol()
-//                .stream()
-//                .map(SimpleGrantedAuthority::new)
-//                .collect(Collectors.toList());
-//
-//        return User.withUsername(patientDTO.getEmail()) //si no funciona intentar .getUsername()
-//                .password(patientDTO.getPassword())
-//                .authorities(authorities)
-//                .build();
-//
-//    }
 
 
 
