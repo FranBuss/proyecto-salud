@@ -2,7 +2,6 @@ package com.equipoUno.proyectoSalud.entities;
 
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,7 +12,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Professional{
+public class Professional {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -44,4 +43,3 @@ public class Professional{
     @Column(name = "qualification")
     private float qualification = 0f;
 }
-

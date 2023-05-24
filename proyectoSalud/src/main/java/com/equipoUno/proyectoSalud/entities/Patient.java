@@ -2,18 +2,16 @@ package com.equipoUno.proyectoSalud.entities;
 
 import com.equipoUno.proyectoSalud.enumerations.HealthInsurance;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-
 
 @Entity
 @Table(name = "patient")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Patient{
+public class Patient {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -31,6 +29,5 @@ public class Patient{
 
     @Column(name = "contact")
     private String contact;
-
 
 }
