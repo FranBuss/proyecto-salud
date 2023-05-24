@@ -15,7 +15,7 @@ public interface ProfessionalService {
 
     ProfessionalDTO createProfessional(ProfessionalDTO dto);
 
-    ProfessionalDTO updateProfessional(String id, ProfessionalDTO dto);
+    Professional updateProfessional(String id);
 
     void deleteProfessional(String id);
 

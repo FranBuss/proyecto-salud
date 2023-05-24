@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="cont-form">
-        <form action="/api/auth/register" method="POST" th:object="${patientDTO}" class="form-register">
+        <form action="/api/auth/register" method="POST" th:object="${userDTO}" class="form-register">
             <p class="form-register__ini">REGISTRO</p>
             <div class="form-register__cont-inp">
                 <div class="form-register__cont-name">
@@ -33,22 +33,22 @@
                         </select>
                     </div> 
                 </div>
-                <div class="form-register__cont-insurance">
-                    <p class="form-register__insurance">Obra Social</p>
-                    <select th:field="*{healthInsurance}" name="obra_social" class="form-register__insurance-select">
-                        <option value="OSDE">Osde</option>
-                        <option value="IOMA">Ioma</option>
-                        <option value="PAMI">Pami</option>
-                        <option value="OSPATCA">Ospatca</option>
-                        <option value="SWISS_MEDICAL">Swiss Medical</option>
-                        <option value="AVALIAN">Avalian</option>
-                        <option value="NONE">No tengo</option>
-                    </select>
-                </div>
-                <div class="form-register__cont-contact">
-                    <p class="form-register__contact">Contacto</p>
-                    <input type="text" th:field="*{contact}" name="telefono" class="form-register__contact-inp">
-                </div>
+<!--                <div class="form-register__cont-insurance">-->
+<!--                    <p class="form-register__insurance">Obra Social</p>-->
+<!--                    <select th:field="*{healthInsurance}" name="obra_social" class="form-register__insurance-select">-->
+<!--                        <option value="OSDE">Osde</option>-->
+<!--                        <option value="IOMA">Ioma</option>-->
+<!--                        <option value="PAMI">Pami</option>-->
+<!--                        <option value="OSPATCA">Ospatca</option>-->
+<!--                        <option value="SWISS_MEDICAL">Swiss Medical</option>-->
+<!--                        <option value="AVALIAN">Avalian</option>-->
+<!--                        <option value="NONE">No tengo</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="form-register__cont-contact">-->
+<!--                    <p class="form-register__contact">Contacto</p>-->
+<!--                    <input type="text" th:field="*{contact}" name="telefono" class="form-register__contact-inp">-->
+<!--                </div>-->
                 <div class="form-register__cont-pass">
                     <p class="form-register__pass">Contraseña</p>
                     <div class="form-register__cont-pass-inp">

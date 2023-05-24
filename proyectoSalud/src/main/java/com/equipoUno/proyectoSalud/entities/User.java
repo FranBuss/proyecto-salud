@@ -12,15 +12,16 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @SuperBuilder
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     @Id
@@ -47,6 +48,12 @@ public class User {
 
     @OneToOne
     protected Image image;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Patient> patients;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Professional> professionals;
 
     @Column(name="created_at")
     protected LocalDateTime createdAt = LocalDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));

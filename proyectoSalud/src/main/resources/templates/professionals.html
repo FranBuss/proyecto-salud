@@ -40,35 +40,36 @@
           <th class="table__thead-col">Eliminar</th>
         </tr>
         </thead>
+
         <tbody class="table__tbody" >
-        <tr th:each="professional : ${professionals}" class="table__tbody-row">
-          <td th:text="${professional.name}" class="table__tbody-col"></td>
-          <td th:text="${professional.email}" class="table__tbody-col"></td>
-          <td th:text="${professional.entryTime}" class="table__tbody-col"></td>
-          <td th:text="${professional.exitTime}" class="table__tbody-col"></td>
-          <td th:text="${professional.charge}" class="table__tbody-col"></td>
-          <td th:text="${professional.qualification}" class="table__tbody-col"></td>
-          <td>
-            <a th:href="@{/admin/update/__${professional.id}__}" class="btn btn-info">Modificar</a>
-          </td>
-          <td>
-            <a th:href="@{/api/professionals/__${professional.id}__}" class="btn btn-danger">Eliminar</a>
-          </td>
-        </tr>
-        <tr class="table__tbody-row">
-          <td class="table__tbody-col">data</td>
-          <td class="table__tbody-col">data</td>
-          <td class="table__tbody-col">data</td>
-          <td class="table__tbody-col">data</td>
-          <td class="table__tbody-col">data</td>
-          <td class="table__tbody-col">data</td>
-          <td>
-            <a class="btn btn-info">Modificar</a>
-          </td>
-          <td>
-            <a class="btn btn-danger">Eliminar</a>
-          </td>
-        </tr>
+          <tr th:each="professional : ${professionals}" class="table__tbody-row">
+            <td th:text="${professional.name}" class="table__tbody-col"></td>
+            <td th:text="${professional.email}" class="table__tbody-col"></td>
+            <td th:text="${professional.entryTime}" class="table__tbody-col"></td>
+            <td th:text="${professional.exitTime}" class="table__tbody-col"></td>
+            <td th:text="${professional.charge}" class="table__tbody-col"></td>
+            <td th:text="${professional.qualification}" class="table__tbody-col"></td>
+            <td>
+              <a th:href="@{/admin/update/__${professional.id}__}" class="btn btn-info">Modificar</a>
+            </td>
+            <td>
+              <a th:href="@{/api/professionals/__${professional.id}__}" class="btn btn-danger">Eliminar</a>
+            </td>
+          </tr>
+          <tr class="table__tbody-row">
+            <td class="table__tbody-col">data</td>
+            <td class="table__tbody-col">data</td>
+            <td class="table__tbody-col">data</td>
+            <td class="table__tbody-col">data</td>
+            <td class="table__tbody-col">data</td>
+            <td class="table__tbody-col">data</td>
+            <td>
+              <a class="btn btn-info">Modificar</a>
+            </td>
+            <td>
+              <a class="btn btn-danger">Eliminar</a>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
