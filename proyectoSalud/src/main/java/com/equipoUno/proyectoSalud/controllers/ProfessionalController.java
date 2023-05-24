@@ -52,25 +52,24 @@ public class ProfessionalController {
     }
 
     //Update a Professional
-    @PostMapping(value = "/update/{id}", params = "_method=put")
-    public ResponseEntity<ProfessionalDTO> update(@RequestBody @PathVariable String id, ProfessionalDTO professionalDTO) {
-        ProfessionalDTO professionalUpdate = professionalService.updateProfessional(id, professionalDTO);
+    @PostMapping(value = ("/update/{id}"), params = "_method=put")
+    public String update(@RequestBody @PathVariable String id) {
+        Professional professionalUpdate = professionalService.updateProfessional(id);
         if (professionalUpdate != null) {
-            return ResponseEntity.ok(professionalUpdate);
+            return "/admin/professionals";
         } else {
-            return ResponseEntity.notFound().build();
+            return "/error";
         }
     }
 
-    //Delete a Professional
     @PostMapping(value = ("/delete/{id}"), params = "_method=delete")
-    public ResponseEntity<Void> delete(@RequestBody @PathVariable String id) {
+    public String delete(@RequestBody @PathVariable String id) {
         professionalService.deleteProfessional(id);
-        return ResponseEntity.noContent().build();
+        return "/admin/professionals";
     }
 
-    @PostMapping(value = ("/updateDropOut/{id}"), params = "_method=put")
-    public ResponseEntity<ProfessionalDTO> updateDropOut(@PathVariable String id, ProfessionalDTO professionalDTO) {
+    @PostMapping(value = "/updateDropOut/{id}", params = "_method=put")
+    public ResponseEntity<ProfessionalDTO> updateDropOut(@PathVariable String id) {
         ProfessionalDTO professionalUpdate = professionalService.updateDropOut(id);
         if (professionalUpdate != null) {
             return ResponseEntity.ok(professionalUpdate);

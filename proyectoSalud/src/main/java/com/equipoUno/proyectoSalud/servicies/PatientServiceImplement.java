@@ -60,14 +60,11 @@ public class PatientServiceImplement implements PatientService, UserDetailsServi
     }
 
     @Override
-    public PatientDTO updatePatient(String id, PatientDTO dto) {
+    public Patient updatePatient(String id) {
         Optional<Patient> optionalPatient = patientRepository.findById(id);
         if (optionalPatient.isPresent()) {
-            Patient patient = optionalPatient.get();
-            patient.setHealthInsurance(dto.getHealthInsurance());
-            patient.setContact(dto.getContact());
-            patient = patientRepository.save(patient);
-            return modelMapper.map(patient, PatientDTO.class);
+            Patient patient = patientRepository.save(optionalPatient.get());
+            return patient;
         }
         return null;
     }
