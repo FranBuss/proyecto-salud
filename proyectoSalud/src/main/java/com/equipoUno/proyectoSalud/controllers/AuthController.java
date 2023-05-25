@@ -28,11 +28,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@Validated @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult,
-            Model model) {
+    public String register(@Validated @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
+            model.addAttribute("errors", bindingResult.getAllErrors());
             return "register";
         }
 
@@ -57,30 +57,6 @@ public class AuthController {
     public ResponseEntity<String> assignProfessionalUser(@PathVariable String userId, @RequestBody ProfessionalDTO professionalDTO) {
         userService.assignProfessionalUser(userId, professionalDTO);
         return ResponseEntity.ok("Profesional asignado correctamente");
-    }
-
-    @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, Model model) {
-
-        if (error != null) {
-            model.addAttribute("error", "Usuario o Contraseña invalidos");
-        }
-
-        return "login";
-
-    }
-
-    @GetMapping("/user/{email}")
-    public String getUserDetails(@PathVariable String email, Model model) {
-        UserDetails userDetails = userService.loadUserByUsername(email);
-
-        if (userDetails == null) {
-            return "error-page";
-        }
-
-        model.addAttribute("userDetails", userDetails);
-
-        return "user-details";
     }
 
 }
