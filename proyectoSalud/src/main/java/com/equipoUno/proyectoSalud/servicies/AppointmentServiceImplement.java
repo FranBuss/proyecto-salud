@@ -3,6 +3,7 @@ package com.equipoUno.proyectoSalud.servicies;
 import com.equipoUno.proyectoSalud.dto.AppointmentDTO;
 
 import com.equipoUno.proyectoSalud.entities.Appointment;
+import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.repositories.AppointmentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class AppointmentServiceImplement implements AppointmentService{
         this.appointmentRepository = appointmentRepository;
     }
 
-    public AppointmentDTO addAppointment(AppointmentDTO dto) {
+    public AppointmentDTO addAppointment(AppointmentDTO dto) throws MiException{
 
         List<LocalDateTime> availableAppointments = generateAppointments(dto);
 
@@ -36,7 +37,8 @@ public class AppointmentServiceImplement implements AppointmentService{
             appointmentRepository.save(appointment);
             return modelMapper.map(appointment, AppointmentDTO.class);
         } else {
-            return null; // Mensaje de que no esta disponible ese dia u horario
+            throw new MiException("El turno no esta disponible");
+
         }
     }
 
@@ -71,18 +73,18 @@ public class AppointmentServiceImplement implements AppointmentService{
 
 
 
-    public List<AppointmentDTO> occupiedAppointment(){
+    public List<AppointmentDTO> occupiedAppointmentsDTO(){
 
         List<Appointment> allAppointments = appointmentRepository.findAll();
-        List<AppointmentDTO> ocuppiedAppointmentsDTO = new ArrayList<>();
+        List<AppointmentDTO> occupiedAppointmentsDTO = new ArrayList<>();
 
         for (Appointment appointment : allAppointments){
             if(appointment.getState().equals("ocupado")) {
                 AppointmentDTO appointmentDTO = modelMapper.map(appointment, AppointmentDTO.class);
-                ocuppiedAppointmentsDTO.add(appointmentDTO);
+                occupiedAppointmentsDTO.add(appointmentDTO);
             }
         }
-        return occupiedAppointment();
+        return occupiedAppointmentsDTO;
     }
 
 
@@ -90,6 +92,20 @@ public class AppointmentServiceImplement implements AppointmentService{
         appointmentRepository.deleteById(id);
     }
 
+
+    public AppointmentDTO updateAppointmentDate(AppointmentDTO dto, LocalDateTime newTime) throws MiException {
+        List<LocalDateTime> availableAppointments = generateAppointments(dto);
+
+        if (availableAppointments.contains(newTime)) {
+            Appointment appointment = appointmentRepository.findById(dto.getId())
+                    .orElseThrow(()->new MiException("No se encontró el turno"));
+            appointment.setAppointment(newTime);
+            appointmentRepository.save(appointment);
+            return modelMapper.map(appointment, AppointmentDTO.class);
+        } else {
+            throw new MiException("El nuevo horario no está disponible");
+        }
+    }
 
 
     /*

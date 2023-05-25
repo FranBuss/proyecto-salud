@@ -37,6 +37,7 @@ public class AuthController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
+            model.addAttribute("errors", bindingResult.getAllErrors());
             return "register";
         }
 
@@ -72,19 +73,6 @@ public class AuthController {
     public ResponseEntity<String> assignProfessionalUser(@PathVariable String userId, @RequestBody ProfessionalDTO professionalDTO) {
         userService.assignProfessionalUser(userId, professionalDTO);
         return ResponseEntity.ok("Profesional asignado correctamente");
-    }
-
-    @GetMapping("/user/{email}")
-    public String getUserDetails(@PathVariable String email, Model model) {
-        UserDetails userDetails = userService.loadUserByUsername(email);
-
-        if (userDetails == null) {
-            return "error-page";
-        }
-
-        model.addAttribute("userDetails", userDetails);
-
-        return "user-details";
     }
 
 }
