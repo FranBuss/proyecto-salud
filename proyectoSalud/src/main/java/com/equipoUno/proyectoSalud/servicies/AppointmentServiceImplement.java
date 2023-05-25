@@ -47,7 +47,7 @@ public class AppointmentServiceImplement implements AppointmentService{
         LocalDateTime endDateTime = LocalDateTime.of(LocalDate.now(), dto.getProfessional().getExitTime());
 
         while(currentDateTime.isBefore(endDateTime)) {
-            if(isAppointmentAvailable(dto){
+            if(isAppointmentAvailable(dto)){
                 appointments.add(currentDateTime);
             }
             currentDateTime = currentDateTime.plusMinutes(30);

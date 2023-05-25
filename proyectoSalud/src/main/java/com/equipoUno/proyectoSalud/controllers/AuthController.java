@@ -27,6 +27,11 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @GetMapping("/register")
+    public String registerUser(){
+        return "register";
+    }
+
     @PostMapping("/register")
     public String register(@Validated @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
 
@@ -43,6 +48,17 @@ public class AuthController {
             model.addAttribute("userDTO", userDTO);
             return "register";
         }
+
+    }
+
+    @GetMapping("/login")
+    public String login(@RequestParam(required = false) String error, Model model) {
+
+        if (error != null) {
+            model.addAttribute("error", "Usuario o Contraseña invalidos");
+        }
+
+        return "login";
 
     }
 
