@@ -69,25 +69,22 @@ public class ProfessionalServiceImplement implements ProfessionalService{
     }
 
     @Override
-    public ProfessionalDTO updateProfessional(String id,ProfessionalDTO dto) {
+    public Professional updateProfessional(String id){
         Optional<Professional> professionalInfo = professionalRepository.findById(id);
         if (professionalInfo.isPresent()) {
-            Professional professional = professionalInfo.get();
-            professional.setEntryTime(dto.getEntryTime());
-            professional.setExitTime(dto.getExitTime());
-            professional = professionalRepository.save(professional);
-            return modelMapper.map(professional, ProfessionalDTO.class);
+            Professional professional = professionalRepository.save(professionalInfo.get());
+            return professional;
         }
         return null;
     }
 
     @Override
-    public void deleteProfessional(String id) {
+    public void deleteProfessional(String id) throws MiException {
         professionalRepository.deleteById(id);
     }
 
     @Override
-    public ProfessionalDTO updateDropOut(String id) {
+    public ProfessionalDTO updateDropOut(String id) throws MiException {
         Optional<Professional> professionalInfo = professionalRepository.findById(id);
         if (professionalInfo.isPresent()) {
             Professional professional = professionalInfo.get();

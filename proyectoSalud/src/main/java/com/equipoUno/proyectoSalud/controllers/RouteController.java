@@ -1,15 +1,19 @@
 package com.equipoUno.proyectoSalud.controllers;
 
+import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.dto.UserDTO;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
-import com.equipoUno.proyectoSalud.servicies.ProfessionalService;
+import com.equipoUno.proyectoSalud.exceptions.MiException;
+import com.equipoUno.proyectoSalud.servicies.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,8 +25,17 @@ import java.util.Map;
 @RequestMapping("/")
 public class RouteController {
 
+    private final UserServiceImplement userService;
+    private final PatientServiceImplement patientService;
+    private final ProfessionalServiceImplement professionalService;
+
     @Autowired
-    private ProfessionalService professionalService;
+    public RouteController(UserServiceImplement userService, PatientServiceImplement patientService, ProfessionalServiceImplement professionalService){
+        this.userService = userService;
+        this.patientService = patientService;
+        this.professionalService = professionalService;
+    }
+
 
     @GetMapping("/")
     public String home() {
@@ -46,6 +59,14 @@ public class RouteController {
         List<Professional> professionals = professionalService.searchProfessionals();
         model.addAttribute("professionals", professionals);
         return "professionals";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_PROFESSIONAL')")
+    @GetMapping("/professionals/patients")
+    public String patients(Model model){
+        List<PatientDTO> patients = patientService.findAllPatients();
+        model.addAttribute("patients",patients);
+        return "patients";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
@@ -74,7 +95,7 @@ public class RouteController {
     }
 
     @GetMapping("/searcher")
-    public String searcher(Model model, @RequestParam Map<String, String> queryParams) {
+    public String searcher(Model model, @RequestParam Map<String, String> queryParams) throws MiException {
         Specialization[] specializations = Specialization.values();
         model.addAttribute("specializations", specializations);
         if (!queryParams.isEmpty()) {
@@ -83,6 +104,19 @@ public class RouteController {
             model.addAttribute("professionals", professionals);
         }
         return "searcher";
+    }
+
+    @GetMapping("/user/{email}")
+    public String getUserDetails(@PathVariable String email, Model model) {
+        UserDetails userDetails = userService.loadUserByUsername(email);
+
+        if (userDetails == null) {
+            return "error-page";
+        }
+
+        model.addAttribute("userDetails", userDetails);
+
+        return "user-details";
     }
 
     @GetMapping("/patient/appointments")
