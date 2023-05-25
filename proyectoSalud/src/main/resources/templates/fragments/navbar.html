@@ -1,4 +1,4 @@
-<nav th:fragment="navbar" class="navbar navbar-expand-lg" aria-label="Thirteenth navbar example">
+<!-- <nav th:fragment="navbar" class="navbar navbar-expand-lg" aria-label="Thirteenth navbar example">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
             aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,8 +39,49 @@
                         <li><a class="dropdown-item" href="#">Another action</a></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
-                </li> -->
+                </li>
             </ul>
         </div>
+    </div>
+</nav> -->
+<nav th:fragment="navbar" class="navbar2">
+    <div class="navbar__cont-title">
+        <a href="#" class="navbar__title">ProyectoSalud</a>
+    </div>
+    <div class="navbar__links">
+        <a href="/" class="navbar__link">Inicio</a>
+        <a href="/searcher" class="navbar__link">Buscador</a>
+        <a href="/login" class="navbar__link">Login</a>
+        <a href="/register" class="navbar__link">Register</a>
+    </div>
+    <div class="navbar__cont-dropdown">
+        <ul class="navbar__dropdown-fs-ul">
+            <li class="nav-item dropdown navbar__dropdown-fs-li">
+                <a class="nav-link dropdown-toggle fs-4 navbar__dropdown-title" href="#" data-bs-toggle="dropdown"
+                    aria-expanded="false">Nicolas</a>
+                <!-- <a th:text="${session.userSession.name}" class="nav-link dropdown-toggle fs-4 navbar__dropdown-title" href="#" data-bs-toggle="dropdown"
+                    aria-expanded="false"></a> -->
+                <ul class="dropdown-menu navbar__dropdown-sd-ul">
+                    <li class="navbar__dropdown-sd-li"><a href="/patient/appointments" class="dropdown-item navbar__dropdown-sd-link">Administrar turnos</a></li>
+                    <li class="navbar__dropdown-sd-li"><a href="#" class="dropdown-item navbar__dropdown-sd-link">Administrar cuenta</a></li>
+                    <li class="navbar__dropdown-sd-li"><a href="#" class="dropdown-item navbar__dropdown-sd-link navbar__dropdown-sd-link--hover">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- <div class="navbar__useradmin">
+            <a href="" class="navbar__useradmin-title">Dropdown</a>
+            <i class="fa-solid fa-circle-chevron-down navbar__useradmin-icon"></i>
+        </div>
+        <ul class="navbar__dropdown navbar__dropdown--active">
+            <li class="navbar__dropdown-row">
+                <a href="/patient/appointments" class="navbar__dropdown-link">Administrar turnos</a>
+            </li>
+            <li class="navbar__dropdown-row">
+                <a href="" class="navbar__dropdown-link">Administrar cuenta</a>
+            </li>
+            <li class="navbar__dropdown-row">
+                <a href="" class="navbar__dropdown-link navbar__dropdown-link--hover">Logout</a>
+            </li>
+        </ul> -->
     </div>
 </nav>
