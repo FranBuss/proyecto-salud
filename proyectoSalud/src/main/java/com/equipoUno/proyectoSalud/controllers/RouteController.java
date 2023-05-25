@@ -4,6 +4,7 @@ import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.dto.UserDTO;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
+import com.equipoUno.proyectoSalud.enumerations.EmailDomain;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.servicies.PatientService;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalService;
@@ -83,6 +84,7 @@ public class RouteController {
     public String register(Model model) {
         UserDTO userDTO = new UserDTO();
         model.addAttribute("userDTO", userDTO);
+        model.addAttribute("emailDomain", EmailDomain.values());
         return "register";
     }
 
