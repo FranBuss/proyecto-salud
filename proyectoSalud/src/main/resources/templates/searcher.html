@@ -45,7 +45,7 @@
             </thead>
             <tbody class="table__tbody">
                 <tr th:each="professional : ${professionals}" class="table__tbody-row">
-                    <td th:text="${professional.name}" class="table__tbody-col"></td>
+                    <td th:text="${professional.user.name}" class="table__tbody-col"></td>
                     <td th:text="${professional.charge}" class="table__tbody-col"></td>
                     <td th:text="${professional.entryTime}" class="table__tbody-col"></td>
                     <td th:text="${professional.exitTime}" class="table__tbody-col"></td>
