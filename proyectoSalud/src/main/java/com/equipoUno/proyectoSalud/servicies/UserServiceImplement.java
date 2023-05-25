@@ -50,7 +50,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     public UserDTO registerUser(UserDTO userDTO){
         User user = modelMapper.map(userDTO, User.class);
         user.setRol(Rol.PATIENT);
-        user.setEmail(userDTO.getEmail().concat(userDTO.getEmailSuffix()));
+        user.setEmail(userDTO.getEmail().concat(userDTO.getEmailSuffix().toString()));
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDTO.class);
