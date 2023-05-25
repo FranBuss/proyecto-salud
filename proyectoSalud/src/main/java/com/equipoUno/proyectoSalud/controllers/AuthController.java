@@ -28,8 +28,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@Validated @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult,
-            Model model) {
+    public String register(@Validated @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
