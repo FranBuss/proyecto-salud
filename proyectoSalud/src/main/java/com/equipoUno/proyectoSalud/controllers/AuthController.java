@@ -32,6 +32,7 @@ public class AuthController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
+            model.addAttribute("errors", bindingResult.getAllErrors());
             return "register";
         }
 
