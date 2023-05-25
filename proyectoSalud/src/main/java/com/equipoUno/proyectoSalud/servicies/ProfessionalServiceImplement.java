@@ -69,7 +69,7 @@ public class ProfessionalServiceImplement implements ProfessionalService{
     }
 
     @Override
-    public Professional updateProfessional(String id) {
+    public Professional updateProfessional(String id){
         Optional<Professional> professionalInfo = professionalRepository.findById(id);
         if (professionalInfo.isPresent()) {
             Professional professional = professionalRepository.save(professionalInfo.get());
@@ -79,12 +79,12 @@ public class ProfessionalServiceImplement implements ProfessionalService{
     }
 
     @Override
-    public void deleteProfessional(String id) {
+    public void deleteProfessional(String id) throws MiException {
         professionalRepository.deleteById(id);
     }
 
     @Override
-    public ProfessionalDTO updateDropOut(String id) {
+    public ProfessionalDTO updateDropOut(String id) throws MiException {
         Optional<Professional> professionalInfo = professionalRepository.findById(id);
         if (professionalInfo.isPresent()) {
             Professional professional = professionalInfo.get();

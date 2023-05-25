@@ -59,17 +59,4 @@ public class AuthController {
         return ResponseEntity.ok("Profesional asignado correctamente");
     }
 
-    @GetMapping("/user/{email}")
-    public String getUserDetails(@PathVariable String email, Model model) {
-        UserDetails userDetails = userService.loadUserByUsername(email);
-
-        if (userDetails == null) {
-            return "error-page";
-        }
-
-        model.addAttribute("userDetails", userDetails);
-
-        return "user-details";
-    }
-
 }
