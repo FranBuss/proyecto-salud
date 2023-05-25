@@ -16,6 +16,7 @@ import java.util.Set;
 @Builder
 public class AppointmentDTO {
 
+    protected String id;
     private Patient patient;
     private Professional professional;
     private LocalDateTime appointment;
