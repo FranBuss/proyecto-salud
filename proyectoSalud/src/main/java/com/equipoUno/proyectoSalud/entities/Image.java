@@ -1,10 +1,16 @@
 package com.equipoUno.proyectoSalud.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "images")
 public class Image {
 
@@ -12,47 +18,17 @@ public class Image {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    private String mime;
+
+    @Column(name = "content_type")
+    private String contentType;
     private String name;
 
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
+    @Size(max = 5 * 1024 * 1024) //Maximo 5MB
     private byte[] content;
 
-    public Image() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getMime() {
-        return mime;
-    }
-
-    public void setMime(String mime) {
-        this.mime = mime;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String nombre) {
-        this.name = name;
-    }
-
-    public byte[] getContent() {
-        return content;
-    }
-
-    public void setContent(byte[] content) {
-        this.content = content;
-    }
+    public Image(){}
 
 }

@@ -58,5 +58,4 @@ public class User {
     @Column(name="created_at")
     protected LocalDateTime createdAt = LocalDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
 
-
 }
