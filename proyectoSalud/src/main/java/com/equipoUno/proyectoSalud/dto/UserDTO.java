@@ -1,9 +1,11 @@
 package com.equipoUno.proyectoSalud.dto;
 
+import com.equipoUno.proyectoSalud.entities.Image;
 import com.equipoUno.proyectoSalud.enumerations.EmailDomain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -35,6 +37,8 @@ public class UserDTO {
     private String password;
 
     private String confpassword;
+
+    private MultipartFile imageFile;
 
     @AssertTrue(message = "Las contraseñas no coinciden.")
     public boolean isPasswordConfirmed(){

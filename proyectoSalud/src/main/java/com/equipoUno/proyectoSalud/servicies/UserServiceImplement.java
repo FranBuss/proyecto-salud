@@ -3,6 +3,7 @@ package com.equipoUno.proyectoSalud.servicies;
 import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
 import com.equipoUno.proyectoSalud.dto.UserDTO;
+import com.equipoUno.proyectoSalud.entities.Image;
 import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
@@ -22,8 +23,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,14 +39,16 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     private final ProfessionalRepository professionalRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final ImageServiceImplement imageServiceImplement;
 
     @Autowired
-    public UserServiceImplement(ProfessionalRepository professionalRepository, PatientRepository patientRepository, UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder){
+    public UserServiceImplement(ProfessionalRepository professionalRepository, PatientRepository patientRepository, UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, ImageServiceImplement imageServiceImplement){
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.professionalRepository = professionalRepository;
         this.patientRepository = patientRepository;
+        this.imageServiceImplement = imageServiceImplement;
     }
 
     @Override
@@ -52,8 +57,18 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         user.setRol(Rol.PATIENT);
         user.setEmail(userDTO.getEmail().concat(userDTO.getEmailSuffix().getValue()));
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        MultipartFile imageFile = userDTO.getImageFile();
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                Image image = imageServiceImplement.save(imageFile);
+                user.setImage(image);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDTO.class);
+
     }
 
     @Override
@@ -62,6 +77,19 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         if (optionalUser.isPresent()){
             User user = optionalUser.get();
             modelMapper.map(userDTO, user);
+
+            MultipartFile imageFile = userDTO.getImageFile();
+            Image image = user.getImage();
+            if(image != null){
+                String imageId = image.getId();
+                try {
+                    Image updatedImage = imageServiceImplement.update(imageFile, imageId);
+                    user.setImage(updatedImage);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
             User updateUser = userRepository.save(user);
             return modelMapper.map(updateUser, UserDTO.class);
         } else {
