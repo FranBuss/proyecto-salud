@@ -1,87 +1,60 @@
-<!-- <nav th:fragment="navbar" class="navbar navbar-expand-lg" aria-label="Thirteenth navbar example">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
-            aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
-            <a class="navbar-brand col-lg-3 me-0 fs-3" href="/">ProyectoSalud</a>
-            <ul class="navbar-nav col-lg-6 justify-content-lg-center">
-                <li class="nav-item">
-                    <a class="nav-link active fs-4" aria-current="page" href="/">Home</a>
+<nav th:fragment="navbar" class="navbar2">
+    <div class="navbar__cont-fs">
+        <div class="navbar__cont-icon">
+            <i id="navbar__icon" class="fa-solid fa-bars navbar__icon"></i>
+        </div>
+        <div class="navbar__cont-title">
+            <a href="/" class="navbar__title">ProyectoSalud</a>
+        </div>
+    </div>
+    <div id="navbar__cont-sd" class="navbar__cont-sd">
+        <div id="navbar__links" class="navbar__links navbar--active">
+            <a href="/" class="navbar__link">Inicio</a>
+            <a href="/searcher" class="navbar__link">Buscador</a>
+            <a th:if="${session.userSession == null}" href="/login" class="navbar__link">Login</a>
+            <a th:if="${session.userSession == null}" href="/register" class="navbar__link">Registro</a>
+        </div>
+        <div id="navbar__cont-dropdown" class="navbar__cont-dropdown navbar--active">
+            <div class="navbar__useradmin">
+                <a th:if="${session.userSession == null}" id="navbar__useradmin-title" class="navbar__useradmin-title">Bienvenido Usuario</a>
+                <a th:if="${session.userSession != null}" th:text="${'Bienvenido/a ' + session.userSession.name}" id="navbar__useradmin-title" class="navbar__useradmin-title"></a>
+                <i id="navbar__useradmin-icon" class="fa-solid fa-circle-chevron-down navbar__useradmin-icon"></i>
+            </div>
+            <ul id="navbar__dropdown" class="navbar__dropdown--d-none">
+                <li class="navbar__dropdown-row">
+                    <a href="/patient/appointments" class="navbar__dropdown-link">Administrar turnos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link fs-4" th:if="${session.userSession == null}" href="/login">Ingresar</a>
+                <li class="navbar__dropdown-row">
+                    <a href="" class="navbar__dropdown-link">Administrar cuenta</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link fs-4" th:if="${session.userSession == null}" href="/register">Registrarse</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fs-4" th:if="${session.userSession != null}" href="/logout">Logout</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fs-4" href="/searcher">Buscador</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fs-4" href="/patient/appointments">Turnos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fs-4" href="/admin/dashboard">Dashboard</a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link disabled fs-4">Disabled</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle fs-4" href="#" data-bs-toggle="dropdown"
-                        aria-expanded="false">Dropdown</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                <li th:if="${session.userSession != null}" class="navbar__dropdown-row">
+                    <a href="/logout" class="navbar__dropdown-link navbar__dropdown-link--hover">Logout</a>
                 </li>
             </ul>
         </div>
     </div>
-</nav> -->
-<nav th:fragment="navbar" class="navbar2">
-    <div class="navbar__cont-title">
-        <a href="#" class="navbar__title">ProyectoSalud</a>
-    </div>
-    <div class="navbar__links">
-        <a href="/" class="navbar__link">Inicio</a>
-        <a href="/searcher" class="navbar__link">Buscador</a>
-        <a href="/login" class="navbar__link">Login</a>
-        <a href="/register" class="navbar__link">Register</a>
-    </div>
-    <div class="navbar__cont-dropdown">
-        <ul class="navbar__dropdown-fs-ul">
-            <li class="nav-item dropdown navbar__dropdown-fs-li">
-                <a class="nav-link dropdown-toggle fs-4 navbar__dropdown-title" href="#" data-bs-toggle="dropdown"
-                    aria-expanded="false">Nicolas</a>
-                <!-- <a th:text="${session.userSession.name}" class="nav-link dropdown-toggle fs-4 navbar__dropdown-title" href="#" data-bs-toggle="dropdown"
-                    aria-expanded="false"></a> -->
-                <ul class="dropdown-menu navbar__dropdown-sd-ul">
-                    <li class="navbar__dropdown-sd-li"><a href="/patient/appointments" class="dropdown-item navbar__dropdown-sd-link">Administrar turnos</a></li>
-                    <li class="navbar__dropdown-sd-li"><a href="#" class="dropdown-item navbar__dropdown-sd-link">Administrar cuenta</a></li>
-                    <li class="navbar__dropdown-sd-li"><a href="#" class="dropdown-item navbar__dropdown-sd-link navbar__dropdown-sd-link--hover">Logout</a></li>
-                </ul>
-            </li>
-        </ul>
-        <!-- <div class="navbar__useradmin">
-            <a href="" class="navbar__useradmin-title">Dropdown</a>
-            <i class="fa-solid fa-circle-chevron-down navbar__useradmin-icon"></i>
-        </div>
-        <ul class="navbar__dropdown navbar__dropdown--active">
-            <li class="navbar__dropdown-row">
-                <a href="/patient/appointments" class="navbar__dropdown-link">Administrar turnos</a>
-            </li>
-            <li class="navbar__dropdown-row">
-                <a href="" class="navbar__dropdown-link">Administrar cuenta</a>
-            </li>
-            <li class="navbar__dropdown-row">
-                <a href="" class="navbar__dropdown-link navbar__dropdown-link--hover">Logout</a>
-            </li>
-        </ul> -->
-    </div>
+    <script>
+        const dropdown_icon = document.getElementById("navbar__useradmin-icon");
+        dropdown_icon.addEventListener("click", () => {
+            let nav_dropdown = document.getElementById("navbar__dropdown");
+            nav_dropdown.classList.toggle("navbar__dropdown--d-none");
+            nav_dropdown.classList.toggle("navbar__dropdown--active");
+            dropdown_icon.classList.toggle("fa-circle-chevron-down");
+            dropdown_icon.classList.toggle("fa-circle-chevron-up");
+        })
+
+        const navbar__icon = document.getElementById("navbar__icon");
+        navbar__icon.addEventListener("click", () => {
+            navbar__icon.classList.toggle("fa-bars");
+            navbar__icon.classList.toggle("fa-bars-staggered");
+
+            let nav_links = document.getElementById("navbar__links");
+            let nav_contDropdown = document.getElementById("navbar__cont-dropdown");
+            nav_links.classList.toggle("navbar--active");
+            nav_contDropdown.classList.toggle("navbar--active");
+
+            let responsiveDropdown = document.getElementById("navbar__cont-sd");
+            responsiveDropdown.classList.toggle("navbar__cont-sd--border");
+        })
+    </script>
 </nav>
