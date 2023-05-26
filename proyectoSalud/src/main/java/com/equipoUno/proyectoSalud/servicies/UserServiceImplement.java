@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImplement implements UserService, UserDetailsService {
@@ -92,6 +93,19 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         }
         return null;
     }
+
+    @Override
+    public List<User> findAllUsers(){
+        List<User> users = userRepository.findAll();
+        return users.stream().map(user -> modelMapper.map(user, User.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public User getOne(String id){
+        return userRepository.getOne(id);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

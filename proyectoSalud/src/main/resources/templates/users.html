@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Profesional</title>
+</head>
+<body>
+<th:block th:replace="/fragments/navbar :: navbar"></th:block>
+<table>
+  <thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Email</th>
+    <th>Editar</th>
+    <th>Eliminar</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${users}">
+    <td th:text="${user.name}"></td>
+    <td th:text="${user.email.concat(user.emailSuffix)}"></td>
+    <td th:text="${user.rol}"></td>
+    <td>
+    <a th:href="@{/changeRolToProfessional/__${user.id}__}">registrar como professional</a></td>
+    <td><a href="#">Eliminar</a></td>
+  </tr>
+  </tbody>
+</table>
+<th:block th:replace="/fragments/footer :: footer"></th:block>
+</body>
+</html>

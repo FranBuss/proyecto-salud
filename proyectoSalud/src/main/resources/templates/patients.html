@@ -21,8 +21,8 @@
         </thead>
         <tbody>
             <tr th:each="patient : ${patients}">
-                <td th:text="${patient.name}"></td>
-                <td th:text="${patient.email}"></td>
+                <td th:text="${patient.user.name}"></td>
+                <td th:text="${patient.user.email}"></td>
                 <td th:text="${patient.contact}"></td>
                 <td th:text="${patient.healthInsurance}"></td>
                 <td><a href="#">Editar</a></td>

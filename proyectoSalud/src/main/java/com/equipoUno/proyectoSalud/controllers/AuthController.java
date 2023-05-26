@@ -63,16 +63,16 @@ public class AuthController {
 
     }
 
-    @PostMapping("/{userId}/patients")
-    public ResponseEntity<String> assignPatientUser(@PathVariable String userId, @RequestBody PatientDTO patientDTO) {
-        userService.assignPatientUser(userId, patientDTO);
-        return ResponseEntity.ok("Paciente asignado correctamente");
-    }
+//    @PostMapping("/{userId}/patients")
+//    public ResponseEntity<String> assignPatientUser(@PathVariable String userId, @RequestBody PatientDTO patientDTO) {
+//        userService.assignPatientUser(userId, patientDTO);
+//        return ResponseEntity.ok("Paciente asignado correctamente");
+//    }
 
-    @PostMapping("/{userId}/professionals")
-    public ResponseEntity<String> assignProfessionalUser(@PathVariable String userId, @RequestBody ProfessionalDTO professionalDTO) {
-        userService.assignProfessionalUser(userId, professionalDTO);
-        return ResponseEntity.ok("Profesional asignado correctamente");
-    }
+//    @PostMapping("/{userId}/professionals")
+//    public ResponseEntity<String> assignProfessionalUser(@PathVariable String userId, @RequestBody ProfessionalDTO professionalDTO) {
+//        userService.assignProfessionalUser(userId, professionalDTO);
+//        return ResponseEntity.ok("Profesional asignado correctamente");
+//    }
 
 }
