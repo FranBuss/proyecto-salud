@@ -117,11 +117,6 @@ public class RouteController {
         return "searcher";
     }
 
-    @GetMapping("/changeRolToProfessional/{userId}")
-    public String assignProfessionalUser(@PathVariable String userId, ModelMap model){
-        model.put("user", userService.getOne(userId));
-        return "professional_form";
-    }
 
     @GetMapping("/user/{email}")
     public String getUserDetails(@PathVariable String email, Model model) {
