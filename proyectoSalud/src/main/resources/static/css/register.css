@@ -10,7 +10,7 @@
 .form-register {
     border-radius: 5%;
     width: 25%;
-    height: 75%;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +18,7 @@
     -webkit-box-shadow: 0px 0px 75px -15px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 75px -15px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 75px -15px rgba(0,0,0,0.75);
-    background-color: var(--gris);
+    background-color: transparent;
 }
 
 .form-register__ini {
@@ -27,6 +27,8 @@
     width: 90%;
     height: 100%;
     margin-top: 30px;
+    font-weight: bold;
+    color: var(--celeste-oscuro);
 }
 
 .form-register__cont-inp {
@@ -38,6 +40,7 @@
 }
 
 .form-register__cont-name,
+.form-register__cont-surname,
 .form-register__cont-pass,
 .form-register__cont-email,
 .form-register__cont-insurance,
@@ -49,12 +52,14 @@
 }
 
 .form-register__name,
+.form-register__surname,
 .form-register__email,
 .form-register__pass,
 .form-register__insurance,
 .form-register__contact {
-    font-weight: 600;
+    font-weight: bold;
     margin: 10px 0;
+    color: var(--azul-oscuro);
 }
 
 .form-register__name-inp:-webkit-autofill {
@@ -79,14 +84,20 @@
 }
 
 .form-register__name-inp,
+.form-register__surname-inp,
 .form-register__email-inp,
 .form-register__insurance-inp,
 .form-register__contact-inp,
 .form-register__pass-inp {
     height: 35px;
     padding: 8px 10px;
-    font-size: 20px;
+    font-size: 18px;
     border: 1px solid var(--gris-oscuro);
+}
+
+.form-register__email-select {
+    color: var(--azul-oscuro);
+    padding-left: 2px;
 }
 
 .form-register__insurance-select {
@@ -95,16 +106,13 @@
     border: 1px solid var(--gris-oscuro);
 }
 
-.form-register__email-select:focus,
-.form-register__insurance-select:focus {
-    border: 1px solid var(--gris-oscuro);
-    outline: none;
-}
-
 .form-register__name-inp:focus,
+.form-register__surname-inp:focus,
 .form-register__email-inp:focus,
 .form-register__contact-inp:focus,
-.form-register__pass-inp:focus {
+.form-register__pass-inp:focus,
+.form-register__email-select:focus,
+.form-register__insurance-select:focus {
     border: 1px solid var(--azul-oscuro);
     outline: none;
 }
@@ -124,6 +132,7 @@
 }
 
 .form-register__eye {
+    color: var(--azul-oscuro);
     font-size: 20px;
 }
 
@@ -213,30 +222,72 @@
 
 @media screen and (max-width: 650px) {
     .form-register {
-        width: 65%;
+        width: 70%;
     }
 }
 
 @media screen and (max-width: 450px) {
     .form-register {
-        width: 75%;
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .form-register {
+        width: 100%;
+    }
+}
+
+@media screen and (max-height: 1200px) {
+    .form-register {
+        height: 53%;
+    }
+}
+
+@media screen and (max-height: 1050px) {
+    .form-register {
+        height: 61%;
+    }
+}
+
+@media screen and (max-height: 950px) {
+    .form-register {
+        height: 66%;
+    }
+}
+
+@media screen and (max-height: 900px) {
+    .form-register {
+        height: 70%;
     }
 }
 
 @media screen and (max-height: 850px) {
     .form-register {
-        height: 90%;
+        height: 75%;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    .form-register {
+        height: 78%;
     }
 }
 
 @media screen and (max-height: 750px) {
     .form-register {
-        height: 95%;
+        height: 82%;
     }
 }
 
 @media screen and (max-height: 700px) {
     .form-register {
-        height: 100%;
+        height: 85%;
+    }
+}
+
+@media screen and (max-height: 650px) {
+    .form-register {
+        height: 95%;
     }
 }

@@ -8,20 +8,27 @@ let validateConfPass = false;
 let inpNameWrited = false;
 const form_name = document.getElementById("form_name");
 form_name.addEventListener("input", () => {
-    if (!inpNameWrited) {
-        if (form_name.value.length >= 3) {
-            validateName = true;
-            inpNameWrited = true;
-            errorCheck();
-        }
+    // if (!inpNameWrited) {
+    //     if (form_name.value.length >= 3) {
+    //         validateName = true;
+    //         inpNameWrited = true;
+    //         errorCheck();
+    //     }
+    // } else {
+    //     if (form_name.value.length >= 3) {
+    //         validateName = true;
+    //         errorCheck();
+    //     } else {
+    //         validateName = false;
+    //         errorCheck();
+    //     }
+    // }
+    if (form_name.value.length >= 3) {
+        validateName = true;
+        errorCheck();
     } else {
-        if (form_name.value.length >= 3) {
-            validateName = true;
-            errorCheck();
-        } else {
-            validateName = false;
-            errorCheck();
-        }
+        validateName = false;
+        errorCheck();
     }
 })
 
