@@ -8,13 +8,14 @@ import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("896656")
+@RequestMapping("/professional")
 public class ProfessionalController {
 
     private final ProfessionalService professionalService;
@@ -104,8 +105,16 @@ public class ProfessionalController {
         }
     }
 
+    @GetMapping("/changeRolToProfessional/{userId}")
+    public String assignProfessionalUser(@PathVariable String userId, ModelMap model){
+        model.put("user", userService.getOne(userId));
+        ProfessionalDTO professionalDTO = new ProfessionalDTO();
+        model.put("professionalDTO", professionalDTO);
+        return "professional_form";
+    }
+
     @PostMapping("/changeRol/{userId}")
-    public String assignProfessionalUser(@PathVariable String userId, @RequestBody ProfessionalDTO professionalDTO) {
+    public String assignProfessionalUser(@PathVariable("userId") String userId,@ModelAttribute("professionalDTO") ProfessionalDTO professionalDTO) {
         userService.assignProfessionalUser(userId, professionalDTO);
         return "redirect:../admin/users";
     }
