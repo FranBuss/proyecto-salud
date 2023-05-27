@@ -71,6 +71,10 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     }
 
     @Override
+    public void deleteUser(String id){
+        userRepository.deleteById(id);
+    }
+    @Override
     public PatientDTO assignPatientUser(String userId, PatientDTO patientDTO) {
         User user = userRepository.findById(userId).orElse(null);
         Patient patient = modelMapper.map(patientDTO, Patient.class);

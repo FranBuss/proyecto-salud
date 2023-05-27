@@ -28,7 +28,7 @@ public class User {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "id")
-    @JsonIgnore
+//    @JsonIgnore
     protected String id;
 
     @Column(name = "name")
@@ -43,7 +43,7 @@ public class User {
 
     @Column(name = "rol")
     @Enumerated(EnumType.STRING)
-    @JsonIgnore
+//    @JsonIgnore
     protected Rol rol;
 
     @OneToOne

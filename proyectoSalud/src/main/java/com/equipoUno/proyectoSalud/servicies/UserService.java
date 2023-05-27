@@ -23,6 +23,8 @@ public interface UserService{
 
     List<User> findAllUsers();
 
+    void deleteUser(String id);
+
     User getOne(String id);
 
 //    void validate(String name, String email, String password, String password2) throws MiException;
