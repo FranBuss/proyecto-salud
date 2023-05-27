@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/professionals")
+@RequestMapping("896656")
 public class ProfessionalController {
 
     private final ProfessionalService professionalService;
