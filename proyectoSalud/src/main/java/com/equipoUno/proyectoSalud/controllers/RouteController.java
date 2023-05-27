@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -119,6 +120,14 @@ public class RouteController {
         model.addAttribute("userDetails", userDetails);
 
         return "user-details";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
+    @GetMapping("/profile")
+    public String perfil(ModelMap model, HttpSession session){
+        User user = (User) session.getAttribute("userSession");
+        model.put("user", user);
+        return "profile";
     }
 
     @GetMapping("/patient/appointments")

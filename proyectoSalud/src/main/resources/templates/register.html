@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,7 +10,7 @@
     <title>Register</title>
 </head>
 <body>
-    <div class="cont-form">
+    <main class="cont-form">
         <form action="/api/auth/register" method="POST" th:object="${userDTO}" class="form-register">
             <p class="form-register__ini">REGISTRO</p>
             <div class="form-register__cont-inp">
@@ -18,12 +18,12 @@
                     <p class="form-register__name">Nombre</p>
                     <input type="text" th:field="*{name}" id="form_name" name="name" class="form-register__name-inp">
                 </div>
-                <div class="form-register__cont-name">
-                    <p class="form-register__name">Apellido</p>
-                    <input type="text" th:field="*{surname}" id="form_name" name="name" class="form-register__name-inp">
+                <div class="form-register__cont-surname">
+                    <p class="form-register__surname">Apellido</p>
+                    <input type="text" th:field="*{surname}" id="form_surname" name="surname" class="form-register__surname-inp">
                 </div>
                 <div class="form-register__cont-email">
-                    <p class="form-register__email">Email</p>
+                    <p class="form-register__email">Correo electrónico</p>
                     <div class="form-register__cont-email-inp">
                         <input type="text" th:field="*{email}" id="form_email" name="email_inp" class="form-register__email-inp">
                         <select th:field="*{emailSuffix}" name="email_select" class="form-register__email-select">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="form-register__cont-pass">
-                    <p class="form-register__pass">Confirma contraseña</p>
+                    <p class="form-register__pass">Confirmar contraseña</p>
                     <div class="form-register__cont-pass-inp">
                         <input type="password" th:field="*{confpassword}" name="password"
                             class="form-register__pass-inp form-register__pass-inp--eye" id="confirmPass-inp">
@@ -55,14 +55,14 @@
                     <p id="form-error" class="form-register__error"></p>
                 </div>
                 <div class="form-register__cont-submit">
-                    <button type="submit" id="form_submit" class="form-register__submit--disabled">Registrarse</button>
+                    <button type="submit" id="form_submit" class="form-register__submit--disabled" disabled>Registrarse</button>
                 </div>
             </div>
             <p class="form-register__log">Si ya tenes cuenta podes
                 <a href="/login" class="form-register__log-a">ingresar</a>.
             </p>
         </form>
-    </div>
+    </main>
     <script src="/static/js/register.js"></script>
 
     <th:block th:replace="/fragments/error :: error"></th:block>

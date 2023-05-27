@@ -1,6 +1,7 @@
 .footer {
     background: var(--celeste);
     border-top: 1px solid var(--azul-oscuro);
+    height: auto;
 }
 
 .footer-content {

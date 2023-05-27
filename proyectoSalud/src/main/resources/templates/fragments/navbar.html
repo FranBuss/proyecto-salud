@@ -16,7 +16,7 @@
         </div>
         <div id="navbar__cont-dropdown" class="navbar__cont-dropdown navbar--active">
             <div class="navbar__useradmin">
-                <a th:if="${session.userSession == null}" id="navbar__useradmin-title" class="navbar__useradmin-title">Bienvenido Usuario</a>
+                <a th:if="${session.userSession == null}" id="navbar__useradmin-title" class="navbar__useradmin-title">Bienvenido/a Usuario</a>
                 <a th:if="${session.userSession != null}" th:text="${'Bienvenido/a ' + session.userSession.name}" id="navbar__useradmin-title" class="navbar__useradmin-title"></a>
                 <i id="navbar__useradmin-icon" class="fa-solid fa-circle-chevron-down navbar__useradmin-icon"></i>
             </div>
@@ -24,8 +24,8 @@
                 <li class="navbar__dropdown-row">
                     <a href="/patient/appointments" class="navbar__dropdown-link">Administrar turnos</a>
                 </li>
-                <li class="navbar__dropdown-row">
-                    <a href="" class="navbar__dropdown-link">Administrar cuenta</a>
+                <li th:if="${session.userSession != null}" class="navbar__dropdown-row">
+                    <a href="/profile" class="navbar__dropdown-link">Administrar cuenta</a>
                 </li>
                 <li th:if="${session.userSession != null}" class="navbar__dropdown-row">
                     <a href="/logout" class="navbar__dropdown-link navbar__dropdown-link--hover">Logout</a>
