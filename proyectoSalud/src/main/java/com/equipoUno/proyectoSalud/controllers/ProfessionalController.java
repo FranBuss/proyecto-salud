@@ -4,6 +4,7 @@ import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalService;
+import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +18,12 @@ import java.util.List;
 public class ProfessionalController {
 
     private final ProfessionalService professionalService;
+    private final UserServiceImplement userService;
 
     @Autowired
-    public ProfessionalController(ProfessionalService professionalService) {
+    public ProfessionalController(ProfessionalService professionalService, UserServiceImplement userService) {
         this.professionalService = professionalService;
+        this.userService = userService;
     }
 
     @GetMapping("/{id}")
@@ -100,5 +103,12 @@ public class ProfessionalController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/changeRol/{userId}")
+    public String assignProfessionalUser(@PathVariable String userId, @RequestBody ProfessionalDTO professionalDTO) {
+        userService.assignProfessionalUser(userId, professionalDTO);
+        return "redirect:../admin/users";
+    }
+
 
 }

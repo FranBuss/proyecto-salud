@@ -27,6 +27,11 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @GetMapping("/register")
+    public String registerUser(){
+        return "register";
+    }
+
     @PostMapping("/register")
     public String register(@Validated @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
 
@@ -47,16 +52,27 @@ public class AuthController {
 
     }
 
-    @PostMapping("/{userId}/patients")
-    public ResponseEntity<String> assignPatientUser(@PathVariable String userId, @RequestBody PatientDTO patientDTO) {
-        userService.assignPatientUser(userId, patientDTO);
-        return ResponseEntity.ok("Paciente asignado correctamente");
+    @GetMapping("/login")
+    public String login(@RequestParam(required = false) String error, Model model) {
+
+        if (error != null) {
+            model.addAttribute("error", "Usuario o Contraseña invalidos");
+        }
+
+        return "login";
+
     }
 
-    @PostMapping("/{userId}/professionals")
-    public ResponseEntity<String> assignProfessionalUser(@PathVariable String userId, @RequestBody ProfessionalDTO professionalDTO) {
-        userService.assignProfessionalUser(userId, professionalDTO);
-        return ResponseEntity.ok("Profesional asignado correctamente");
-    }
+//    @PostMapping("/{userId}/patients")
+//    public ResponseEntity<String> assignPatientUser(@PathVariable String userId, @RequestBody PatientDTO patientDTO) {
+//        userService.assignPatientUser(userId, patientDTO);
+//        return ResponseEntity.ok("Paciente asignado correctamente");
+//    }
+
+//    @PostMapping("/{userId}/professionals")
+//    public ResponseEntity<String> assignProfessionalUser(@PathVariable String userId, @RequestBody ProfessionalDTO professionalDTO) {
+//        userService.assignProfessionalUser(userId, professionalDTO);
+//        return ResponseEntity.ok("Profesional asignado correctamente");
+//    }
 
 }

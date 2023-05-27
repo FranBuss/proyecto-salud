@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,6 +63,14 @@ public class RouteController {
         return "professionals";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/admin/users")
+    public String users(Model model){
+        List<User> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        return "users";
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_PROFESSIONAL')")
     @GetMapping("/professionals/patients")
     public String patients(Model model){
@@ -106,6 +115,12 @@ public class RouteController {
             model.addAttribute("professionals", professionals);
         }
         return "searcher";
+    }
+
+    @GetMapping("/changeRolToProfessional/{userId}")
+    public String assignProfessionalUser(@PathVariable String userId, ModelMap model){
+        model.put("user", userService.getOne(userId));
+        return "professional_form";
     }
 
     @GetMapping("/user/{email}")
