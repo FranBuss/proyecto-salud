@@ -39,11 +39,6 @@ public class RouteController {
     }
 
 
-    @GetMapping("/")
-    public String home() {
-        return "index";
-    }
-
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, Model model) {
 
@@ -85,13 +80,9 @@ public class RouteController {
 
         User loggedUser = (User) session.getAttribute("userSession");
 
-        if (loggedUser.getRol().toString().equals("ADMIN")) {
-            return "redirect:api/admin/dashboard";
-        }
-
-        if (loggedUser.getRol().toString().equals("PROFESSIONAL")) {
-            return "redirect:api/professional/index";
-        }
+//        if (loggedUser.getRol().toString().equals("ADMIN")) {
+//            return "redirect:/admin/dashboard";
+//        }
 
         return "index";
 

@@ -32,6 +32,9 @@
                 </li>
             </ul>
         </div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <h1>HOLA SOY ADMIN</h1>
+        </div>
     </div>
     <script>
         const dropdown_icon = document.getElementById("navbar__useradmin-icon");
