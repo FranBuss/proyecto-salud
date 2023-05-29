@@ -44,6 +44,7 @@
     width: 75%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .navbar__link {
@@ -74,12 +75,24 @@
     z-index: 19;
 }
 
+.navbar__profile-img {
+    width: 50px;
+    border-radius: 50%;
+    border: 1px solid var(--azul-oscuro);
+    margin-right: 10px;
+}
+
 .navbar__useradmin-title {
     color: var(--blanco);
     font-size: 25px;
     text-decoration: none;
     cursor: default;
     z-index: 18;
+}
+
+.navbar__title:hover,
+.navbar__useradmin-title:hover {
+    color: var(--blanco);
 }
 
 .navbar__useradmin-icon {

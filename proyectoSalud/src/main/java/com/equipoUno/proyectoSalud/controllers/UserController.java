@@ -27,8 +27,6 @@ public class UserController {
     @PostMapping("/update/{id}")
     public String updateUser(@PathVariable String id, @ModelAttribute("userDTO")UserDTO userDTO) throws MiException {
         userService.updateUser(id, userDTO);
-        return "redirect:../profile";
+        return "redirect:/profile";
     }
-
-
 }
