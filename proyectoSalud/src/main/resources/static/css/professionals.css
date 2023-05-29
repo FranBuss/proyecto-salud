@@ -1,0 +1,64 @@
+.cont-form {
+    height: 640px;
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    align-content: stretch;
+    justify-content: space-around;
+    align-items: center;
+    background-image: linear-gradient(
+    var(--blanco), var(--gris), var(--celeste));
+}
+
+/* tabla */
+.cont-table {
+    margin-top: 100px;
+    width: 50%;
+}
+
+.table__thead-col,
+.table__tbody-col{
+    text-align: center;
+}
+
+/* Modificar botón "Modificar" */
+.btn.btn-info {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+
+/* Modificar botón "Eliminar" */
+.btn.btn-danger {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+/* fin tabla */

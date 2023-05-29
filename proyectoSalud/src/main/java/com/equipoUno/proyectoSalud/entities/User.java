@@ -15,7 +15,7 @@ import java.time.ZoneId;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,7 +28,7 @@ public class User {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "id")
-    @JsonIgnore
+//    @JsonIgnore
     protected String id;
 
     @Column(name = "name")
@@ -43,7 +43,7 @@ public class User {
 
     @Column(name = "rol")
     @Enumerated(EnumType.STRING)
-    @JsonIgnore
+//    @JsonIgnore
     protected Rol rol;
 
     @OneToOne
@@ -57,6 +57,5 @@ public class User {
 
     @Column(name="created_at")
     protected LocalDateTime createdAt = LocalDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
-
 
 }
