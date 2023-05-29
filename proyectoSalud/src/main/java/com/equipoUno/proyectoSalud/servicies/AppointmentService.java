@@ -19,4 +19,6 @@ public interface AppointmentService {
 
     AppointmentDTO updateAppointmentDate(AppointmentDTO dto, LocalDateTime newTime) throws MiException;
 
+    List<AppointmentDTO> availableAppointments();
+
 }
