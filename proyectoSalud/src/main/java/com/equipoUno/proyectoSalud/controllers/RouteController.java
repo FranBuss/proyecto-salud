@@ -127,9 +127,12 @@ public class RouteController {
         User user = (User) session.getAttribute("userSession");
         Image image = user.getImage();
         UserDTO userDTO = new UserDTO();
+//        System.out.println(image.getId());
+//        System.out.println(user.getImage().getId());
 
         if (image != null) {
-            model.addAttribute("image", image);
+//            model.addAttribute("image", image);
+            model.addAttribute("imageid", image.getId());
         }
         model.addAttribute("user", user);
         model.addAttribute("userDTO", userDTO);

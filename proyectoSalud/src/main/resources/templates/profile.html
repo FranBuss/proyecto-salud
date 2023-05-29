@@ -27,8 +27,8 @@
 						<!-- <img class="rounded-circle mt-2" width="150px" th:src="${imagenURL}"> -->
 					<!-- </div> -->
 					<!-- <div th:unless="${imagenURL}"> -->
-						<img th:if="${image == null}" src="/static/img/profile.png" class="rounded-circle profile-img" id="preview_image">
-						<img th:if="${image != null}" th:src="@{/image/__${user.id}__}" class="rounded-circle profile-img" id="preview_image">
+						<!-- <img th:if="${image == null}" src="/static/img/profile.png" class="rounded-circle profile-img" id="preview_image"> -->
+						<img th:src="@{/image/__${user.id}__}" class="rounded-circle profile-img" id="preview_image">
 					<!-- </div> -->
 					<!-- <form th:action="@{/api/auth/update-image}" method="POST" enctype="multipart/form-data"> -->
 						<!-- <div class="form-group mt-1"> -->
@@ -47,7 +47,7 @@
 						<div class="col-md-10">
 							<div class="form-profile__group">
 								<label for="email" class="form-profile__label">Email<span th:text="${' (' + user.email + ')'}"></span></label>
-								<input th:field="*{email}" type="email" id="email" class="form-profile__input form-control">
+								<input th:field="*{email}" type="text" name="email" id="email" class="form-profile__input form-control">
 								<select th:field="*{emailSuffix}" name="email_select" class="form-register__email-select">
 									<option th:each="suffix : ${T(com.equipoUno.proyectoSalud.enumerations.EmailDomain).values()}" th:value="${suffix}" th:text="${suffix.value}"></option>
 								</select>

@@ -77,22 +77,32 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()){
             User user = optionalUser.get();
-            modelMapper.map(userDTO, user);
-
-            MultipartFile imageFile = userDTO.getImageFile();
-            Image image = user.getImage();
-            if(image != null){
-                String imageId = image.getId();
-                try {
-                    Image updatedImage = imageServiceImplement.update(imageFile, imageId);
-                    user.setImage(updatedImage);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+//            User updateUser = modelMapper.map(userDTO, User.class);
+            if (userDTO.getEmail() != null && !userDTO.getEmail().isEmpty()) {
+                user.setEmail(userDTO.getEmail().concat(userDTO.getEmailSuffix().getValue()));
             }
+            if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty() ) {
+                user.setPassword(userDTO.getPassword());
+            }
+            if (userDTO.getImageFile() != null) {
+                System.out.println("ENTRA 1");
+                MultipartFile imageFile = userDTO.getImageFile();
+                Image image = user.getImage();
+                String imageId = "";
+                if (image != null) {
+                    imageId = image.getId();
+                }
+                    System.out.println("ENTRA 2");
 
-            User updateUser = userRepository.save(user);
-            return modelMapper.map(updateUser, UserDTO.class);
+                    try {
+                        Image updatedImage = imageServiceImplement.update(imageFile, imageId);
+                        user.setImage(updatedImage);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+            }
+            userRepository.save(user);
+            return modelMapper.map(user, UserDTO.class);
         } else {
             throw new MiException("User Not Found");
         }

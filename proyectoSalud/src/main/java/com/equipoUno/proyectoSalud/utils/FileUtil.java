@@ -14,9 +14,9 @@ public class FileUtil {
     private static final List<String> CONTENT_TYPES_ALLOWED = Arrays.asList("image/jpeg", "image/png");
 
     public void validateFile(MultipartFile file){
-        if(file == null || file.isEmpty()){
-            throw new IllegalArgumentException("No se proporcionó ningún archivo");
-        }
+//        if(file == null || file.isEmpty()){
+//            throw new IllegalArgumentException("No se proporcionó ningún archivo");
+//        }
         if(file.getSize() > MAX_FILE_SIZE){
             throw new IllegalArgumentException("El tamaño del archivo excede el límite permitido");
         }
