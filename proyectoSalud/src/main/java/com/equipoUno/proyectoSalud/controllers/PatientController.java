@@ -66,10 +66,10 @@ public class PatientController {
         return "patient_list";
     }
 
-    @PostMapping("/{userId}/patients")
-    public ResponseEntity<String> assignPatientUser(@PathVariable String userId, @RequestBody PatientDTO patientDTO) {
+    @PostMapping("/generatePatient/{userId}")
+    public String assignPatientUser(@PathVariable("userId") String userId, @ModelAttribute("patientDTO") PatientDTO patientDTO) {
         userService.assignPatientUser(userId, patientDTO);
-        return ResponseEntity.ok("Paciente asignado correctamente");
+        return "redirect:../profile";
     }
 
 }

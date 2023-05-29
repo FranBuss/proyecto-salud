@@ -40,8 +40,8 @@ public class AppointmentServiceImplement implements AppointmentService{
             throw new MiException("El turno no esta disponible");
 
         }
-    }
 
+    }
 
     public List<LocalDateTime> generateAppointments(AppointmentDTO dto) {
         List<LocalDateTime> appointments = new ArrayList<>();
@@ -70,8 +70,6 @@ public class AppointmentServiceImplement implements AppointmentService{
         }
         return false;
     }
-
-
 
     public List<AppointmentDTO> occupiedAppointmentsDTO(){
 

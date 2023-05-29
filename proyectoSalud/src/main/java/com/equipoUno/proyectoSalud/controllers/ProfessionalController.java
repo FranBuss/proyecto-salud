@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/professional")
 public class ProfessionalController {
 
@@ -28,25 +28,15 @@ public class ProfessionalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProfessionalDTO> getPatient(@PathVariable String id) throws MiException {
+    public String getProfessional(@PathVariable String id, ModelMap model) {
         ProfessionalDTO professionalDTO = professionalService.getProfessional(id);
-        if (professionalDTO != null) {
-            return ResponseEntity.ok(professionalDTO);
-        } else {
-            return ResponseEntity.notFound().build();
+        if (professionalDTO != null){
+            model.put("professionalDTO", professionalDTO);
+            return "professional_view";
         }
+        return null;
     }
 
-    // List all Professionals
-    @GetMapping("/allProfessionals")
-    public ResponseEntity<List<Professional>> listProfessionals() throws MiException {
-        List<Professional> professionals = professionalService.searchProfessionals();
-        if (professionals != null) {
-            return ResponseEntity.ok(professionals);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
     // Create a Professional
 //    @PostMapping("/create")
@@ -55,30 +45,30 @@ public class ProfessionalController {
 //        return ResponseEntity.status(HttpStatus.CREATED).body(professionalCreate);
 //    }
 
-    @GetMapping("/create")
-    public String professionalRegister(){
-        return "professional_form";
-    }
-
-    @PostMapping("/create")
-    public String create(@RequestParam ProfessionalDTO professionalDTO, ModelMap model){
-        try {
-
-            professionalService.createProfessional(professionalDTO);
-            model.put("success", "The professional has been created correctly");
-
-        } catch (MiException ex){
-
-            model.put("error", ex.getMessage());
-            return "professional_form";
-
-        }
-        return "index";
-    }
+//    @GetMapping("/create")
+//    public String professionalRegister(){
+//        return "professional_form";
+//    }
+//
+//    @PostMapping("/create")
+//    public String create(@RequestParam ProfessionalDTO professionalDTO, ModelMap model){
+//        try {
+//
+//            professionalService.createProfessional(professionalDTO);
+//            model.put("success", "The professional has been created correctly");
+//
+//        } catch (MiException ex){
+//
+//            model.put("error", ex.getMessage());
+//            return "professional_form";
+//
+//        }
+//        return "index";
+//    }
 
 
     //Update a Professional
-    @PostMapping(value = ("/update/{id}"), params = "_method=put")
+    @PostMapping(value = ("/update/{id}"))
     public String update(@RequestBody @PathVariable String id) throws MiException {
         Professional professionalUpdate = professionalService.updateProfessional(id);
         if (professionalUpdate != null) {
@@ -89,7 +79,7 @@ public class ProfessionalController {
     }
 
 
-    @PostMapping(value = ("/delete/{id}"), params = "_method=delete")
+    @PostMapping(value = ("/delete/{id}"))
     public String delete(@RequestBody @PathVariable String id) throws MiException{
         professionalService.deleteProfessional(id);
         return "/admin/professionals";
