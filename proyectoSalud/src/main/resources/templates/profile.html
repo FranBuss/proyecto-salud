@@ -28,7 +28,8 @@
 					<!-- </div> -->
 					<!-- <div th:unless="${imagenURL}"> -->
 						<!-- <img th:if="${image == null}" src="/static/img/profile.png" class="rounded-circle profile-img" id="preview_image"> -->
-						<img th:src="@{/image/__${user.id}__}" class="rounded-circle profile-img" id="preview_image">
+						<img th:if="${image != null}" th:src="@{/image/__${user.id}__}" class="profile-img" id="preview_image">
+						<img th:if="${image == null}" src="/static/img/profile.png" class="profile-img" id="preview_image">
 					<!-- </div> -->
 					<!-- <form th:action="@{/api/auth/update-image}" method="POST" enctype="multipart/form-data"> -->
 						<!-- <div class="form-group mt-1"> -->
