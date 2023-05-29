@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/navbar.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/users.css ">
     <link rel="stylesheet" href="/static/css/register.css">
     <script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>
     <title>Register Professional</title>
 </head>
 <body>
+<th:block th:replace="/fragments/navbar :: navbar"></th:block>
+
 <main class="cont-form">
     <form th:action="@{/professional/changeRol/{userId}(userId=${user.id})}" method="POST" th:object="${professionalDTO}" class="form-register">
         <p class="form-register__ini">REGISTRO DE PROFESIONAL</p>
         <input type="hidden" th:value="${userId}"/>
         <input type="time" th:field="*{entryTime}" id="form_name" name="name" class="form-register__name-inp">
         <input type="time" th:field="*{exitTime}" id="form_name" name="name" class="form-register__name-inp">
-<!--        Specialization es un Enum  -->
+        <!--        Specialization es un Enum  -->
         <input type="time" th:field="*{specialization}" id="form_name" name="name" class="form-register__name-inp">
-<!--                                   -->
+        <!--                                   -->
     </form>
 </main>
+
 <script src="/static/js/register.js"></script>
 
 <th:block th:replace="/fragments/error :: error"></th:block>
+<th:block th:replace="/fragments/footer :: footer"></th:block>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
 </body>
 </html>
