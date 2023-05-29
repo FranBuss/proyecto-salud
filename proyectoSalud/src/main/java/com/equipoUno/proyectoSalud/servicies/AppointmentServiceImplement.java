@@ -93,7 +93,7 @@ public class AppointmentServiceImplement implements AppointmentService{
     }
 
 
-    public AppointmentDTO updateAppointmentDate(AppointmentDTO dto, LocalDateTime newTime) throws MiException {
+    public AppointmentDTO updateAppointmentDate(String id,AppointmentDTO dto, LocalDateTime newTime) throws MiException {
         List<LocalDateTime> availableAppointments = generateAppointments(dto);
 
         if (availableAppointments.contains(newTime)) {
@@ -111,13 +111,10 @@ public class AppointmentServiceImplement implements AppointmentService{
 
     public List<AppointmentDTO> availableAppointments() {
 
-<<<<<<< HEAD
+
         List<Appointment> appointmentList = appointmentRepository.findAll();
         List<AppointmentDTO> availableAppointmentsDTO = new ArrayList<>();
-=======
-       List<Appointment> appointmentList = appointmentRepository.findAll();
-       List<AppointmentDTO> availableAppointmentsDTO = new ArrayList<>();
->>>>>>> dev
+
 
         for (Appointment appointment : appointmentList){
             AppointmentDTO appointmentDTO = modelMapper.map(appointment, AppointmentDTO.class);
