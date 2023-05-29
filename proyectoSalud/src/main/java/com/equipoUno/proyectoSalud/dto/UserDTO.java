@@ -23,7 +23,7 @@ public class UserDTO {
     private String surname;
 
     //Regex: Solo letras, números y (.,-,_)
-    @Pattern(regexp = "^[A-Za-z0-9._-]$", message = "El email solo puede contener -,_,.,letras y/o números.")
+    @Pattern(regexp = "^[a-zA-Z0-9._-]*$", message = "El email solo puede contener -,_,.,letras y/o números.")
     private String email;
 
     @NotNull(message = "Tiene que seleccionar un dominio válido.")
