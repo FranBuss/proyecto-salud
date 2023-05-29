@@ -2,6 +2,7 @@ package com.equipoUno.proyectoSalud.controllers;
 
 import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
 import com.equipoUno.proyectoSalud.entities.Professional;
+import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalService;
 import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/professional")
 public class ProfessionalController {
 
@@ -110,6 +111,8 @@ public class ProfessionalController {
         model.put("user", userService.getOne(userId));
         ProfessionalDTO professionalDTO = new ProfessionalDTO();
         model.put("professionalDTO", professionalDTO);
+        Specialization[] specializations = Specialization.values();
+        model.addAttribute("specializations", specializations);
         return "professional_form";
     }
 
