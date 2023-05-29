@@ -16,8 +16,9 @@
         </div>
         <div id="navbar__cont-dropdown" class="navbar__cont-dropdown navbar--active">
             <div class="navbar__useradmin">
-                <a th:if="${session.userSession == null}" id="navbar__useradmin-title" class="navbar__useradmin-title">Bienvenido/a Usuario</a>
-                <a th:if="${session.userSession != null}" th:text="${'Bienvenido/a ' + session.userSession.name}" id="navbar__useradmin-title" class="navbar__useradmin-title"></a>
+                <a th:if="${role == null}" th:text="${'Bienvenido/a Usuario'}" class="navbar__useradmin-title"></a>
+                <a th:if="${role == 'PATIENT' || role == 'PROFESSIONAL'}" th:text="${'Bienvenido/a ' + name}" class="navbar__useradmin-title"></a>
+                <a th:if="${role == 'ADMIN'}" th:text="${'Bienvenido/a Admin'}" class="navbar__useradmin-title"></a>
                 <i id="navbar__useradmin-icon" class="fa-solid fa-circle-chevron-down navbar__useradmin-icon"></i>
             </div>
             <ul id="navbar__dropdown" class="navbar__dropdown--d-none">
@@ -31,9 +32,6 @@
                     <a href="/logout" class="navbar__dropdown-link navbar__dropdown-link--hover">Logout</a>
                 </li>
             </ul>
-        </div>
-        <div sec:authorize="hasRole('ROLE_ADMIN')">
-            <h1>HOLA SOY ADMIN</h1>
         </div>
     </div>
     <script>
@@ -59,5 +57,12 @@
             let responsiveDropdown = document.getElementById("navbar__cont-sd");
             responsiveDropdown.classList.toggle("navbar__cont-sd--border");
         })
+
+        addHoverLastChild();
+        function addHoverLastChild() {
+            const nav_dropdown = document.getElementById("navbar__dropdown");
+            // console.log(nav_dropdown.lastElementChild.children[0].classList);
+            nav_dropdown.lastElementChild.children[0].classList.add("navbar__dropdown-link--hover");
+        }
     </script>
 </nav>
