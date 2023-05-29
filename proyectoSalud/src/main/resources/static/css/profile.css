@@ -88,6 +88,10 @@ body {
 	cursor: pointer;
 }
 
+.healthInsurance--hidden {
+	display: none;
+}
+
 @media screen and (max-width: 1200px) {
 	.form-profile {
 		width: 40%;

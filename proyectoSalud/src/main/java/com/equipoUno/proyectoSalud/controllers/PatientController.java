@@ -5,15 +5,15 @@ import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/patients")
 public class PatientController {
 
@@ -70,7 +70,6 @@ public class PatientController {
     @PostMapping("/generatePatient/{userId}")
     public String assignPatientUser(@PathVariable("userId") String userId, @ModelAttribute("patientDTO") PatientDTO patientDTO) {
         userService.assignPatientUser(userId, patientDTO);
-        return "redirect:../profile";
+        return "redirect:/profile";
     }
-
 }

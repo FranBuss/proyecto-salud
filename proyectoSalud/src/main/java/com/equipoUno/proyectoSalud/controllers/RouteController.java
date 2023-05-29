@@ -127,12 +127,19 @@ public class RouteController {
         User user = (User) session.getAttribute("userSession");
         Image image = user.getImage();
         UserDTO userDTO = new UserDTO();
+        PatientDTO patientDTO = new PatientDTO();
+        Patient patient = patientService.getPatientByUserId(user.getId());
 
+        if (patient != null) {
+            model.addAttribute("patient", patient);
+        }
         if (image != null) {
             model.addAttribute("image", "notNull");
         }
+
         model.addAttribute("user", user);
         model.addAttribute("userDTO", userDTO);
+        model.addAttribute("patientDTO", patientDTO);
         return "profile";
     }
 

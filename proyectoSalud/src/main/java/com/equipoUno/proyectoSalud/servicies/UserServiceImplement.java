@@ -116,10 +116,24 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     @Override
     public PatientDTO assignPatientUser(String userId, PatientDTO patientDTO) {
         User user = userRepository.findById(userId).orElse(null);
-        Patient patient = modelMapper.map(patientDTO, Patient.class);
-        patient.setUser(user);
-        Patient savePatient = patientRepository.save(patient);
-        return modelMapper.map(savePatient, PatientDTO.class);
+        Optional<Patient> patientResponse = patientRepository.findPatientByUser(user);
+        if (patientResponse.isPresent()) {
+            Patient patient = patientResponse.get();
+            if (patientDTO.getContact() != null && !patientDTO.getContact().isEmpty()) {
+                patient.setContact(patientDTO.getContact());
+            }
+            if (patientDTO.getHealthInsurance() != null && !patientDTO.getHealthInsurance().toString().isEmpty()) {
+                patient.setHealthInsurance(patientDTO.getHealthInsurance());
+            }
+            patientRepository.save(patient);
+        } else {
+            Patient patient = modelMapper.map(patientDTO, Patient.class);
+            patient.setUser(user);
+            patientRepository.save(patient);
+        }
+//        Patient savePatient = patientRepository.save(patient);
+//        return modelMapper.map(savePatient, PatientDTO.class);
+        return null;
     }
 
     @Override
