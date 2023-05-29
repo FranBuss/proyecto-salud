@@ -27,14 +27,20 @@
                 <li th:if="${session.userSession != null}" class="navbar__dropdown-row">
                     <a href="/profile" class="navbar__dropdown-link">Administrar cuenta</a>
                 </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')" class="navbar__dropdown-row">
+                    <a href="/admin/users" class="navbar__dropdown-link navbar__dropdown-link--hover">Administrar Usuario</a>
+                </li>
                 <li th:if="${session.userSession != null}" class="navbar__dropdown-row">
                     <a href="/logout" class="navbar__dropdown-link navbar__dropdown-link--hover">Logout</a>
                 </li>
+
             </ul>
         </div>
+
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <h1>HOLA SOY ADMIN</h1>
         </div>
+
     </div>
     <script>
         const dropdown_icon = document.getElementById("navbar__useradmin-icon");
