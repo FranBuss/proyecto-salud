@@ -40,8 +40,8 @@ public class AppointmentServiceImplement implements AppointmentService{
             throw new MiException("El turno no esta disponible");
 
         }
-
     }
+
 
     public List<LocalDateTime> generateAppointments(AppointmentDTO dto) {
         List<LocalDateTime> appointments = new ArrayList<>();
@@ -70,6 +70,8 @@ public class AppointmentServiceImplement implements AppointmentService{
         }
         return false;
     }
+
+
 
     public List<AppointmentDTO> occupiedAppointmentsDTO(){
 
@@ -106,22 +108,22 @@ public class AppointmentServiceImplement implements AppointmentService{
     }
 
 
-    /*
+
     public List<AppointmentDTO> availableAppointments() {
 
-        List<Appointment> allAppointments = appointmentRepository.findAll();
+        List<Appointment> appointmentList = appointmentRepository.findAll();
         List<AppointmentDTO> availableAppointmentsDTO = new ArrayList<>();
 
-        for (Appointment appointment : allAppointments){
-            if(appointment.getState().equals("disponible")) {
-                AppointmentDTO appointmentDTO = modelMapper.map(appointment, AppointmentDTO.class);
+        for (Appointment appointment : appointmentList){
+            AppointmentDTO appointmentDTO = modelMapper.map(appointment, AppointmentDTO.class);
+            if(isAppointmentAvailable(appointmentDTO)) {
                 availableAppointmentsDTO.add(appointmentDTO);
             }
         }
         return availableAppointmentsDTO;
 
     }
-*/
+
 
 
 

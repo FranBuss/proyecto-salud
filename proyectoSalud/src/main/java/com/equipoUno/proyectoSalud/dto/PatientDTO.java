@@ -12,7 +12,6 @@ public class PatientDTO {
 
     private HealthInsurance healthInsurance;
     private String contact;
-
     private Appointment appointment;
 
 

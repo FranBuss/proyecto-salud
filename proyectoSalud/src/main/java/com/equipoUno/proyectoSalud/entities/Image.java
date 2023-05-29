@@ -23,7 +23,6 @@ public class Image {
     private String contentType;
     private String name;
 
-
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Size(max = 5 * 1024 * 1024) //Maximo 5MB

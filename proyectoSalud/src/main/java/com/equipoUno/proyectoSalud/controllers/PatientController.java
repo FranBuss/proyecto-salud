@@ -36,11 +36,11 @@ public class PatientController {
         }
     }
 
-    @PostMapping("/createPatient")
-    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
-        PatientDTO createdPatient = patientService.createPatient(patientDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
-    }
+//    @PostMapping("/createPatient")
+//    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
+//        PatientDTO createdPatient = patientService.createPatient(patientDTO);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
+//    }
 
     @PostMapping(value = "/update/{id}", params = "_method=put")
     public String updatePatient(@PathVariable String id) {
@@ -65,6 +65,7 @@ public class PatientController {
         model.addAttribute("patients", patients);
         return "patient_list";
     }
+
 
     @PostMapping("/generatePatient/{userId}")
     public String assignPatientUser(@PathVariable("userId") String userId, @ModelAttribute("patientDTO") PatientDTO patientDTO) {
