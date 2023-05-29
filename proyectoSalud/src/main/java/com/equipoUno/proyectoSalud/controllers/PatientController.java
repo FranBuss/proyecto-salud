@@ -25,7 +25,7 @@ public class PatientController {
         this.patientService = patientService;
         this.userService = userService;
     }
-
+/* QUEDA PENDIENTE. FALTA VISTA.
     @GetMapping("/{id}")
     public ResponseEntity<PatientDTO> getPatient(@PathVariable String id) {
         PatientDTO patientDTO = patientService.getPatient(id);
@@ -35,12 +35,12 @@ public class PatientController {
             return ResponseEntity.notFound().build();
         }
     }
-
-//    @PostMapping("/createPatient")
-//    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
-//        PatientDTO createdPatient = patientService.createPatient(patientDTO);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
-//    }
+*/
+   @PostMapping("/createPatient")
+   public String createPatient(@RequestBody Patient patient) {
+       patientService.createPatient(patient);
+      return "/register";
+    }
 
     @PostMapping(value = "/update/{id}", params = "_method=put")
     public String updatePatient(@PathVariable String id) {

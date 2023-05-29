@@ -8,6 +8,7 @@ import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -37,34 +38,27 @@ public class ProfessionalController {
         return null;
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/create")
+    public String professionalRegister(){
+        return "professional_form";
+    }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/create")
+    public String create(@RequestParam ProfessionalDTO professionalDTO, ModelMap model){
+        try {
 
-    // Create a Professional
-//    @PostMapping("/create")
-//    public ResponseEntity<ProfessionalDTO> create(@RequestBody ProfessionalDTO professionalDTO) {
-//        ProfessionalDTO professionalCreate = professionalService.createProfessional(professionalDTO);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(professionalCreate);
-//    }
+            professionalService.createProfessional(professionalDTO);
+            model.put("success", "The professional has been created correctly");
 
-//    @GetMapping("/create")
-//    public String professionalRegister(){
-//        return "professional_form";
-//    }
-//
-//    @PostMapping("/create")
-//    public String create(@RequestParam ProfessionalDTO professionalDTO, ModelMap model){
-//        try {
-//
-//            professionalService.createProfessional(professionalDTO);
-//            model.put("success", "The professional has been created correctly");
-//
-//        } catch (MiException ex){
-//
-//            model.put("error", ex.getMessage());
-//            return "professional_form";
-//
-//        }
-//        return "index";
-//    }
+        } catch (MiException ex){
+
+            model.put("error", ex.getMessage());
+            return "professional_form";
+
+        }
+        return "index";
+    }
 
 
     //Update a Professional
@@ -86,12 +80,12 @@ public class ProfessionalController {
     }
 
     @PostMapping(value = "/updateDropOut/{id}", params = "_method=put")
-    public ResponseEntity<ProfessionalDTO> updateDropOut(@PathVariable String id)  throws MiException {
+    public String updateDropOut(@PathVariable String id)  throws MiException {
         ProfessionalDTO professionalUpdate = professionalService.updateDropOut(id);
         if (professionalUpdate != null) {
-            return ResponseEntity.ok(professionalUpdate);
+            return "/admin/professionals";
         } else {
-            return ResponseEntity.notFound().build();
+            return "/error";
         }
     }
 
