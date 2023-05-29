@@ -124,9 +124,11 @@ public class RouteController {
 
     @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
     @GetMapping("/profile")
-    public String perfil(ModelMap model, HttpSession session){
+    public String perfil(Model model, HttpSession session){
         User user = (User) session.getAttribute("userSession");
-        model.put("user", user);
+
+        model.addAttribute("user", user);
+
         return "profile";
     }
 

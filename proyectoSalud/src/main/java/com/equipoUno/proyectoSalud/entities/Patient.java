@@ -23,6 +23,10 @@ public class Patient {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
+
     @Column(name = "health_insurance")
     @Enumerated(EnumType.STRING)
     private HealthInsurance healthInsurance;

@@ -1,5 +1,6 @@
 package com.equipoUno.proyectoSalud.dto;
 
+import com.equipoUno.proyectoSalud.entities.Appointment;
 import com.equipoUno.proyectoSalud.enumerations.HealthInsurance;
 import lombok.*;
 
@@ -20,5 +21,7 @@ public class PatientDTO {
 
     @Pattern(regexp = "^[0-9]{10,12}$", message = "Ingrese un celular válido.")
     private String contact;
+    private Appointment appointment;
+
 
 }

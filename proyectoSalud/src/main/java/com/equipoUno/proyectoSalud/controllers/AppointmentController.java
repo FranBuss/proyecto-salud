@@ -1,3 +1,7 @@
+
+
+
+
 package com.equipoUno.proyectoSalud.controllers;
 
 import com.equipoUno.proyectoSalud.dto.AppointmentDTO;
@@ -36,26 +40,21 @@ public class AppointmentController {
     }
 
     @PostMapping("/{id}/date")
-    public ResponseEntity<AppointmentDTO> updateAppointment(@PathVariable String id, @RequestParam LocalDateTime newDate, Model model){
+    public ResponseEntity<AppointmentDTO> updateAppointment(@PathVariable String id,@ModelAttribute("appointmentDTO") AppointmentDTO appointmentDTO, @RequestParam LocalDateTime newDate, Model model){
         try {
-            AppointmentDTO updateAppointment = appointmentService.updateAppointmentDate(id, newDate);
-            model.addAttribute("exito", "El turno se actualizó correctamente")
+            AppointmentDTO updateAppointment = appointmentService.updateAppointmentDate(id, appointmentDTO, newDate);
+            model.addAttribute("exito", "El turno se actualizó correctamente");
         } catch (MiException e){
             model.addAttribute("error", "Error al actualizar el turno");
         }
-        return ""; //Vista del form para cambiar el turno
+        return null; //Vista del form para cambiar el turno
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAppointment(@PathVariable String id, Model model) {
-        try {
-            appointmentService.deleteAppointment();
-            model.addAttribute("exito", "El turno se eliminó correctamente")
-        }catch (MiException e){
-            model.addAttribute("error", "Error al eliminar el turno")
-        }
-        return ""; // vista de la lista de turnos
-
+        appointmentService.deleteAppointment(id);
+        model.addAttribute("exito", "El turno se eliminó correctamente");
+        return null; // vista de la lista de turnos
     }
 
 
@@ -74,6 +73,3 @@ public class AppointmentController {
     }
 
 }
-
-
-
