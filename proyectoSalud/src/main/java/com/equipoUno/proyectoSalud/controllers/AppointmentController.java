@@ -1,18 +1,22 @@
 package com.equipoUno.proyectoSalud.controllers;
 
 import com.equipoUno.proyectoSalud.dto.AppointmentDTO;
+import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.servicies.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
-@RequestMapping("/turno")
+@RequestMapping("/appointment")
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
@@ -54,11 +58,22 @@ public class AppointmentController {
 
     }
 
-    /*
-    @GetMapping("/occupied")
-    public ResponseEntity<List<AppointmentDTO>> OccupiedAppintments(){
-        List<AppointmentDTO> occupiedAppointments = appointmentService.occupiedAppointmentsDTO();
-        return ResponseEntity.ok(occupiedAppointments);
+
+    @GetMapping ("/allAppointments")
+    public String listAppointments(ModelMap model) {
+        List<AppointmentDTO> appointments = appointmentService.availableAppointments();
+        model.addAttribute("appointments", appointments);
+        return "appointment_list";
     }
 
-    */
+    @GetMapping ("/occupiedAppointments")
+    public String occupiedAppointments(ModelMap model) {
+        List<AppointmentDTO> occupiedAppointments = appointmentService.occupiedAppointmentsDTO();
+        model.addAttribute("appointments", occupiedAppointments);
+        return "occupiedApointments";
+    }
+
+}
+
+
+
