@@ -111,8 +111,13 @@ public class AppointmentServiceImplement implements AppointmentService{
 
     public List<AppointmentDTO> availableAppointments() {
 
+<<<<<<< HEAD
         List<Appointment> appointmentList = appointmentRepository.findAll();
         List<AppointmentDTO> availableAppointmentsDTO = new ArrayList<>();
+=======
+       List<Appointment> appointmentList = appointmentRepository.findAll();
+       List<AppointmentDTO> availableAppointmentsDTO = new ArrayList<>();
+>>>>>>> dev
 
         for (Appointment appointment : appointmentList){
             AppointmentDTO appointmentDTO = modelMapper.map(appointment, AppointmentDTO.class);
