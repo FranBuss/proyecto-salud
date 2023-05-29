@@ -9,8 +9,10 @@ body {
 }
 
 .profile-img {
-	margin-top: 20px;
-	width: 120px;
+	margin-top: 50px;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
 }
 
 /* .cont-form {

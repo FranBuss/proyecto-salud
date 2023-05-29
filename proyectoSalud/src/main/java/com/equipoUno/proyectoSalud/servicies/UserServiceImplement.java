@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImplement implements UserService, UserDetailsService {
 
-    private  final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final PatientRepository patientRepository;
     private final ProfessionalRepository professionalRepository;
     private final ModelMapper modelMapper;
@@ -43,7 +43,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     private final ImageServiceImplement imageServiceImplement;
 
     @Autowired
-    public UserServiceImplement(ProfessionalRepository professionalRepository, PatientRepository patientRepository, UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, ImageServiceImplement imageServiceImplement){
+    public UserServiceImplement(ProfessionalRepository professionalRepository, PatientRepository patientRepository, UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, ImageServiceImplement imageServiceImplement) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -53,7 +53,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDTO registerUser(UserDTO userDTO){
+    public UserDTO registerUser(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         user.setRol(Rol.PATIENT);
         user.setEmail(userDTO.getEmail().concat(userDTO.getEmailSuffix().getValue()));
@@ -73,45 +73,46 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDTO updateUser(String id, UserDTO userDTO) throws MiException{
+    public User updateUser(String id, UserDTO userDTO, User userSession) throws MiException {
         Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-//            User updateUser = modelMapper.map(userDTO, User.class);
             if (userDTO.getEmail() != null && !userDTO.getEmail().isEmpty()) {
                 user.setEmail(userDTO.getEmail().concat(userDTO.getEmailSuffix().getValue()));
+                userSession.setEmail(user.getEmail());
             }
-            if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty() ) {
-                user.setPassword(userDTO.getPassword());
+            if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
+                user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+                userSession.setPassword(user.getPassword());
             }
-            if (userDTO.getImageFile() != null) {
-                System.out.println("ENTRA 1");
+            if (userDTO.getImageFile() != null && !userDTO.getImageFile().isEmpty()) {
                 MultipartFile imageFile = userDTO.getImageFile();
                 Image image = user.getImage();
                 String imageId = "";
                 if (image != null) {
                     imageId = image.getId();
                 }
-                    System.out.println("ENTRA 2");
-
-                    try {
-                        Image updatedImage = imageServiceImplement.update(imageFile, imageId);
-                        user.setImage(updatedImage);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                try {
+                    Image updatedImage = imageServiceImplement.update(imageFile, imageId);
+                    user.setImage(updatedImage);
+                    userSession.setImage(user.getImage());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
             userRepository.save(user);
-            return modelMapper.map(user, UserDTO.class);
+            return userSession;
+//            return modelMapper.map(user, UserDTO.class);
         } else {
             throw new MiException("User Not Found");
         }
     }
 
     @Override
-    public void deleteUser(String id){
+    public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
+
     @Override
     public PatientDTO assignPatientUser(String userId, PatientDTO patientDTO) {
         User user = userRepository.findById(userId).orElse(null);
@@ -125,7 +126,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     public ProfessionalDTO assignProfessionalUser(String userId, ProfessionalDTO professionalDTO) {
         User user = userRepository.findById(userId).orElse(null);
         assert user != null;
-        if (user.getRol().toString().equals("PATIENT")){
+        if (user.getRol().toString().equals("PATIENT")) {
             user.setRol(Rol.PROFESSIONAL);
             userRepository.save(user);
             Professional professional = modelMapper.map(professionalDTO, Professional.class);
@@ -135,17 +136,17 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         }
         return null;
     }
-    
+
 
     @Override
-    public List<User> findAllUsers(){
+    public List<User> findAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream().map(user -> modelMapper.map(user, User.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public User getOne(String id){
+    public User getOne(String id) {
         return userRepository.getOne(id);
     }
 
@@ -154,7 +155,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
 
-        if (user != null){
+        if (user != null) {
             List<GrantedAuthority> auths = new ArrayList();
 
             GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + user.getRol().toString());
