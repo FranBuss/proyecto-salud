@@ -23,11 +23,8 @@ public class AppointmentDTO {
     private int duration;
     private String state;
     private String comments;
-
     private LocalTime startTime;
-
     private LocalTime endTime;
-
     private Set<DayOfWeek> availableDays;
 
 }

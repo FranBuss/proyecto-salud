@@ -36,11 +36,11 @@ public class PatientController {
         }
     }
 
-    @PostMapping("/createPatient")
-    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
-        PatientDTO createdPatient = patientService.createPatient(patientDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
-    }
+//    @PostMapping("/createPatient")
+//    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
+//        PatientDTO createdPatient = patientService.createPatient(patientDTO);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
+//    }
 
     @PostMapping(value = "/update/{id}", params = "_method=put")
     public String updatePatient(@PathVariable String id) {
@@ -66,10 +66,11 @@ public class PatientController {
         return "patient_list";
     }
 
-    @PostMapping("/{userId}/patients")
-    public ResponseEntity<String> assignPatientUser(@PathVariable String userId, @RequestBody PatientDTO patientDTO) {
+
+    @PostMapping("/generatePatient/{userId}")
+    public String assignPatientUser(@PathVariable("userId") String userId, @ModelAttribute("patientDTO") PatientDTO patientDTO) {
         userService.assignPatientUser(userId, patientDTO);
-        return ResponseEntity.ok("Paciente asignado correctamente");
+        return "redirect:../profile";
     }
 
 }
