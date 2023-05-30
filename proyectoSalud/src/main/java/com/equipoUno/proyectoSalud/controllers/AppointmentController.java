@@ -5,12 +5,10 @@
 package com.equipoUno.proyectoSalud.controllers;
 
 import com.equipoUno.proyectoSalud.dto.AppointmentDTO;
-import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.servicies.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -29,6 +27,7 @@ public class AppointmentController {
     AppointmentController(AppointmentService appointmentService){
         this.appointmentService = appointmentService;
     }
+
     @PostMapping("/addAppointment")
     public ResponseEntity<AppointmentDTO> addAppointment(@RequestBody AppointmentDTO appointmentDto) throws MiException {
         try {
