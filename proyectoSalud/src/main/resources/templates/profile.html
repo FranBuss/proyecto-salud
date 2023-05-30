@@ -89,7 +89,7 @@
 					</div>
 					<div class="col-md-10">
 						<div class="form-profile__group">
-							<label for="contact" class="form-profile__label">Contacto<span th:text="${' (' + patient.contact + ')'}"></span></label>
+							<label for="contact" class="form-profile__label">Contacto<span th:if="${patient != null}" th:text="${' (' + patient.contact + ')'}"></span></label>
 							<input th:field="*{contact}" type="tel" id="contact" class="form-profile__input form-control">
 						</div>
 					</div>
