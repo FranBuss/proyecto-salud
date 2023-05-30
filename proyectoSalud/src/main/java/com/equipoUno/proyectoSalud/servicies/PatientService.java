@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public interface PatientService {
-    PatientDTO createPatient(PatientDTO dto);
+    void createPatient(Patient patient);
     PatientDTO getPatient(String id);
     Patient getPatientByUserId(String id);
     Patient updatePatient(String id);

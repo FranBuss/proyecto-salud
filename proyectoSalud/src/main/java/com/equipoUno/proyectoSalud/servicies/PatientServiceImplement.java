@@ -38,10 +38,8 @@ public class PatientServiceImplement implements PatientService {
     }
 
     @Override
-    public PatientDTO createPatient(PatientDTO dto) {
-        Patient patient = modelMapper.map(dto, Patient.class);
-        patient = patientRepository.save(patient);
-        return modelMapper.map(patient, PatientDTO.class);
+    public void createPatient(Patient patient) {
+        patientRepository.save(patient);
     }
 
     @Override
