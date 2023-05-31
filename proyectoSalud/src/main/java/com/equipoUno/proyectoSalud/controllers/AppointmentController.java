@@ -29,12 +29,14 @@ public class AppointmentController {
     }
 
     @PostMapping("/addAppointment")
-    public ResponseEntity<AppointmentDTO> addAppointment(@RequestBody AppointmentDTO appointmentDto) throws MiException {
+    public String addAppointment(@ModelAttribute("appointmentDTO") AppointmentDTO appointmentDto, Model model) throws MiException {
         try {
             AppointmentDTO createdAppointment = appointmentService.addAppointment(appointmentDto);
-            return ResponseEntity.ok(createdAppointment);
+            model.addAttribute("createdAppointment", createdAppointment);
+            return "appointment-success";
         } catch (MiException e){
-            return ResponseEntity.badRequest().body(null);
+            model.addAttribute("error", e.getMessage());
+            return "appointment-error";
         }
     }
 
@@ -68,7 +70,7 @@ public class AppointmentController {
     public String occupiedAppointments(ModelMap model) {
         List<AppointmentDTO> occupiedAppointments = appointmentService.occupiedAppointmentsDTO();
         model.addAttribute("appointments", occupiedAppointments);
-        return "occupiedApointments";
+        return "occupiedAppointments";
     }
 
 }

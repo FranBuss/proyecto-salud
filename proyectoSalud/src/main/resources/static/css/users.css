@@ -50,15 +50,21 @@
 
 .table-users-view {
   width: 100%
+
 }*/
 
 .appointment-view {
-      display: flex;
+      /*display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 100vh;*/
       background-color: var(--blanco);
-      background-image: linear-gradient(var(--blanco), var(--gris), var(--celeste));
+      /*background-image: linear-gradient(var(--blanco), var(--gris), var(--celeste));*/
+      flex: 1;
+      border-radius: 20px;
+      border: 2px solid var(--celeste-oscuro);
+      width: 95%;
+      align-self: center;
     }
 
     .cont-table {
@@ -70,14 +76,17 @@
       width: 100%;
       background-color: var(--blanco);
       background-image: none;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
       border-collapse: collapse;
+      border-radius: 20px;
     }
 
     .table-users-view th,
     .table-users-view td {
       padding: 10px;
       text-align: center;
+      border-radius: 20px;
+
     }
 
     .table-users-view th {
@@ -119,3 +128,10 @@
       display: inline-block;
       padding: 6px 12px;
       margin-bottom: 0;
+      }
+      .main_conteiner{
+      display:flex;
+      flex-direction: column;
+      height: 100vh;
+      background: linear-gradient(var(--blanco), var(--gris), var(--celeste));
+      }
