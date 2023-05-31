@@ -24,17 +24,23 @@
 <main class="cont-form">
     <form th:action="@{/professional/changeRol/{userId}(userId=${user.id})}" method="POST" th:object="${professionalDTO}" class="form-register">
         <p class="form-register__ini">REGISTRO DE PROFESIONAL</p>
-        <input type="hidden" th:value="${userId}"/>
+        <input hidden th:value="${userId}"/>
+
+        <input type="text" class="form-register__name-inp" name="nombre" th:value="${user.name}">
+        <input type="text" class="form-register__name-inp" name="nombre" th:value="${user.email}">
         <input type="time" th:field="*{entryTime}" id="form_name" name="name" class="form-register__name-inp">
         <input type="time" th:field="*{exitTime}" id="form_name" name="name" class="form-register__name-inp">
+
         <select name="specialization" class="form-searcher__email-inp">
             <option>Especialidad</option>
             <option th:each="specialization : ${specializations}" th:value="${specialization}" th:text="${specialization}" />
         </select>
 
+
         <div class="form-register__cont-submit">
             <button type="submit" >Registrarse</button>
         </div>
+
     </form>
 </main>
 
