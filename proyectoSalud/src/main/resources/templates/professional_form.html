@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/static/css/navbar.css">
     <link rel="stylesheet" href="/static/css/footer.css">
     <link rel="stylesheet" href="/static/css/users.css ">
-    <link rel="stylesheet" href="/static/css/register.css">
+    <link rel="stylesheet" href="/static/css/professional_form.css">
     <script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>
     <title>Register Professional</title>
 </head>
@@ -30,13 +30,22 @@
         <input type="text" class="form-register__name-inp" name="nombre" th:value="${user.email}">
         <input type="time" th:field="*{entryTime}" id="form_name" name="name" class="form-register__name-inp">
         <input type="time" th:field="*{exitTime}" id="form_name" name="name" class="form-register__name-inp">
+<<<<<<< HEAD
         <!--        Specialization es un Enum  -->
+=======
+>>>>>>> fa18a2042af7ca476865bfbc8c159566219b54bc
         <select name="specialization" class="form-searcher__email-inp">
             <option>Especialidad</option>
             <option th:each="specialization : ${specializations}" th:value="${specialization}" th:text="${specialization}" />
         </select>
 
+<<<<<<< HEAD
                                          -->
+=======
+        <div class="form-register__cont-submit">
+            <button type="submit" >Registrarse</button>
+        </div>
+>>>>>>> fa18a2042af7ca476865bfbc8c159566219b54bc
     </form>
 </main>
 

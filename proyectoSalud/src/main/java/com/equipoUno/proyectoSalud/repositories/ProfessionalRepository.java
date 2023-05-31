@@ -12,4 +12,6 @@ import java.util.List;
 public interface ProfessionalRepository extends JpaRepository<Professional, String> {
     @Query("SELECT p FROM Professional p WHERE p.specialization = :specialization ORDER BY p.charge, p.qualification DESC")
     List<Professional> searchBySpecialization(Specialization specialization);
+
+
 }

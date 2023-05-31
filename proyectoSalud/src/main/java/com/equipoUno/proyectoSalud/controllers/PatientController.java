@@ -5,15 +5,15 @@ import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/patients")
 public class PatientController {
 
@@ -25,7 +25,7 @@ public class PatientController {
         this.patientService = patientService;
         this.userService = userService;
     }
-
+/* QUEDA PENDIENTE. FALTA VISTA.
     @GetMapping("/{id}")
     public ResponseEntity<PatientDTO> getPatient(@PathVariable String id) {
         PatientDTO patientDTO = patientService.getPatient(id);
@@ -35,11 +35,11 @@ public class PatientController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    @PostMapping("/createPatient")
-    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
-        PatientDTO createdPatient = patientService.createPatient(patientDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
+*/
+   @PostMapping("/createPatient")
+   public String createPatient(@RequestBody Patient patient) {
+       patientService.createPatient(patient);
+      return "/register";
     }
 
     @PostMapping(value = "/update/{id}", params = "_method=put")
@@ -66,10 +66,10 @@ public class PatientController {
         return "patient_list";
     }
 
-    @PostMapping("/{userId}/patients")
-    public ResponseEntity<String> assignPatientUser(@PathVariable String userId, @RequestBody PatientDTO patientDTO) {
-        userService.assignPatientUser(userId, patientDTO);
-        return ResponseEntity.ok("Paciente asignado correctamente");
-    }
 
+    @PostMapping("/generatePatient/{userId}")
+    public String assignPatientUser(@PathVariable("userId") String userId, @ModelAttribute("patientDTO") PatientDTO patientDTO) {
+        userService.assignPatientUser(userId, patientDTO);
+        return "redirect:/profile";
+    }
 }
