@@ -1,70 +1,148 @@
-body {
-	background-image: linear-gradient(var(--blanco), var(--gris), var(--celeste));
+.profile__main {
+	background-image: linear-gradient(
+		var(--blanco), var(--gris), var(--celeste));
+	border-top: 1px solid var(--blanco);
+	border-bottom: 1px solid var(--celeste);
+	height: 640px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.profile_title {
-	color: var(--celeste-oscuro);
-	text-align: center;
-	font-size: 40px;
+.form-profile__cont {
+	border: 2px solid var(--celeste-oscuro);
+	border-radius: 20px;
+	background-color: transparent;
+	margin: 20px;
+	width: 800px;
+	height: 80%;
+	-webkit-box-shadow: 0px 0px 45px -15px var(--azul-oscuro);
+    -moz-box-shadow: 0px 0px 45px -15px var(--azul-oscuro);
+    box-shadow: 0px 0px 45px -15px var(--azul-oscuro);
 }
 
-.profile-img {
-	margin-top: 50px;
-	width: 150px;
-	height: 150px;
+/* Left-side User Profile */
+.user-profile__leftside {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-right: 1px solid var(--celeste-oscuro);
+	margin: 20px 0;
+}
+
+.user-profile__img {
+	margin-top: 30px;
+	width: 180px;
+	height: 180px;
+	border: 3px solid var(--celeste-oscuro);
 	border-radius: 50%;
 }
 
-/* .cont-form {
-	height: 100vh;
+.user-profile__img-inp-cont {
+	width: 100%;
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	background-image: linear-gradient(var(--blanco), var(--gris), var(--celeste));
-} */
-
-.form-profile {
-	border-radius: 5%;
-	width: 30%;
-	height: 75%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	box-shadow: 0px 0px 75px -15px rgba(0, 0, 0, 0.75);
-	background-color: var(--gris);
+	margin-top: 20px;
 }
 
-.form-profile__title {
+#user-profile__img-inp {
+    display: none;
+}
+
+#user-profile__img-inp-label {
+    display: inline-block;
+    width: 90%;
+    height: 50px;
+    padding: 10px 20px;
+	color: var(--blanco);
+    background-color: var(--celeste-oscuro);
+    border: 1px solid #ccc;
+    cursor: pointer;
 	text-align: center;
-	font-size: 30px;
-	width: 90%;
-	margin-top: 30px;
+	line-height: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.form-profile__group {
-	width: 90%;
-	margin-bottom: 20px;
+#user-profile__img-inp-label:hover {
+	color: whitesmoke;
+    background-color: var(--celeste);
+}
+/* ----------------------- */
+.form-profile__title {
+	color: var(--celeste-oscuro);
+	font-size: 40px;
+}
+
+.user-profile__name-surname-cont,
+.user-profile__email-cont,
+.user-profile__pass-cont,
+.user-profile__confpass-cont,
+.patient-profile__insurance-cont,
+.patient-profile__contact-cont {
+	margin-bottom: 15px;
+	width: 85%;
 }
 
 .form-profile__label {
+	color: var(--azul-oscuro);
+	font-size: 18px;
 	font-weight: 600;
-	margin-bottom: 5px;
 }
 
-.form-profile__input {
-	width: 100%;
+.form-profile__span {
+	font-size: 18px;
+	margin-left: 10px;
+	padding-top: 2px;
+}
+
+/* .form-profile__input {
 	height: 35px;
 	padding: 8px 10px;
 	font-size: 20px;
 	border: 1px solid var(--gris-oscuro);
 }
 
-.form-profile__select {
-	width: 100%;
-	font-size: 15px;
+.form-profile__input:focus {
+	border: 1px solid var(--azul-oscuro);
+    outline: none;
+} */
+
+.form-profile__input {
 	height: 35px;
-	border: 1px solid var(--gris-oscuro);
+	padding: 8px 10px;
+	font-size: 18px;
+	border: 0;
+	border-bottom: 2px solid var(--celeste-oscuro);
+	background-color: transparent;
+}
+
+.form-profile__input:focus {
+    outline: none;
+}
+
+.user-profile__email-inp {
+	width: 55%;
+}
+
+.user-profile__email-select {
+	font-size: 18px;
+	width: 45%;
+	height: 35px;
+	margin-left: 10px;
+	background-color: transparent;
+	border: 0;
+	border-bottom: 2px solid var(--celeste-oscuro);
+}
+/* ------------ */
+.patient-profile__insurance-select {
+	font-size: 18px;
+	height: 35px;
+	padding-left: 4px;
+	background-color: transparent;
+	border: 0;
+	border-bottom: 2px solid var(--celeste-oscuro);
 }
 
 .form-profile__button {
@@ -88,8 +166,30 @@ body {
 	cursor: pointer;
 }
 
-.healthInsurance--hidden {
-	display: none;
+.form-profile__edit-icon,
+.form-profile__cancel-icon {
+	color: var(--azul-oscuro);
+	margin-left: 10px;
+	display: flex !important;
+	align-items: center;
+	cursor: pointer;
+}
+
+.form-profile__edit-icon {
+	font-size: 18px;
+}
+
+.form-profile__cancel-icon {
+	font-size: 25px;
+}	
+
+.form-profile__edit-icon:hover,
+.form-profile__cancel-icon:hover {
+	color: var(--celeste-oscuro);
+}
+
+.form-profile--hidden {
+	display: none !important;
 }
 
 @media screen and (max-width: 1200px) {

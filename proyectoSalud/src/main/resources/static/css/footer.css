@@ -1,7 +1,7 @@
-.footer {
+footer {
     background: var(--celeste);
     border-top: 1px solid var(--azul-oscuro);
-    height: auto;
+    /* height: 200px; */
 }
 
 .footer-content {
