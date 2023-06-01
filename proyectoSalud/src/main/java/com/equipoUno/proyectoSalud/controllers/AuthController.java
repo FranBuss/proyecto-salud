@@ -54,9 +54,10 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, Model model) {
+    public String login(@RequestParam(required = false) BindingResult bindingResult, Model model) {
 
-        if (error != null) {
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult.getAllErrors());
             model.addAttribute("error", "Usuario o Contraseña invalidos");
         }
 

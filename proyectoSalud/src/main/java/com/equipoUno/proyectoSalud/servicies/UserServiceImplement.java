@@ -43,7 +43,9 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     private final ImageServiceImplement imageServiceImplement;
 
     @Autowired
-    public UserServiceImplement(ProfessionalRepository professionalRepository, PatientRepository patientRepository, UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, ImageServiceImplement imageServiceImplement) {
+    public UserServiceImplement(ProfessionalRepository professionalRepository, PatientRepository patientRepository,
+            UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder,
+            ImageServiceImplement imageServiceImplement) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -102,7 +104,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
             }
             userRepository.save(user);
             return userSession;
-//            return modelMapper.map(user, UserDTO.class);
+            // return modelMapper.map(user, UserDTO.class);
         } else {
             throw new MiException("User Not Found");
         }
@@ -137,7 +139,6 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         return null;
     }
 
-
     @Override
     public List<User> findAllUsers() {
         List<User> users = userRepository.findAll();
@@ -149,7 +150,6 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     public User getOne(String id) {
         return userRepository.getOne(id);
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -175,6 +175,5 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         }
 
     }
-
 
 }

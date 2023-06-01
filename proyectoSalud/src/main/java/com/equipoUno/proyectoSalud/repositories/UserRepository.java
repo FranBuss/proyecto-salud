@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
+
+    @Query("SELECT u FROM User u WHERE u.email LIKE CONCAT(:email, '@%')")
+    public User findByEmailLike(@Param("email") String email);
     @Query("SELECT u FROM User u WHERE u.email = :email")
     public User findByEmail(@Param("email")String email);
 

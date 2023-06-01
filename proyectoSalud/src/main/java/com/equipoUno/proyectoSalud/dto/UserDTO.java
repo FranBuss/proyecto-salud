@@ -1,5 +1,6 @@
 package com.equipoUno.proyectoSalud.dto;
 
+import com.equipoUno.proyectoSalud.anotations.EmailAlreadyExist;
 import com.equipoUno.proyectoSalud.anotations.FileExtension;
 import com.equipoUno.proyectoSalud.enumerations.EmailDomain;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class UserDTO {
 
     // Regex: Solo letras, números y (.,-,_)
     @Pattern(regexp = "^[a-zA-Z0-9._-]{6,30}$", message = "El email solo puede contener -,_,.,letras y/o números.")
+    @EmailAlreadyExist()
     private String email;
 
     @NotNull(message = "Tiene que seleccionar un dominio válido.")
