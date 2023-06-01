@@ -142,6 +142,7 @@
 }
 
 .navbar__dropdown-link:hover {
+    color: whitesmoke;
     background-color: var(--celeste-oscuro);
 }
 

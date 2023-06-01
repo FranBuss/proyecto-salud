@@ -82,6 +82,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
                 userSession.setEmail(user.getEmail());
             }
             if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
+                System.out.println(userDTO.getPassword());
                 user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
                 userSession.setPassword(user.getPassword());
             }

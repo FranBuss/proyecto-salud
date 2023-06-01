@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="/static/css/login.css">
     <title>Login</title>
     <script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>
-</head><div class="cont-form">
+</head>
+<body>
+    <div class="cont-form">
         <form action="/api/auth/login" method="POST" class="form-login">
             <p class="form-login__ini">INICIA SESIÓN</p>
             <div class="form-login__cont-inp">
@@ -16,10 +18,11 @@
                     <p class="form-login__email">Correo electrónico</p>
                     <input type="email" name="email" class="form-login__email-inp">
                 </div>
-                <div class="form-login__cont-pass"> 
+                <div class="form-login__cont-pass">
                     <p class="form-login__pass">Contraseña</p>
                     <div class="form-login__cont-pass-inp">
-                        <input type="password" name="password" class="form-login__pass-inp form-login__pass-inp--eye" id="pass-inp">
+                        <input type="password" name="password" class="form-login__pass-inp form-login__pass-inp--eye"
+                            id="pass-inp">
                         <div class="form-login__cont-eye" id="cont-eye">
                             <i class="fa-regular fa-eye-slash form-login__eye" id="eye"></i>
                         </div>
@@ -28,15 +31,15 @@
                 <div id="cont-error" class="form-login__cont-error form-login__cont-error--hidden">
                     <p id="form-error" class="form-login__error">Hola</p>
                 </div>
+                <th:block th:replace="/fragments/error :: error"></th:block>
                 <div class="form-login__cont-submit">
                     <button type="submit" class="form-login__submit">Ingresar</button>
                 </div>
             </div>
-            <p class="form-login__reg">Si no tenes cuenta 
+            <p class="form-login__reg">Si no tenes cuenta
                 <a href="/register" class="form-login__reg-a">registrate</a>.
             </p>
         </form>
-        <th:block th:replace="/fragments/error :: error"></th:block>
     </div>
     <script>
         document.getElementById("cont-eye").addEventListener("click", () => {
