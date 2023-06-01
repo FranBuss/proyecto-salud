@@ -57,7 +57,6 @@ email.addEventListener("input", () => {
 
 emailSuffix.addEventListener("input", () => {
   formState.emailSuffix = validEmailSuffix.includes(emailSuffix.value);
-  console.log(emailSuffix.value);
   errorCheck();
 });
 
