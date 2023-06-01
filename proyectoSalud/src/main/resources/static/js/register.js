@@ -62,6 +62,7 @@ emailSuffix.addEventListener("input", () => {
 
 password.addEventListener("input", () => {
   formState.password = regex.password.test(password.value);
+  formState.confPassword = password.value === confPassword.value;
   errorCheck();
 });
 
