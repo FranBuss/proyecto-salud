@@ -2,6 +2,8 @@ package com.equipoUno.proyectoSalud.controllers;
 
 import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.dto.UserDTO;
+import com.equipoUno.proyectoSalud.entities.Image;
+import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.enumerations.EmailDomain;
@@ -38,6 +40,17 @@ public class RouteController {
         this.professionalService = professionalService;
     }
 
+    @GetMapping("/")
+    public String index(HttpSession session, ModelMap model) {
+        if (session.getAttribute("userSession") == null) {
+            return "index.html";
+        } else {
+            User loggedUser = (User) session.getAttribute("userSession");
+            model.put("role", loggedUser.getRol().toString());
+            model.put("name", loggedUser.getName().toString());
+            return "index.html";
+        }
+    }
 
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, Model model) {
@@ -72,20 +85,6 @@ public class RouteController {
         List<PatientDTO> patients = patientService.findAllPatients();
         model.addAttribute("patients",patients);
         return "patients";
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
-    @GetMapping("/index")
-    public String index(HttpSession session) {
-
-        User loggedUser = (User) session.getAttribute("userSession");
-
-//        if (loggedUser.getRol().toString().equals("ADMIN")) {
-//            return "redirect:/admin/dashboard";
-//        }
-
-        return "index";
-
     }
 
     @GetMapping("/register")
@@ -124,9 +123,23 @@ public class RouteController {
 
     @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
     @GetMapping("/profile")
-    public String perfil(ModelMap model, HttpSession session){
+    public String perfil(Model model, HttpSession session){
         User user = (User) session.getAttribute("userSession");
-        model.put("user", user);
+        Image image = user.getImage();
+        UserDTO userDTO = new UserDTO();
+        PatientDTO patientDTO = new PatientDTO();
+        Patient patient = patientService.getPatientByUserId(user.getId());
+
+        if (patient != null) {
+            model.addAttribute("patient", patient);
+        }
+        if (image != null) {
+            model.addAttribute("image", "notNull");
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("userDTO", userDTO);
+        model.addAttribute("patientDTO", patientDTO);
         return "profile";
     }
 

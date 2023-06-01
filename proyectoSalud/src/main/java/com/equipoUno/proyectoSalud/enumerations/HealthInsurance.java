@@ -14,5 +14,5 @@ public enum HealthInsurance {
 
     AVALIAN,
 
-    NONE;
+    NINGUNA;
 }

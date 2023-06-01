@@ -36,6 +36,7 @@
           <th class="table__thead-col">Hora de salida</th>
           <th class="table__thead-col">Costo de consulta</th>
           <th class="table__thead-col">Calificación</th>
+          <th class="table__thead-col">Insepcionar</th>
           <th class="table__thead-col">Modificar</th>
           <th class="table__thead-col">Eliminar</th>
         </tr>
@@ -50,10 +51,13 @@
             <td th:text="${professional.charge}" class="table__tbody-col"></td>
             <td th:text="${professional.qualification}" class="table__tbody-col"></td>
             <td>
+              <a th:href="@{/professionals/__${professional.id}__}" class="btn btn-info">VER</a>
+            </td>
+            <td>
               <a th:href="@{/admin/update/__${professional.id}__}" class="btn btn-info">Modificar</a>
             </td>
             <td>
-              <a th:href="@{/api/professionals/__${professional.id}__}" class="btn btn-danger">Eliminar</a>
+              <a th:href="@{/professionals/delete/__${professional.id}__}" class="btn btn-danger">Eliminar</a>
             </td>
           </tr>
           <tr class="table__tbody-row">

@@ -1,0 +1,293 @@
+.cont-form {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(
+        var(--blanco), var(--gris), var(--celeste));
+}
+
+.form-register {
+    border-radius: 5%;
+    width: 25%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    -webkit-box-shadow: 0px 0px 75px -15px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 75px -15px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 75px -15px rgba(0,0,0,0.75);
+    background-color: transparent;
+}
+
+.form-register__ini {
+    text-align: center;
+    font-size: 40px;
+    width: 50%;
+    height: 100%;
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--celeste-oscuro);
+}
+
+.form-register__cont-inp {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form-register__cont-name,
+.form-register__cont-surname,
+.form-register__cont-pass,
+.form-register__cont-email,
+.form-register__cont-insurance,
+.form-register__cont-contact {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.form-register__name,
+.form-register__surname,
+.form-register__email,
+.form-register__pass,
+.form-register__insurance,
+.form-register__contact {
+    font-weight: bold;
+    margin: 10px 0;
+    color: var(--azul-oscuro);
+}
+
+.form-register__name-inp:-webkit-autofill {
+    background-color: white;
+}
+
+.form-register__cont-email-inp {
+    display: flex;
+}
+
+.form-register__email-inp {
+    width: 70%;
+}
+
+.form-register__select-inp {
+    width: 30%;
+}
+
+.form-register__cont-pass-inp {
+    display: flex;
+    width: 100%;
+}
+
+.form-register__name-inp,
+.form-register__surname-inp,
+.form-register__email-inp,
+.form-register__insurance-inp,
+.form-register__contact-inp,
+.form-register__pass-inp {
+    height: 35px;
+    padding: 8px 10px;
+    font-size: 18px;
+    border: 1px solid var(--gris-oscuro);
+}
+
+.form-register__email-select {
+    color: var(--azul-oscuro);
+    padding-left: 2px;
+}
+
+.form-register__insurance-select {
+    font-size: 15px;
+    height: 35px;
+    border: 1px solid var(--gris-oscuro);
+}
+
+.form-register__name-inp:focus,
+.form-register__surname-inp:focus,
+.form-register__email-inp:focus,
+.form-register__contact-inp:focus,
+.form-register__pass-inp:focus,
+.form-register__email-select:focus,
+.form-register__insurance-select:focus {
+    border: 1px solid var(--azul-oscuro);
+    outline: none;
+}
+
+.form-register__pass-inp--eye {
+    width: 88%;
+}
+
+.form-register__cont-eye {
+    width: 12%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--blanco);
+    border: 1px solid var(--azul-oscuro);
+    cursor: pointer;
+}
+
+.form-register__eye {
+    color: var(--azul-oscuro);
+    font-size: 20px;
+}
+
+.form-register__cont-error {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--error);
+    background-color: var(--bg-error);
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-register__error {
+    text-align: center;
+}
+
+.form-register__cont-error--hidden {
+    display: none;
+}
+
+.form-register__cont-submit {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 10px 0;
+    width: 100%;
+}
+
+.form-register__submit {
+    width: 80%;
+    height: 35px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--blanco);
+    background-color: var(--celeste-oscuro);
+    border: none;
+    cursor: pointer;
+}
+
+.form-register__submit--disabled {
+    width: 80%;
+    height: 35px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--gris);
+    background-color: var(--celeste);
+    border: none;
+    cursor: default;
+}
+
+.form-register__log {
+    margin-top: 0;
+    margin-bottom: 50px;
+    text-align: center;
+    width: 80%;
+}
+
+.form-register__log-a {
+    font-weight: bold;
+    color: var(--azul-oscuro);
+}
+
+@media screen and (max-width: 1500px) {
+    .form-register {
+        width: 35%;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .form-register {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .form-register {
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .form-register {
+        width: 55%;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .form-register {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .form-register {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .form-register {
+        width: 100%;
+    }
+}
+
+@media screen and (max-height: 1200px) {
+    .form-register {
+        height: 53%;
+    }
+}
+
+@media screen and (max-height: 1050px) {
+    .form-register {
+        height: 61%;
+    }
+}
+
+@media screen and (max-height: 950px) {
+    .form-register {
+        height: 35%;
+    }
+}
+
+@media screen and (max-height: 900px) {
+    .form-register {
+        height: 70%;
+    }
+}
+
+@media screen and (max-height: 850px) {
+    .form-register {
+        height: 75%;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    .form-register {
+        height: 78%;
+    }
+}
+
+@media screen and (max-height: 750px) {
+    .form-register {
+        height: 82%;
+    }
+}
+
+@media screen and (max-height: 700px) {
+    .form-register {
+        height: 85%;
+    }
+}
+
+@media screen and (max-height: 650px) {
+    .form-register {
+        height: 95%;
+    }
+}

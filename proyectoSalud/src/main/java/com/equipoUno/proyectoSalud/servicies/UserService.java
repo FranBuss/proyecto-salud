@@ -6,6 +6,7 @@ import com.equipoUno.proyectoSalud.dto.UserDTO;
 import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface UserService{
@@ -15,7 +16,7 @@ public interface UserService{
 
     UserDTO registerUser(UserDTO userDTO);
 
-    UserDTO updateUser(String id, UserDTO userDTO) throws MiException;
+    User updateUser(String id, UserDTO userDTO, User userSession) throws MiException;
 
     PatientDTO assignPatientUser(String userId, PatientDTO patientDTO);
 

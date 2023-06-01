@@ -41,7 +41,9 @@ public class ImageServiceImplement implements ImageService{
 
     @Override
     public Image update(MultipartFile file, String id) throws IOException {
-        fileUtil.validateFile(file);
+        if (file != null) {
+            fileUtil.validateFile(file);
+        }
         byte[] content = fileUtil.readContentFile(file);
         Optional<Image> imageOptional = imageRepository.findById(id);
         Image image = imageOptional.orElseGet(Image::new);

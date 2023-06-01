@@ -14,83 +14,52 @@
 	<link rel="stylesheet" href="/static/css/navbar.css">
 	<link rel="stylesheet" href="/static/css/footer.css">
 	<link rel="stylesheet" href="/static/css/profile.css">
-	<script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>
 	<title>Profile</title>
+	<script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>
 </head>
 <body>
 	<th:block th:replace="/fragments/navbar :: navbar"></th:block>
 	<div class="container rounded bg-white mt-5 mb-5">
-		<div class="row">
+		<form th:action="@{/user/update/__${user.id}__}" th:object="${userDTO}" method="POST" enctype="multipart/form-data" class="row">
 			<div class="col-md-4 border-right">
 				<div class="d-flex flex-column align-items-center text-center p-3 py-2">
-					<div th:if="${imagenURL}">
-						<img class="rounded-circle mt-2" width="150px" th:src="${imagenURL}">
-					</div>
-					<div th:unless="${imagenURL}">
-						<img class="rounded-circle mt-2" id="preview_image" width="150px"
-							src="/static/img/profile.png">
-					</div>
-					<form th:action="@{/api/auth/update-image}" method="POST" enctype="multipart/form-data">
-						<div class="form-group mt-1">
-							<input type="file" id="profile_picture" onchange="previewImage(event)" name="profilePicture"
-								class="form-control-file mt-2" accept="image/*">
-						</div>
-						<button type="submit" class="form-profile_button_image mt-4">Cambiar Foto</button>
-					</form>
+					<!-- <div th:if="${imagenURL}"> -->
+						<!-- <img class="rounded-circle mt-2" width="150px" th:src="${imagenURL}"> -->
+					<!-- </div> -->
+					<!-- <div th:unless="${imagenURL}"> -->
+						<!-- <img th:if="${image == null}" src="/static/img/profile.png" class="rounded-circle profile-img" id="preview_image"> -->
+						<img th:if="${image != null}" th:src="@{/image/__${user.id}__}" class="profile-img" id="preview_image">
+						<img th:if="${image == null}" src="/static/img/profile.png" class="profile-img" id="preview_image">
+					<!-- </div> -->
+					<!-- <form th:action="@{/api/auth/update-image}" method="POST" enctype="multipart/form-data"> -->
+						<!-- <div class="form-group mt-1"> -->
+							<!-- <input th:field="*{imageFile}" type="file" id="profile_picture" name="profilePicture" class="mt-2" accept="image/*"> -->
+							<input th:field="*{imageFile}" type="file" id="profile_picture" name="profilePicture" class="mt-2">
+						<!-- </div> -->
+						<!-- <button type="submit" class="form-profile_button_image mt-4">Cambiar Foto</button> -->
+					<!-- </form> -->
 				</div>
 			</div>
 			<div class="col-md-8 border-right">
 				<div class="p-4 py-5">
-					<div class="d-flex justify-content-between align-items-center mb-5">
-						<h4 class="text-right profile_title">Perfil</h4>
+					<div class="d-flex justify-content-center align-items-center mb-5">
+						<h4 th:text="${'Perfil de ' + user.name + ' ' + user.surname}" class="text-right profile_title"></h4>
 					</div>
 					<div class="row mt-2">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-profile__group">
-									<label for="name" class="labels form-profile__label">Nombre</label>
-									<input class="form-profile_input form-control" id="name" readonly type="text">
-								</div>
-							</div>
-							<div class="col-md-6">
-
-								<div class="form-profile__group">
-									<label class="labels form-profile__label">Apellido</label>
-									<input type="text" class="form-profile__input form-control" readonly>
-								</div>
-							</div>
-						</div>
 						<div class="col-md-10">
 							<div class="form-profile__group">
-								<label for="email" class="form-profile__label">Email</label>
-								<input type="email" id="email" class="form-profile__input form-control">
+								<label for="email" class="form-profile__label">Email<span th:text="${' (' + user.email + ')'}"></span></label>
+								<input th:field="*{email}" type="text" name="email" id="email" class="form-profile__input form-control">
+								<select th:field="*{emailSuffix}" name="email_select" class="form-register__email-select">
+									<option th:each="suffix : ${T(com.equipoUno.proyectoSalud.enumerations.EmailDomain).values()}" th:value="${suffix}" th:text="${suffix.value}"></option>
+								</select>
 							</div>
 						</div>
 						<div class="col-md-8">
 							<div class="form-profile__group">
 								<label for="password" class="form-profile__label">Contraseña</label>
-								<input type="password" id="password" class="form-profile__input form-control">
+								<input th:field="*{password}" type="password" id="password" class="form-profile__input form-control">
 							</div>
-						</div>
-					</div>
-					<div class="col-md-5">
-						<div class="form-profile__group">
-							<label for="health_insurance" class="form-profile__label">Obra Social</label>
-							<select id="health_insurance" class="form-profile__select form-select">
-								<option value="OSDE">Osde</option>
-								<option value="IOMA">Ioma</option>
-								<option value="PAMI">Pami</option>
-								<option value="OSPATCA">Ospatca</option>
-								<option value="SWISS_MEDICAL">Swiss Medical</option>
-								<option value="AVALIAN">Avalian</option>
-								<option value="NONE">No tengo</option>
-							</select>
-						</div>
-					</div>
-					<div class="col-md-10">
-						<div class="form-profile__group">
-							<label for="contact" class="form-profile__label">Contacto</label>
-							<input type="tel" id="contact" class="form-profile__input form-control">
 						</div>
 					</div>
 				</div>
@@ -100,7 +69,38 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</form>
+	</div>
+	<div class="container rounded bg-white mt-5 mb-5">
+		<form th:action="@{/api/patients/generatePatient/__${user.id}__}" th:object="${patientDTO}" method="POST" class="row">
+			<!-- <div class="col-md-8 border-right"> -->
+				<div class="p-4 py-5">
+					<div class="d-flex justify-content-center align-items-center mb-5">
+						<h4 th:text="${'Datos de paciente'}" class="text-right profile_title"></h4>
+					</div>
+					<div class="col-md-5">
+						<div class="form-profile__group">
+							<label for="health_insurance" class="form-profile__label">Obra Social</label>
+							<select th:field="*{healthInsurance}" id="health_insurance" class="form-profile__select form-select">
+								<option th:if="${patient != null}" th:value="${patient.healthInsurance}" th:text="${patient.healthInsurance}" id="patient_insurance"></option>
+								<option th:each="insurance : ${T(com.equipoUno.proyectoSalud.enumerations.HealthInsurance).values()}" th:value="${insurance}" th:text="${insurance}" class="healthInsurance"></option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-10">
+						<div class="form-profile__group">
+							<label for="contact" class="form-profile__label">Contacto<span th:text="${' (' + patient.contact + ')'}"></span></label>
+							<input th:field="*{contact}" type="tel" id="contact" class="form-profile__input form-control">
+						</div>
+					</div>
+				</div>
+				<div class=" text-center">
+					<div class="form-profile__group">
+						<button type="submit" class="form-profile__button">Guardar</button>
+					</div>
+				</div>
+			<!-- </div> -->
+		</form>
 	</div>
 	<th:block th:replace="/fragments/footer :: footer"></th:block>
 
@@ -112,7 +112,15 @@
 	<script src="/static/js/profile.js"></script>
 
 
-
+	<script>
+		let html = document.getElementsByClassName("healthInsurance");
+		let arr = Array.from(html);
+		let patient_insurance = document.getElementById("patient_insurance");
+		for (let i = 0; i < arr.length; i++) {
+			if (arr[i].getAttribute("value") == patient_insurance.getAttribute("value")) {
+				arr[i].classList.add("healthInsurance--hidden");
+			}
+		}
+	</script>
 </body>
-
 </html>

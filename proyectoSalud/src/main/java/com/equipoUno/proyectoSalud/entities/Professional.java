@@ -24,6 +24,10 @@ public class Professional {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
+
     @Column(name = "drop_out")
     private boolean dropOut = false;
 
