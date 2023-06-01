@@ -1,151 +1,164 @@
-"use strict";
+const name = document.getElementById("form_name");
+const surname = document.getElementById("form_surname");
+const email = document.getElementById("form_email");
+const emailSuffix = document.getElementById("form_emailsuffix");
+const password = document.getElementById("form_password");
+const confPassword = document.getElementById("form_confpassword");
 
-let validateName = false;
-let validateEmail = false;
-let validatePass = false;
-let validateConfPass = false;
+const formState = {
+  name: false,
+  surname: false,
+  email: false,
+  emailSuffix: false,
+  password: false,
+  confPassword: false,
+};
 
-let inpNameWrited = false;
-const form_name = document.getElementById("form_name");
-form_name.addEventListener("input", () => {
-    // if (!inpNameWrited) {
-    //     if (form_name.value.length >= 3) {
-    //         validateName = true;
-    //         inpNameWrited = true;
-    //         errorCheck();
-    //     }
-    // } else {
-    //     if (form_name.value.length >= 3) {
-    //         validateName = true;
-    //         errorCheck();
-    //     } else {
-    //         validateName = false;
-    //         errorCheck();
-    //     }
-    // }
-    if (form_name.value.length >= 3) {
-        validateName = true;
-        errorCheck();
-    } else {
-        validateName = false;
-        errorCheck();
-    }
-})
+const errorMessage = {
+  name: "El nombre debe tener entre 3 y 13 letras.",
+  surname: "El apellido debe tener entre 3 y 13 letras.",
+  email: "Solo letras, números, ., _ , - y entre 6 a 30 caracteres.",
+  emailSuffix: "Seleccione un sub-dominio válido.",
+  password:
+    "Requisitos de contraseña: Minúscula, mayúscula, carácter especial, número, 6-10 caracteres.",
+  confPassword: "Las contraseñas deben coincidir.",
+};
 
-const form_email = document.getElementById("form_email");
-form_email.addEventListener("input", () => {
-    if (form_email.value.includes("@")) {
-        validateEmail = false;
-        errorCheck();
-    }
-    if (validateEmail == false && !form_email.value.includes("@")) {
-        validateEmail = true;
-        errorCheck();
-    }
-})
+const regex = {
+  name: /^[a-zA-Z]{3,13}$/,
+  email: /^[a-zA-Z0-9._-]{6,30}$/,
+  password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=]).{6,10}$/,
+};
 
-let inpPassWrited = false;
-const form_pass = document.getElementById("pass-inp");
-form_pass.addEventListener("input", () => {
-    if (!inpPassWrited) {
-        if (form_pass.value.length >= 6) {
-            validatePass = true;
-            inpPassWrited = true;
-            errorCheck();
-        }
-    } else {
-        if (form_pass.value.length < 6) {
-            validatePass = false;
-            errorCheck();
-        } else {
-            validatePass = true;
-            errorCheck();
-        }
-    }
-})
+const validEmailSuffix = [
+  "GMAIL",
+  "GMAIL_AR",
+  "OUTLOOK",
+  "OUTLOOK_AR",
+  "HOTMAIL",
+  "YAHOO",
+  "YAHOO_AR",
+];
 
-const form_confirmPass = document.getElementById("confirmPass-inp");
-form_confirmPass.addEventListener("input", () => {
-    if (validatePass == true) {
-        if (form_pass.value == form_confirmPass.value) {
-            validateConfPass = true;
-            errorCheck();
-        } else {
-            validateConfPass = false;
-            errorCheck();
-        }
-    } else {
-        validateConfPass = false;
-        errorCheck();
-    }
-})
+name.addEventListener("input", () => {
+  formState.name = regex.name.test(name.value);
+  errorCheck();
+});
 
-function errorCheck() {
-    let cont_error = document.getElementById("cont-error");
-    let error = document.getElementById("form-error");
-    if (validateName) {
-        cont_error.classList.add("form-register__cont-error--hidden");
-        if (validateEmail) {
-            cont_error.classList.add("form-register__cont-error--hidden");
-            if (validatePass) {
-                cont_error.classList.add("form-register__cont-error--hidden");
-                if (validatePass && validateConfPass) {
-                    cont_error.classList.add("form-register__cont-error--hidden");
-                    removeDisabled();
-                } else if (!form_confirmPass.value == "") {
-                    cont_error.classList.remove("form-register__cont-error--hidden");
-                    error.innerHTML = "Las contraseñas deben coincidir."
-                    addDisabled();
-                }
-            } else if (!form_pass.value == "") {
-                addDisabled();
-                cont_error.classList.remove("form-register__cont-error--hidden");
-                error.innerHTML = "La contraseña debe ser de al menos 6 caracteres.";
-            }
-        } else if (!form_email.value == "") {
-            addDisabled();
-            cont_error.classList.remove("form-register__cont-error--hidden");
-            error.innerHTML = "El mail no puede contener un arroba.";
-        }
-    } else {
-        addDisabled();
-        cont_error.classList.remove("form-register__cont-error--hidden");
-        error.innerHTML = "El nombre debe ser de al menos 3 caracteres.";
-    }
-}
+surname.addEventListener("input", () => {
+  formState.surname = regex.name.test(surname.value);
+  errorCheck();
+});
 
-function addDisabled() {
-    let form_submit = document.getElementById("form_submit");
-    form_submit.setAttribute("disabled", "");
-    form_submit.classList.remove("form-register__submit");
-    form_submit.classList.add("form-register__submit--disabled");
-}
+email.addEventListener("input", () => {
+  formState.email = regex.email.test(email.value);
+  errorCheck();
+});
 
-function removeDisabled() {
-    let form_submit = document.getElementById("form_submit");
+emailSuffix.addEventListener("input", () => {
+  formState.emailSuffix = validEmailSuffix.includes(emailSuffix.value);
+  console.log(emailSuffix.value);
+  errorCheck();
+});
+
+password.addEventListener("input", () => {
+  formState.password = regex.password.test(password.value);
+  errorCheck();
+});
+
+confPassword.addEventListener("input", () => {
+  formState.confPassword = password.value === confPassword.value;
+  errorCheck();
+});
+
+const toggleDisabledClass = () => {
+  const isDisable = Object.values(formState).some((valid) => !valid);
+  let form_submit = document.getElementById("form_submit");
+
+  if (isDisable) {
+    form_submit.setAttribute("class", "disabled");
+  } else {
     form_submit.removeAttribute("disabled");
-    form_submit.classList.add("form-register__submit");
-    form_submit.classList.remove("form-register__submit--disabled");
-}
+  }
+
+  form_submit.classList.add(
+    `${
+      isDisable !== false
+        ? "form-register__submit--disabled"
+        : "form-register__submit"
+    }`
+  );
+
+  form_submit.classList.remove(
+    `${
+      isDisable !== false
+        ? "form-register__submit"
+        : "form-register__submit--disabled"
+    }`
+  );
+};
+
+const errorCheck = () => {
+  const cont_error = document.getElementById("cont-error");
+  const error = document.getElementById("form-error");
+
+  if (!formState.name && name.value !== "") {
+    cont_error.classList.remove("form-register__cont-error--hidden");
+    error.innerHTML = errorMessage.name;
+    addDisabled();
+  } else if (!formState.surname && surname.value !== "") {
+    cont_error.classList.remove("form-register__cont-error--hidden");
+    error.innerHTML = errorMessage.surname;
+    addDisabled();
+  } else if (!formState.email && email.value !== "") {
+    cont_error.classList.remove("form-register__cont-error--hidden");
+    error.innerHTML = errorMessage.email;
+    addDisabled();
+  } else if (!formState.emailSuffix && emailSuffix.value !== "") {
+    cont_error.classList.remove("form-register__cont-error--hidden");
+    error.innerHTML = errorMessage.emailSuffix;
+    addDisabled();
+  } else if (!formState.password && password.value !== "") {
+    cont_error.classList.remove("form-register__cont-error--hidden");
+    error.innerHTML = errorMessage.password;
+    addDisabled();
+  } else if (!formState.confPassword && confPassword.value !== "") {
+    cont_error.classList.remove("form-register__cont-error--hidden");
+    error.innerHTML = errorMessage.confPassword;
+    addDisabled();
+  } else {
+    cont_error.classList.add("form-register__cont-error--hidden");
+    error.innerHTML = "";
+    toggleDisabledClass();
+  }
+};
+
+const addDisabled = () => {
+  const form_submit = document.getElementById("form_submit");
+  form_submit.classList.add("disabled");
+  form_submit.disabled = true;
+};
 
 document.getElementById("cont-pass-eye").addEventListener("click", () => {
-    let eye = document.getElementById("pass-eye");
-    if (eye.classList.contains("fa-eye-slash")) {
-        eye.classList.replace("fa-eye-slash", "fa-eye");
-        document.getElementById("pass-inp").type = "text";
-    } else {
-        eye.classList.replace("fa-eye", "fa-eye-slash");
-        document.getElementById("pass-inp").type = "password";
-    }
-})
+  let eye = document.getElementById("pass-eye");
+  if (eye.classList.contains("fa-eye-slash")) {
+    eye.classList.replace("fa-eye-slash", "fa-eye");
+    document.getElementById("form_password").type = "text";
+  } else {
+    eye.classList.replace("fa-eye", "fa-eye-slash");
+    document.getElementById("form_password").type = "password";
+  }
+});
 
-document.getElementById("cont-confirmPass-eye").addEventListener("click", () => {
+document
+  .getElementById("cont-confirmPass-eye")
+  .addEventListener("click", () => {
     let eye = document.getElementById("confirmPass-eye");
     if (eye.classList.contains("fa-eye-slash")) {
-        eye.classList.replace("fa-eye-slash", "fa-eye");
-        document.getElementById("confirmPass-inp").type = "text";
+      eye.classList.replace("fa-eye-slash", "fa-eye");
+      document.getElementById("form_confpassword").type = "text";
     } else {
-        eye.classList.replace("fa-eye", "fa-eye-slash");
-        document.getElementById("confirmPass-inp").type = "password";
+      eye.classList.replace("fa-eye", "fa-eye-slash");
+      document.getElementById("form_confpassword").type = "password";
     }
-})
+  });
