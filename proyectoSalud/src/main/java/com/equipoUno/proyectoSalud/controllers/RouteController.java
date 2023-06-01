@@ -54,13 +54,17 @@ public class RouteController {
 
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, Model model) {
-
         if (error != null) {
+            System.out.println();
             model.addAttribute("error", "Usuario o Contraseña invalidos");
         }
+        try {
 
-        return "login";
-
+            return "login";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -127,12 +131,20 @@ public class RouteController {
         User user = (User) session.getAttribute("userSession");
         Image image = user.getImage();
         UserDTO userDTO = new UserDTO();
+        PatientDTO patientDTO = new PatientDTO();
+        Patient patient = patientService.getPatientByUserId(user.getId());
 
+        if (patient != null) {
+            model.addAttribute("patient", patient);
+        } else {
+            model.addAttribute("patient", null);
+        }
         if (image != null) {
             model.addAttribute("image", "notNull");
         }
         model.addAttribute("user", user);
         model.addAttribute("userDTO", userDTO);
+        model.addAttribute("patientDTO", patientDTO);
         return "profile";
     }
 

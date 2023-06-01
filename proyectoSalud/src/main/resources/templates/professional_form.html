@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/static/css/navbar.css">
     <link rel="stylesheet" href="/static/css/footer.css">
     <link rel="stylesheet" href="/static/css/users.css ">
-    <link rel="stylesheet" href="/static/css/register.css">
+    <link rel="stylesheet" href="/static/css/professional_form.css">
     <script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>
     <title>Register Professional</title>
 </head>
@@ -24,22 +24,23 @@
 <main class="cont-form">
     <form th:action="@{/professional/changeRol/{userId}(userId=${user.id})}" method="POST" th:object="${professionalDTO}" class="form-register">
         <p class="form-register__ini">REGISTRO DE PROFESIONAL</p>
-        <input type="hidden" th:value="${userId}"/>
-<!--        <input hidden th:value="${userId}"/>-->
+        <input hidden th:value="${userId}"/>
 
         <input type="text" class="form-register__name-inp" name="nombre" th:value="${user.name}">
         <input type="text" class="form-register__name-inp" name="nombre" th:value="${user.email}">
         <input type="time" th:field="*{entryTime}" id="form_name" name="name" class="form-register__name-inp">
         <input type="time" th:field="*{exitTime}" id="form_name" name="name" class="form-register__name-inp">
-        <!--        Specialization es un Enum  -->
-        <input type="time" th:field="*{specialization}" id="form_name" name="name" class="form-register__name-inp">
-        <!--                                   -->
+
         <select name="specialization" class="form-searcher__email-inp">
             <option>Especialidad</option>
             <option th:each="specialization : ${specializations}" th:value="${specialization}" th:text="${specialization}" />
         </select>
 
-        -->
+
+        <div class="form-register__cont-submit">
+            <button type="submit" >Registrarse</button>
+        </div>
+
     </form>
 </main>
 

@@ -27,21 +27,16 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/register")
-    public String registerUser() {
-        return "register";
-    }
+
 
     @PostMapping("/register")
     public String register(@Validated @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult,
             Model model) {
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "register";
         }
-
         try {
             userService.registerUser(userDTO);
             return "redirect:/login";
@@ -50,8 +45,8 @@ public class AuthController {
             model.addAttribute("userDTO", userDTO);
             return "register";
         }
-
     }
+
 
     @GetMapping("/login")
     public String login(@RequestParam(required = false) BindingResult bindingResult, Model model) {

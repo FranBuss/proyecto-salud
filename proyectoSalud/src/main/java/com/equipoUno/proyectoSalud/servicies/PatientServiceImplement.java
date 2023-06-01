@@ -53,6 +53,16 @@ public class PatientServiceImplement implements PatientService {
     }
 
     @Override
+    public Patient getPatientByUserId(String id) {
+        Optional<Patient> patientResponse = patientRepository.getPatientByUserId(id);
+        if (patientResponse.isPresent()) {
+            Patient patient = patientResponse.get();
+            return patient;
+        }
+        return null;
+    }
+
+    @Override
     public Patient updatePatient(String id) {
         Optional<Patient> optionalPatient = patientRepository.findById(id);
         if (optionalPatient.isPresent()) {

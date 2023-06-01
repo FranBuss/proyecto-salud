@@ -17,6 +17,7 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 public class UserDTO {
 
+
     @Pattern(regexp = "^[a-zA-Z]{3,13}$", message = "El nombre debe tener entre 3 y 15 caracteres.")
     private String name;
 
