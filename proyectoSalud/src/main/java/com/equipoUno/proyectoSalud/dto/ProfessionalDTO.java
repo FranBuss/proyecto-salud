@@ -9,6 +9,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -24,8 +25,6 @@ public class ProfessionalDTO{
     private LocalTime exitTime;
 
     private float charge;
-
-    private Appointment appointment;
 
     public String getSpecializationName(){
         return specialization.getDisplayName();

@@ -42,8 +42,10 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final ImageServiceImplement imageServiceImplement;
 
+    private final AppointmentServiceImplement appointmentServiceImplement;
+
     @Autowired
-    public UserServiceImplement(ProfessionalRepository professionalRepository, PatientRepository patientRepository,
+    public UserServiceImplement(AppointmentServiceImplement appointmentServiceImplement ,ProfessionalRepository professionalRepository, PatientRepository patientRepository,
             UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder,
             ImageServiceImplement imageServiceImplement) {
         this.userRepository = userRepository;
@@ -52,6 +54,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         this.professionalRepository = professionalRepository;
         this.patientRepository = patientRepository;
         this.imageServiceImplement = imageServiceImplement;
+        this.appointmentServiceImplement = appointmentServiceImplement;
     }
 
     @Override
@@ -148,6 +151,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
             userRepository.save(user);
             Professional professional = modelMapper.map(professionalDTO, Professional.class);
             professional.setUser(user);
+            appointmentServiceImplement.generateAppointments(professional);
             Professional saveProfessional = professionalRepository.save(professional);
             return modelMapper.map(saveProfessional, ProfessionalDTO.class);
         }

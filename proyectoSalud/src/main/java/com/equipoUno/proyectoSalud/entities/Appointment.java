@@ -42,12 +42,10 @@ public class Appointment {
     private int duration = 30;
 
     @Column(name = "state")
-    private String state = "disponible";
+    private boolean state;
 
     @Column(name = "comments")
     private String comments;
-
-
 
     @ElementCollection
     @Column(name = "available_day")
