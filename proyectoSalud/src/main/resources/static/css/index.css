@@ -39,7 +39,8 @@
 }
 
 .main {
-    background-image: linear-gradient(var(--blanco), var(--gris), var(--celeste));
+    background-image: linear-gradient(
+        var(--blanco), var(--gris), var(--celeste));
 }
 
 @media screen and (max-width:800px) {

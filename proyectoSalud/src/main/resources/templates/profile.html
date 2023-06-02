@@ -39,11 +39,11 @@
 							<div class="d-flex justify-content-between user-profile__name-surname-cont">
 								<div class="user-profile__name-cont">
 									<span class="form-profile__label">Nombre:</span>
-									<span th:text="${user.name}" id="user-profile__name-span" class="form-profile__span"></span>
+									<span th:text="${user.name}" id="user-profile__name-span" class="form-profile__span form-profile__span--m-left"></span>
 								</div>
 								<div class="user-profile__surname-cont">
 									<span class="form-profile__label">Apellido:</span>
-									<span th:text="${user.surname}" id="user-profile__surname-span" class="form-profile__span"></span>
+									<span th:text="${user.surname}" id="user-profile__surname-span" class="form-profile__span form-profile__span--m-left"></span>
 								</div>
 							</div>
 							<div class="user-profile__email-cont">
@@ -74,13 +74,13 @@
 							</div>
 						</div>
 					</div>
-					<div class="text-center">
+					<div class="text-center form-profile__submit">
 						<button type="submit" class="form-profile__button">Guardar</button>
 					</div>
 				</div>
 			</form>
 		</div>
-		<div class="container form-profile__cont">
+		<div class="container form-profile__cont form-profile__contact-cont">
 			<form th:action="@{/api/patients/generatePatient/__${user.id}__}" th:object="${patientDTO}" method="POST" class="row d-flex justify-content-center form-profile__form">
 				<div class="col-md-8 mt-5 patient-profile__sd-cont">
 					<div class="d-flex justify-content-center align-items-center mb-4">
@@ -89,8 +89,8 @@
 					<div class="row m-0 mt-2 w-100 d-flex justify-content-center patient-profile__inp-cont">
 						<div class="patient-profile__insurance-cont">
 							<div class="d-flex align-items-center patient-profile__insurance-txt-cont">
-								<label for="patient-profile__insurance-select" class="form-profile__label">Obra Social:</label>
-								<span th:if="${patient.healthInsurance != null}" th:text="${patient.healthInsurance}" class="form-profile__span"></span>
+								<label for="patient-profile__insurance-select" class="form-profile__label">Obra Social<span th:if="${patient != null}">:</span></label>
+								<span th:if="${patient != null}" th:text="${patient.healthInsurance}" class="form-profile__span"></span>
 								<i id="form-profile__insurance-edit-icon" class="fa-solid fa-pen-to-square form-profile__edit-icon"></i>
 								<i id="form-profile__insurance-cancel-icon" class="fa-solid fa-xmark form-profile__cancel-icon form-profile--hidden"></i>
 							</div>
@@ -103,7 +103,7 @@
 						</div>
 						<div class="patient-profile__contact-cont">
 							<div class="d-flex align-items-center patient-profile__contact-txt-cont">
-								<label for="form-profile__contact-inp" class="form-profile__label">Contacto:</label>
+								<label for="form-profile__contact-inp" class="form-profile__label">Contacto<span th:if="${patient != null}">:</span></label>
 								<span th:if="${patient != null}" th:text="${patient.contact}" class="form-profile__span"></span>
 								<i id="form-profile__contact-edit-icon" class="fa-solid fa-pen-to-square form-profile__edit-icon"></i>
 								<i id="form-profile__contact-cancel-icon" class="fa-solid fa-xmark form-profile__cancel-icon form-profile--hidden"></i>
@@ -111,9 +111,9 @@
 							<input th:field="*{contact}" type="text" id="form-profile__contact-inp" class="mt-1 w-100 form-profile__input form-profile--hidden">
 						</div>
 					</div>
-					<div class="text-center mt-2">
-						<button type="submit" class="form-profile__button">Guardar</button>
-					</div>
+				</div>
+				<div class="text-center mt-1 form-profile__submit">
+					<button type="submit" class="form-profile__button">Guardar</button>
 				</div>
 			</form>
 		</div>
