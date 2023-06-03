@@ -3,12 +3,10 @@ package com.equipoUno.proyectoSalud.servicies;
 import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
 import com.equipoUno.proyectoSalud.dto.UserDTO;
-import com.equipoUno.proyectoSalud.entities.Image;
-import com.equipoUno.proyectoSalud.entities.Patient;
-import com.equipoUno.proyectoSalud.entities.Professional;
-import com.equipoUno.proyectoSalud.entities.User;
+import com.equipoUno.proyectoSalud.entities.*;
 import com.equipoUno.proyectoSalud.enumerations.Rol;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
+import com.equipoUno.proyectoSalud.repositories.AppointmentRepository;
 import com.equipoUno.proyectoSalud.repositories.PatientRepository;
 import com.equipoUno.proyectoSalud.repositories.ProfessionalRepository;
 import com.equipoUno.proyectoSalud.repositories.UserRepository;
@@ -42,16 +40,22 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final ImageServiceImplement imageServiceImplement;
 
+    private final AppointmentRepository appointmentRepository;
+
+    private final AppointmentServiceImplement appointmentServiceImplement;
+
     @Autowired
-    public UserServiceImplement(ProfessionalRepository professionalRepository, PatientRepository patientRepository,
+    public UserServiceImplement(AppointmentServiceImplement appointmentServiceImplement ,ProfessionalRepository professionalRepository, PatientRepository patientRepository,
             UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder,
-            ImageServiceImplement imageServiceImplement) {
+            ImageServiceImplement imageServiceImplement, AppointmentRepository appointmentRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.professionalRepository = professionalRepository;
         this.patientRepository = patientRepository;
         this.imageServiceImplement = imageServiceImplement;
+        this.appointmentServiceImplement = appointmentServiceImplement;
+        this.appointmentRepository = appointmentRepository;
     }
 
     @Override
@@ -113,7 +117,18 @@ public class UserServiceImplement implements UserService, UserDetailsService {
 
     @Override
     public void deleteUser(String id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            if (user.getRol() == Rol.PROFESSIONAL){
+                Professional professional = professionalRepository.findByUser_Id(id);
+                List<Appointment> appointments = appointmentRepository.findByProfessionalId(professional.getId());
+                appointmentRepository.deleteAll(appointments);
+                professionalRepository.delete(professional);
+            } else {
+                userRepository.deleteById(id);
+            }
+        }
+
     }
 
     @Override
@@ -148,6 +163,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
             userRepository.save(user);
             Professional professional = modelMapper.map(professionalDTO, Professional.class);
             professional.setUser(user);
+            appointmentServiceImplement.generateAppointments(professional);
             Professional saveProfessional = professionalRepository.save(professional);
             return modelMapper.map(saveProfessional, ProfessionalDTO.class);
         }
