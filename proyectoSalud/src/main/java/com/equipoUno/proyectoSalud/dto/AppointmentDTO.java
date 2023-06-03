@@ -21,7 +21,7 @@ public class AppointmentDTO {
     private Professional professional;
     private LocalDateTime appointment;
     private int duration;
-    private String state;
+    private boolean state;
     private String comments;
     private LocalTime startTime;
     private LocalTime endTime;

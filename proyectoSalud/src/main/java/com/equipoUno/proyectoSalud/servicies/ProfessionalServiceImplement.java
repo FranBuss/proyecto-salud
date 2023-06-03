@@ -32,6 +32,7 @@ public class ProfessionalServiceImplement implements ProfessionalService{
         this.passwordEncoder = passwordEncoder;
     }
 
+
     @Override
     public ProfessionalDTO getProfessional(String id){
         Optional<Professional> optionalProfessional = professionalRepository.findById(id);
