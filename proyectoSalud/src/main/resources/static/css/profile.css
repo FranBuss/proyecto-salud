@@ -3,7 +3,7 @@
 		var(--blanco), var(--gris), var(--celeste));
 	border-top: 1px solid var(--blanco);
 	border-bottom: 1px solid var(--celeste);
-	height: 640px;
+	height: 73vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;

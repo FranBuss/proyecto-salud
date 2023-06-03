@@ -1,5 +1,5 @@
 .cont-form {
-    height: 100vh;
+    height: 73vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,8 +9,8 @@
 
 .form-register {
     border-radius: 5%;
-    width: 25%;
-    height: auto;
+    width: 60%;
+    height: 50% !important;
     display: flex;
     justify-content: center;
     align-items: center;
