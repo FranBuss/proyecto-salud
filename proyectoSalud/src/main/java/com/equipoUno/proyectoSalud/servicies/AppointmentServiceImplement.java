@@ -10,11 +10,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class AppointmentServiceImplement implements AppointmentService{
@@ -48,27 +51,58 @@ public class AppointmentServiceImplement implements AppointmentService{
 
     public void generateAppointments(Professional professional){
 
-        LocalDateTime entryTime = LocalDateTime.from(professional.getEntryTime());
-        LocalDateTime exitTime = LocalDateTime.from(professional.getExitTime());
+        LocalTime entryTime = professional.getEntryTime();
+        LocalTime exitTime = professional.getExitTime();
 
-        LocalDateTime appointmentTime = entryTime;
+        LocalDate currentDate = LocalDate.now();
 
-        while (appointmentTime.isBefore(exitTime)){
+        LocalDateTime appointmentDateTime = LocalDateTime.of(currentDate, entryTime);
 
-            Appointment appointment = new Appointment();
 
-            appointment.setProfessional(professional);
-            appointment.setState(false);
+        while (appointmentDateTime.toLocalTime().isBefore(exitTime)){
+            if (appointmentDateTime.getDayOfWeek().getValue() >= DayOfWeek.MONDAY.getValue()
+                    && appointmentDateTime.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()){
+                Appointment appointment = new Appointment();
+                appointment.setProfessional(professional);
+                appointment.setState(false);
+//                appointment.setDay(appointmentDateTime.getDayOfWeek());
+                System.out.println(appointmentDateTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault()));
 
-            appointmentRepository.save(appointment);
+                appointmentRepository.save(appointment);
+            }
 
-            appointmentTime = appointmentTime.plusMinutes(30);
+            appointmentDateTime = appointmentDateTime.plusMinutes(30);
 
+            if (appointmentDateTime.toLocalTime().isAfter(exitTime)) {
+                currentDate = getNextBusinessDay(currentDate);
+                appointmentDateTime = LocalDateTime.of(currentDate, entryTime);
+            }
         }
-
-
     }
 
+    private LocalDate getNextBusinessDay(LocalDate currentDate){
+        LocalDate nextDay = currentDate.plusDays(1);
+        if (nextDay.getDayOfWeek() == DayOfWeek.SATURDAY) {
+            return nextDay.plusDays(2);
+        } else if (nextDay.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            return nextDay.plusDays(1);
+        }
+        return nextDay;
+    }
+
+
+    //        while (appointmentTime.isBefore(exitTime)){
+//
+//            Appointment appointment = new Appointment();
+//
+//            appointment.setProfessional(professional);
+//            appointment.setState(false);
+//
+//            appointmentRepository.save(appointment);
+//
+//            appointmentTime = appointmentTime.plusMinutes(30);
+//
+//        }
 
 
 //    public List<LocalDateTime> generateAppointments(AppointmentDTO dto) {

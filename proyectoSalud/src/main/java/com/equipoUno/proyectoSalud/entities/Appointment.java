@@ -31,12 +31,12 @@ public class Appointment {
     @JoinColumn(name = "idPatient")
     private Patient patient;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idProfessional")
     private Professional professional;
 
     @Column(name = "appointment")
-    private LocalDateTime appointment;
+    private LocalTime appointment;
 
     @Column(name = "duration")
     private int duration = 30;
@@ -47,15 +47,17 @@ public class Appointment {
     @Column(name = "comments")
     private String comments;
 
-    @ElementCollection
-    @Column(name = "available_day")
-    @Enumerated(EnumType.STRING)
-    private Set<DayOfWeek> availableDays = new HashSet<>(Arrays.asList(
-            DayOfWeek.MONDAY,
-            DayOfWeek.TUESDAY,
-            DayOfWeek.WEDNESDAY,
-            DayOfWeek.THURSDAY,
-            DayOfWeek.FRIDAY
-    ));
+//    @ElementCollection
+//    @Column(name = "available_day")
+//    @Enumerated(EnumType.STRING)
+//    private Set<DayOfWeek> availableDays = new HashSet<>(Arrays.asList(
+//            DayOfWeek.MONDAY,
+//            DayOfWeek.TUESDAY,
+//            DayOfWeek.WEDNESDAY,
+//            DayOfWeek.THURSDAY,
+//            DayOfWeek.FRIDAY
+//    ));
+
+    private String day;
 
 }

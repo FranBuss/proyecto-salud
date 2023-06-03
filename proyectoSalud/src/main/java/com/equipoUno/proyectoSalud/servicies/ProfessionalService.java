@@ -12,6 +12,7 @@ public interface ProfessionalService {
     ProfessionalDTO getProfessional(String id);
     List<Professional> searchProfessionals();
 
+
     List<Professional> searchProfessionalsBySpecialization(String specializationString) throws MiException;
 
     ProfessionalDTO createProfessional(ProfessionalDTO dto) throws MiException;

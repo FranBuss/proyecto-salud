@@ -103,7 +103,7 @@ public class ProfessionalController {
     @PostMapping("/changeRol/{userId}")
     public String assignProfessionalUser(@PathVariable("userId") String userId,@ModelAttribute("professionalDTO") ProfessionalDTO professionalDTO) {
         userService.assignProfessionalUser(userId, professionalDTO);
-        return "redirect:../admin/users";
+        return "redirect:/admin/users";
     }
 
 
