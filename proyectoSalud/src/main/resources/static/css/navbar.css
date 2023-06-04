@@ -1,7 +1,7 @@
 .navbar2 {
     background-color: var(--celeste);
     border-bottom: 1px solid var(--azul-oscuro);
-    height: 7vh;
+    height: 80px;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -120,7 +120,7 @@
     margin: 0;
     padding: 0;
     position: absolute;
-    top: 7vh;
+    top: 80px;
     right: 0px;
 }
 

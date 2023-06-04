@@ -1,10 +1,16 @@
 footer {
     background: var(--celeste);
     border-top: 1px solid var(--azul-oscuro);
+}
+
+.footer-content {
+    color: var(--blanco);
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 20vh;
+    flex-wrap: wrap;
+    padding-top: 60px;
+    padding-bottom: 60px;
 }
 
 .footer-text {
