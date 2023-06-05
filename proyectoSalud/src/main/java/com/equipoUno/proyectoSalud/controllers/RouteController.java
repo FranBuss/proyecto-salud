@@ -111,7 +111,6 @@ public class RouteController {
         return "searcher";
     }
 
-
     @GetMapping("/user/{email}")
     public String getUserDetails(@PathVariable String email, Model model) {
         UserDetails userDetails = userService.loadUserByUsername(email);

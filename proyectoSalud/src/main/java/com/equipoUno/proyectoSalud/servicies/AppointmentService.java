@@ -1,6 +1,7 @@
 package com.equipoUno.proyectoSalud.servicies;
 
 import com.equipoUno.proyectoSalud.dto.AppointmentDTO;
+import com.equipoUno.proyectoSalud.entities.Appointment;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 
@@ -13,6 +14,8 @@ public interface AppointmentService {
 //    List<LocalDateTime> generateAppointments(AppointmentDTO dto);
 
     void generateAppointments(Professional professional);
+
+    List<Appointment> getAllAppointments();
 
 //    boolean isAppointmentAvailable(AppointmentDTO dto);
 //
