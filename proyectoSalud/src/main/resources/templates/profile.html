@@ -1,126 +1,129 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
-
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 	<link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-	<link rel="stylesheet" href="/static/css/style.css">
 	<link rel="stylesheet" href="/static/css/navbar.css">
 	<link rel="stylesheet" href="/static/css/footer.css">
 	<link rel="stylesheet" href="/static/css/profile.css">
+	<link rel="stylesheet" href="/static/css/style.css">
 	<title>Profile</title>
 	<script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>
 </head>
 <body>
 	<th:block th:replace="/fragments/navbar :: navbar"></th:block>
-	<div class="container rounded bg-white mt-5 mb-5">
-		<form th:action="@{/user/update/__${user.id}__}" th:object="${userDTO}" method="POST" enctype="multipart/form-data" class="row">
-			<div class="col-md-4 border-right">
-				<div class="d-flex flex-column align-items-center text-center p-3 py-2">
-					<!-- <div th:if="${imagenURL}"> -->
-						<!-- <img class="rounded-circle mt-2" width="150px" th:src="${imagenURL}"> -->
-					<!-- </div> -->
-					<!-- <div th:unless="${imagenURL}"> -->
-						<!-- <img th:if="${image == null}" src="/static/img/profile.png" class="rounded-circle profile-img" id="preview_image"> -->
-						<img th:if="${image != null}" th:src="@{/image/__${user.id}__}" class="profile-img" id="preview_image">
-						<img th:if="${image == null}" src="/static/img/profile.png" class="profile-img" id="preview_image">
-					<!-- </div> -->
-					<!-- <form th:action="@{/api/auth/update-image}" method="POST" enctype="multipart/form-data"> -->
-						<!-- <div class="form-group mt-1"> -->
-							<!-- <input th:field="*{imageFile}" type="file" id="profile_picture" name="profilePicture" class="mt-2" accept="image/*"> -->
-							<input th:field="*{imageFile}" type="file" id="profile_picture" name="profilePicture" class="mt-2">
-						<!-- </div> -->
-						<!-- <button type="submit" class="form-profile_button_image mt-4">Cambiar Foto</button> -->
-					<!-- </form> -->
-				</div>
-			</div>
-			<div class="col-md-8 border-right">
-				<div class="p-4 py-5">
-					<div class="d-flex justify-content-center align-items-center mb-5">
-						<h4 th:text="${'Perfil de ' + user.name + ' ' + user.surname}" class="text-right profile_title"></h4>
-					</div>
-					<div class="row mt-2">
-						<div class="col-md-10">
-							<div class="form-profile__group">
-								<label for="email" class="form-profile__label">Email<span th:text="${' (' + user.email + ')'}"></span></label>
-								<input th:field="*{email}" type="text" name="email" id="email" class="form-profile__input form-control">
-								<select th:field="*{emailSuffix}" name="email_select" class="form-register__email-select">
-									<option th:each="suffix : ${T(com.equipoUno.proyectoSalud.enumerations.EmailDomain).values()}" th:value="${suffix}" th:text="${suffix.value}"></option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-8">
-							<div class="form-profile__group">
-								<label for="password" class="form-profile__label">Contraseña</label>
-								<input th:field="*{password}" type="password" id="password" class="form-profile__input form-control">
-							</div>
-						</div>
+	<main class="profile__main">
+		<div class="container form-profile__cont">
+			<form th:action="@{/user/update/__${user.id}__}" th:object="${userDTO}" method="POST" enctype="multipart/form-data" class="row h-100 form-profile__form">
+				<div class="col-md-4 user-profile__leftside">
+					<img th:if="${image != null}" th:src="@{/image/__${user.id}__}" class="user-profile__img" id="preview_image">
+					<img th:if="${image == null}" src="/static/img/profile.png" class="user-profile__img" id="preview_image">
+					<div class="user-profile__img-inp-cont">
+						<input th:field="*{imageFile}" type="file" id="user-profile__img-inp" accept="image/*">
+						<label for="user-profile__img-inp" id="user-profile__img-inp-label">Seleccione una foto</label>
 					</div>
 				</div>
-				<div class=" text-center">
-					<div class="form-profile__group">
+				<div class="col-md-8 user-profile__rightside-cont-fs">
+					<div class="p-4 ps-0 pe-0 pb-3 py-5 user-profile__rightside-cont-sd">
+						<div class="d-flex justify-content-center align-items-center mb-4 user-profile__title-cont">
+							<h4 th:text="${'Perfil del usuario'}" class="text-center form-profile__title"></h4>
+						</div>
+						<div class="row m-0 mt-2 w-100 d-flex justify-content-center user-profile__inp-cont">
+							<div class="d-flex justify-content-between user-profile__name-surname-cont">
+								<div class="user-profile__name-cont">
+									<span class="form-profile__label">Nombre:</span>
+									<span th:text="${user.name}" id="user-profile__name-span" class="form-profile__span form-profile__span--m-left"></span>
+								</div>
+								<div class="user-profile__surname-cont">
+									<span class="form-profile__label">Apellido:</span>
+									<span th:text="${user.surname}" id="user-profile__surname-span" class="form-profile__span form-profile__span--m-left"></span>
+								</div>
+							</div>
+							<div class="user-profile__email-cont">
+								<div class="d-flex align-items-center user-profile__email-txt-cont">
+									<label for="user-profile__email-inp" class="form-profile__label">Correo electrónico:</label>
+									<span th:text="${user.email}" class="form-profile__span"></span>
+									<i id="form-profile__email-edit-icon" class="fa-solid fa-pen-to-square form-profile__edit-icon"></i>
+									<i id="form-profile__email-cancel-icon" class="fa-solid fa-xmark form-profile__cancel-icon form-profile--hidden"></i>
+								</div>
+								<div id="user-profile__email-inp-cont" class="d-flex mt-1 w-100 user-profile__email-inp-cont form-profile--hidden">
+									<input th:field="*{email}" type="text" name="email" id="user-profile__email-inp" class="form-profile__input user-profile__email-inp" autocomplete="#">
+									<select th:field="*{emailSuffix}" name="email_select" class="user-profile__email-select">
+										<option th:each="suffix : ${T(com.equipoUno.proyectoSalud.enumerations.EmailDomain).values()}" th:value="${suffix}" th:text="${suffix.value}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="user-profile__pass-cont">
+								<div class="d-flex user-profile__pass-title-cont">
+									<label for="form-profile__pass" class="form-profile__label">Contraseña</label>
+									<i id="form-profile__pass-edit-icon" class="fa-solid fa-pen-to-square form-profile__edit-icon"></i>
+									<i id="form-profile__pass-cancel-icon" class="fa-solid fa-xmark form-profile__cancel-icon form-profile--hidden"></i>
+								</div>
+								<input th:field="*{password}" type="password" id="form-profile__pass" class="mt-1 w-100 form-profile__input form-profile--hidden">
+							</div>
+							<div id="user-profile__confpass-cont" class="user-profile__confpass-cont form-profile--hidden">
+								<label for="form-profile__confpass" class="form-profile__label">Confirmar contraseña</label>
+								<input th:field="*{confpassword}" type="password" id="form-profile__confpass" class="mt-1 w-100 form-profile__input">
+							</div>
+						</div>
+					</div>
+					<div class="text-center form-profile__submit">
 						<button type="submit" class="form-profile__button">Guardar</button>
 					</div>
 				</div>
-			</div>
-		</form>
-	</div>
-	<div class="container rounded bg-white mt-5 mb-5">
-		<form th:action="@{/api/patients/generatePatient/__${user.id}__}" th:object="${patientDTO}" method="POST" class="row">
-			<!-- <div class="col-md-8 border-right"> -->
-				<div class="p-4 py-5">
-					<div class="d-flex justify-content-center align-items-center mb-5">
-						<h4 th:text="${'Datos de paciente'}" class="text-right profile_title"></h4>
+			</form>
+		</div>
+		<div class="container form-profile__cont form-profile__contact-cont">
+			<form th:action="@{/api/patients/generatePatient/__${user.id}__}" th:object="${patientDTO}" method="POST" class="row d-flex justify-content-center form-profile__form">
+				<div class="col-md-8 mt-5 patient-profile__sd-cont">
+					<div class="d-flex justify-content-center align-items-center mb-4">
+						<h4 th:text="${'Datos del paciente'}" class="text-center form-profile__title"></h4>
 					</div>
-					<div class="col-md-5">
-						<div class="form-profile__group">
-							<label for="health_insurance" class="form-profile__label">Obra Social</label>
-							<select th:field="*{healthInsurance}" id="health_insurance" class="form-profile__select form-select">
-								<option th:if="${patient != null}" th:value="${patient.healthInsurance}" th:text="${patient.healthInsurance}" id="patient_insurance"></option>
-								<option th:each="insurance : ${T(com.equipoUno.proyectoSalud.enumerations.HealthInsurance).values()}" th:value="${insurance}" th:text="${insurance}" class="healthInsurance"></option>
+					<div class="row m-0 mt-2 w-100 d-flex justify-content-center patient-profile__inp-cont">
+						<div class="patient-profile__insurance-cont">
+							<div class="d-flex align-items-center patient-profile__insurance-txt-cont">
+								<label for="patient-profile__insurance-select" class="form-profile__label">Obra Social<span th:if="${patient != null}">:</span></label>
+								<span th:if="${patient != null}" th:text="${patient.healthInsurance}" class="form-profile__span"></span>
+								<i id="form-profile__insurance-edit-icon" class="fa-solid fa-pen-to-square form-profile__edit-icon"></i>
+								<i id="form-profile__insurance-cancel-icon" class="fa-solid fa-xmark form-profile__cancel-icon form-profile--hidden"></i>
+							</div>
+							<select th:field="*{healthInsurance}" id="patient-profile__insurance-select" class="mt-1 w-100 patient-profile__insurance-select form-profile--hidden">
+								<option th:if="${patient != null}" th:value="${patient.healthInsurance}" th:text="${patient.healthInsurance}" id="patient-profile__insurance-option--actual"></option>
+								<option th:each="insurance : ${T(com.equipoUno.proyectoSalud.enumerations.HealthInsurance).values()}" 
+										th:value="${insurance}" th:text="${insurance}" class="insurance-select__option">
+								</option>
 							</select>
 						</div>
-					</div>
-					<div class="col-md-10">
-						<div class="form-profile__group">
-							<label for="contact" class="form-profile__label">Contacto<span th:text="${' (' + patient.contact + ')'}"></span></label>
-							<input th:field="*{contact}" type="tel" id="contact" class="form-profile__input form-control">
+						<div class="patient-profile__contact-cont">
+							<div class="d-flex align-items-center patient-profile__contact-txt-cont">
+								<label for="form-profile__contact-inp" class="form-profile__label">Contacto<span th:if="${patient != null}">:</span></label>
+								<span th:if="${patient != null}" th:text="${patient.contact}" class="form-profile__span"></span>
+								<i id="form-profile__contact-edit-icon" class="fa-solid fa-pen-to-square form-profile__edit-icon"></i>
+								<i id="form-profile__contact-cancel-icon" class="fa-solid fa-xmark form-profile__cancel-icon form-profile--hidden"></i>
+							</div>
+							<input th:field="*{contact}" type="text" id="form-profile__contact-inp" class="mt-1 w-100 form-profile__input form-profile--hidden">
 						</div>
 					</div>
 				</div>
-				<div class=" text-center">
-					<div class="form-profile__group">
-						<button type="submit" class="form-profile__button">Guardar</button>
-					</div>
+				<div class="text-center mt-1 form-profile__submit">
+					<button type="submit" class="form-profile__button">Guardar</button>
 				</div>
-			<!-- </div> -->
-		</form>
-	</div>
+			</form>
+		</div>
+	</main>
 	<th:block th:replace="/fragments/footer :: footer"></th:block>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!-- Importar el archivo JavaScript de Bootstrap -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-
-	<script src="/static/js/profile.js"></script>
-
-
-	<script>
-		let html = document.getElementsByClassName("healthInsurance");
-		let arr = Array.from(html);
-		let patient_insurance = document.getElementById("patient_insurance");
-		for (let i = 0; i < arr.length; i++) {
-			if (arr[i].getAttribute("value") == patient_insurance.getAttribute("value")) {
-				arr[i].classList.add("healthInsurance--hidden");
-			}
-		}
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
 	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="/static/js/profile.js"></script>
 </body>
+
 </html>

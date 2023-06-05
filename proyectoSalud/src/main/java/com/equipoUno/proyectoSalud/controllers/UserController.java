@@ -1,8 +1,12 @@
 package com.equipoUno.proyectoSalud.controllers;
 
 import com.equipoUno.proyectoSalud.dto.UserDTO;
+import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
+import com.equipoUno.proyectoSalud.servicies.AppointmentServiceImplement;
+import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
+import com.equipoUno.proyectoSalud.servicies.ProfessionalServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +19,17 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserServiceImplement userService;
+    private final ProfessionalServiceImplement professionalServiceImplement;
+    private final PatientServiceImplement patientServiceImplement;
+    private final AppointmentServiceImplement appointmentServiceImplement;
 
     @Autowired
-    public UserController(UserServiceImplement userService) {
+    public UserController(UserServiceImplement userService,ProfessionalServiceImplement professionalServiceImplement,
+                          PatientServiceImplement patientServiceImplement, AppointmentServiceImplement appointmentServiceImplement) {
         this.userService = userService;
+        this.professionalServiceImplement = professionalServiceImplement;
+        this.patientServiceImplement = patientServiceImplement;
+        this.appointmentServiceImplement = appointmentServiceImplement;
     }
 
     @GetMapping("/delete")

@@ -22,7 +22,7 @@
 <th:block th:replace="/fragments/navbar :: navbar"></th:block>
 
 <main class="cont-form">
-    <form th:action="@{/professional/changeRol/{userId}(userId=${user.id})}" method="POST" th:object="${professionalDTO}" class="form-register">
+    <form th:action="@{/professional/changeRol/__${user.id}__}" method="POST" th:object="${professionalDTO}" class="form-register">
         <p class="form-register__ini">REGISTRO DE PROFESIONAL</p>
         <input hidden th:value="${userId}"/>
 
