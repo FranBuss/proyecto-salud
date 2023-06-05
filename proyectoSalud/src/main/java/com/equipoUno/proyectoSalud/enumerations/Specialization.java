@@ -2,9 +2,9 @@ package com.equipoUno.proyectoSalud.enumerations;
 
 public enum Specialization {
     PEDIATRICS("Pediatra"),
-    GYNECOLOGY("Ginecologo"),
-    CLINIC("Clinico"),
-    CARDIOLOGY("Cardiologo");
+    GYNECOLOGY("Ginecologia"),
+    CLINIC("Clinica"),
+    CARDIOLOGY("Cardiologia");
 
     private final String displayName;
 

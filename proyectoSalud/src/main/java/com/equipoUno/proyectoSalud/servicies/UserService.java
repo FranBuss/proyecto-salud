@@ -16,6 +16,7 @@ public interface UserService{
 
     UserDTO registerUser(UserDTO userDTO);
 
+
     User updateUser(String id, UserDTO userDTO, User userSession) throws MiException;
 
     PatientDTO assignPatientUser(String userId, PatientDTO patientDTO);

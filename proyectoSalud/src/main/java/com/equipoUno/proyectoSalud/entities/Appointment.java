@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -38,6 +39,12 @@ public class Appointment {
     @Column(name = "appointment")
     private LocalTime appointment;
 
+    @Column(name = "day")
+    private String day;
+
+    @Column(name = "date")
+    private LocalDate date;
+
     @Column(name = "duration")
     private int duration = 30;
 
@@ -58,6 +65,5 @@ public class Appointment {
 //            DayOfWeek.FRIDAY
 //    ));
 
-    private String day;
 
 }

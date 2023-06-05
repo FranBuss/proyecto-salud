@@ -18,6 +18,7 @@ import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @Service
 public class AppointmentServiceImplement implements AppointmentService{
@@ -49,76 +50,44 @@ public class AppointmentServiceImplement implements AppointmentService{
 //        }
 //    }
 
-    public void generateAppointments(Professional professional){
-
+    public void generateAppointments(Professional professional) {
         LocalTime entryTime = professional.getEntryTime();
         LocalTime exitTime = professional.getExitTime();
-
         LocalDate currentDate = LocalDate.now();
 
-        LocalDateTime appointmentDateTime = LocalDateTime.of(currentDate, entryTime);
+        while (currentDate.getDayOfWeek() != DayOfWeek.MONDAY){
+            currentDate = currentDate.plusDays(1);
 
+        }
 
-        while (appointmentDateTime.toLocalTime().isBefore(exitTime)){
-            if (appointmentDateTime.getDayOfWeek().getValue() >= DayOfWeek.MONDAY.getValue()
-                    && appointmentDateTime.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()){
+        while (currentDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()) {
+
+            LocalDateTime appointmentDateTime = LocalDateTime.of(currentDate, entryTime);
+
+            while (appointmentDateTime.toLocalTime().isBefore(exitTime)) {
                 Appointment appointment = new Appointment();
                 appointment.setProfessional(professional);
                 appointment.setState(false);
-//                appointment.setDay(appointmentDateTime.getDayOfWeek());
-                System.out.println(appointmentDateTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault()));
+                appointment.setDay(currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault()));
+
+                appointment.setAppointment(appointmentDateTime.toLocalTime());
+                appointment.setDate(appointmentDateTime.toLocalDate());
 
                 appointmentRepository.save(appointment);
+
+                appointmentDateTime = appointmentDateTime.plusMinutes(30);
             }
 
-            appointmentDateTime = appointmentDateTime.plusMinutes(30);
-
-            if (appointmentDateTime.toLocalTime().isAfter(exitTime)) {
-                currentDate = getNextBusinessDay(currentDate);
-                appointmentDateTime = LocalDateTime.of(currentDate, entryTime);
-            }
+            currentDate = currentDate.plusDays(1);
         }
     }
 
-    private LocalDate getNextBusinessDay(LocalDate currentDate){
-        LocalDate nextDay = currentDate.plusDays(1);
-        if (nextDay.getDayOfWeek() == DayOfWeek.SATURDAY) {
-            return nextDay.plusDays(2);
-        } else if (nextDay.getDayOfWeek() == DayOfWeek.SUNDAY) {
-            return nextDay.plusDays(1);
-        }
-        return nextDay;
+    @Override
+    public List<Appointment> getAllAppointments(){
+        List<Appointment> appointments = appointmentRepository.getAllAppointmentsByOrder();;
+        return appointments.stream().map(appointment -> modelMapper.map(appointment, Appointment.class))
+                .collect(Collectors.toList());
     }
-
-
-    //        while (appointmentTime.isBefore(exitTime)){
-//
-//            Appointment appointment = new Appointment();
-//
-//            appointment.setProfessional(professional);
-//            appointment.setState(false);
-//
-//            appointmentRepository.save(appointment);
-//
-//            appointmentTime = appointmentTime.plusMinutes(30);
-//
-//        }
-
-
-//    public List<LocalDateTime> generateAppointments(AppointmentDTO dto) {
-//        List<LocalDateTime> appointments = new ArrayList<>();
-//        LocalDateTime currentDateTime = LocalDateTime.of(LocalDate.now(), dto.getProfessional().getEntryTime());
-//        LocalDateTime endDateTime = LocalDateTime.of(LocalDate.now(), dto.getProfessional().getExitTime());
-//
-//        while(currentDateTime.isBefore(endDateTime)) {
-//            if(isAppointmentAvailable(dto)){
-//                appointments.add(currentDateTime);
-//            }
-//            currentDateTime = currentDateTime.plusMinutes(30);
-//        }
-//
-//        return appointments;
-//    }
 
 //    public boolean isAppointmentAvailable(AppointmentDTO dto) {
 //        if(dto.getAvailableDays().contains(dto.getAppointment().getDayOfWeek()) && dto.getState().equals("disponible")){
