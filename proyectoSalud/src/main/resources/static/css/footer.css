@@ -1,19 +1,14 @@
 footer {
     background: var(--celeste);
     border-top: 1px solid var(--azul-oscuro);
-}
-
-.footer-content {
-    color: var(--blanco);
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: wrap;
-    padding-top: 60px;
-    padding-bottom: 60px;
+    height: 22vh;
 }
 
 .footer-text {
+    text-align: center;
     color: var(--blanco);
 }
 

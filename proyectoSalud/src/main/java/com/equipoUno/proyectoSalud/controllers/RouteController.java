@@ -42,14 +42,8 @@ public class RouteController {
 
     @GetMapping("/")
     public String index(HttpSession session, ModelMap model) {
-        if (session.getAttribute("userSession") == null) {
-            return "index.html";
-        } else {
-            User loggedUser = (User) session.getAttribute("userSession");
-            model.put("role", loggedUser.getRol().toString());
-            model.put("name", loggedUser.getName().toString());
-            return "index.html";
-        }
+        model = userService.getUserData(session, model);
+        return "index.html";
     }
 
     @GetMapping("/login")
@@ -77,7 +71,8 @@ public class RouteController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/admin/users")
-    public String users(Model model){
+    public String users(HttpSession session, ModelMap model){
+        model = userService.getUserData(session, model);
         List<User> users = userService.findAllUsers();
         model.addAttribute("users", users);
         return "users";
@@ -100,7 +95,8 @@ public class RouteController {
     }
 
     @GetMapping("/searcher")
-    public String searcher(Model model, @RequestParam Map<String, String> queryParams) throws MiException {
+    public String searcher(HttpSession session, ModelMap model, @RequestParam Map<String, String> queryParams) throws MiException {
+        model = userService.getUserData(session, model);
         Specialization[] specializations = Specialization.values();
         model.addAttribute("specializations", specializations);
         if (!queryParams.isEmpty()) {
@@ -126,9 +122,10 @@ public class RouteController {
 
     @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
     @GetMapping("/profile")
-    public String perfil(Model model, HttpSession session){
+    public String perfil(ModelMap model, HttpSession session){
         User user = (User) session.getAttribute("userSession");
-        Image image = user.getImage();
+        model = userService.getUserData(session, model);
+//        Image image = user.getImage();
         UserDTO userDTO = new UserDTO();
         PatientDTO patientDTO = new PatientDTO();
         Patient patient = patientService.getPatientByUserId(user.getId());
@@ -138,17 +135,18 @@ public class RouteController {
         } else {
             model.addAttribute("patient", null);
         }
-        if (image != null) {
-            model.addAttribute("image", "notNull");
-        }
-        model.addAttribute("user", user);
+//        if (image != null) {
+//            model.addAttribute("image", "notNull");
+//        }
+//        model.addAttribute("user", user);
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("patientDTO", patientDTO);
         return "profile";
     }
 
     @GetMapping("/patient/appointments")
-    public String adminAppointments() {
+    public String adminAppointments(HttpSession session, ModelMap model) {
+        model = userService.getUserData(session, model);
         return "appointments";
     }
 

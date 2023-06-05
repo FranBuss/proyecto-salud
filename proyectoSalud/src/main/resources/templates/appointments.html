@@ -22,31 +22,31 @@
     <div class="cont-sidebar">
         <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
             <!-- <a href="/" class="mb-3 mb-md-0 me-md-auto text-center text-decoration-none"> -->
-                <span class="fs-4 text-center sidebar__title">Administración</span>
+                <span class="fs-3 text-center sidebar__title">Administración</span>
             <!-- </a> -->
             <hr>
             <ul class="nav nav-pills flex-column mb-auto sidebar__ul">
                 <li class="nav-item sidebar__li">
-                    <a id="appointment" class="nav-link sidebar__link sidebar__link--active" aria-current="page">
-                        <i class="fa-solid fa-calendar-days me-2 sidebar__icon"></i>
+                    <a id="appointments" class="nav-link sidebar__link sidebar__link--active">
+                        <i id="apps_icon" class="fa-solid fa-calendar-days me-2 sidebar__icon sidebar__icon--active"></i>
                         Ver turnos
                     </a>
                 </li>
                 <li class="sidebar__li">
                     <a id="getAppointment" class="nav-link sidebar__link">
-                        <i class="fa-regular fa-calendar-check me-2 sidebar__icon"></i>
+                        <i id="getApp_icon" class="fa-regular fa-calendar-check me-2 sidebar__icon"></i>
                         Sacar turno
                     </a>
                 </li>
                 <li class="sidebar__li">
-                    <a href="#" class="nav-link sidebar__link sidebar__link--padding">
-                        <i class="fa-solid fa-clock-rotate-left me-2 sidebar__icon"></i>
+                    <a id="editAppointment" class="nav-link sidebar__link sidebar__link--padding">
+                        <i id="editApp_icon" class="fa-solid fa-clock-rotate-left me-2 sidebar__icon"></i>
                         Modificar turno
                     </a>
                 </li>
                 <li class="sidebar__li">
-                    <a href="#" class="nav-link sidebar__link">
-                        <i class="fa-solid fa-clipboard-user me-2 sidebar__icon"></i>
+                    <a id="editContact" class="nav-link sidebar__link">
+                        <i id="editCon_icon" class="fa-solid fa-clipboard-user me-2 sidebar__icon"></i>
                         Modificar contacto
                     </a>
                 </li>
@@ -77,19 +77,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
 	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" 
 	crossorigin="anonymous"></script>
-    <script>
-        const appointment = document.getElementById("appointment");
-        appointment.addEventListener("click", () => {
-            let getAppointment = document.getElementById("getAppointment");
-            getAppointment.classList.remove("sidebar__link--active");
-            appointment.classList.add("sidebar__link--active");
-        })
-        const getAppointment = document.getElementById("getAppointment");
-        getAppointment.addEventListener("click", () => {
-            let appointment = document.getElementById("appointment");
-            appointment.classList.remove("sidebar__link--active");
-            getAppointment.classList.add("sidebar__link--active");
-        })
-    </script>
+    <script src="/static/js/appointments.js"></script>
 </body>
 </html>
