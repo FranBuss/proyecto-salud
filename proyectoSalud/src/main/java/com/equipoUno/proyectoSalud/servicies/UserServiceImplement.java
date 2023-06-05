@@ -19,12 +19,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,9 +47,9 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     private final AppointmentServiceImplement appointmentServiceImplement;
 
     @Autowired
-    public UserServiceImplement(AppointmentServiceImplement appointmentServiceImplement ,ProfessionalRepository professionalRepository, PatientRepository patientRepository,
-            UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder,
-            ImageServiceImplement imageServiceImplement, AppointmentRepository appointmentRepository) {
+    public UserServiceImplement(AppointmentServiceImplement appointmentServiceImplement, ProfessionalRepository professionalRepository, PatientRepository patientRepository,
+                                UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder,
+                                ImageServiceImplement imageServiceImplement, AppointmentRepository appointmentRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -119,7 +121,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     public void deleteUser(String id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
-            if (user.getRol() == Rol.PROFESSIONAL){
+            if (user.getRol() == Rol.PROFESSIONAL) {
                 Professional professional = professionalRepository.findByUser_Id(id);
                 List<Appointment> appointments = appointmentRepository.findByProfessionalId(professional.getId());
                 appointmentRepository.deleteAll(appointments);
@@ -172,7 +174,10 @@ public class UserServiceImplement implements UserService, UserDetailsService {
 
     @Override
     public List<User> findAllUsers() {
-        List<User> users = userRepository.findAll();
+//        List<User> users = userRepository.findAll();
+//        return users.stream().map(user -> modelMapper.map(user, User.class))
+//                .collect(Collectors.toList());
+        List<User> users = userRepository.getUsers();
         return users.stream().map(user -> modelMapper.map(user, User.class))
                 .collect(Collectors.toList());
     }
@@ -180,6 +185,25 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     @Override
     public User getOne(String id) {
         return userRepository.getOne(id);
+    }
+
+    @Override
+    public ModelMap getUserData(HttpSession session, ModelMap model) {
+        if (session.getAttribute("userSession") == null) {
+            model.put("user", null);
+            model.put("image", null);
+            model.put("rol", null);
+        } else {
+            User loggedUser = (User) session.getAttribute("userSession");
+            model.put("user", loggedUser);
+            model.put("rol", loggedUser.getRol().toString());
+            if (loggedUser.getImage() != null) {
+                model.put("image", true);
+            } else {
+                model.put("image", null);
+            }
+        }
+        return model;
     }
 
     @Override

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -91,8 +92,9 @@ public class ProfessionalController {
     }
 
     @GetMapping("/changeRolToProfessional/{userId}")
-    public String assignProfessionalUser(@PathVariable String userId, ModelMap model){
-        model.put("user", userService.getOne(userId));
+    public String assignProfessionalUser(@PathVariable String userId, HttpSession session, ModelMap model){
+        model = userService.getUserData(session, model);
+        model.put("newProfessional", userService.getOne(userId));
         ProfessionalDTO professionalDTO = new ProfessionalDTO();
         model.put("professionalDTO", professionalDTO);
         Specialization[] specializations = Specialization.values();
@@ -103,7 +105,7 @@ public class ProfessionalController {
     @PostMapping("/changeRol/{userId}")
     public String assignProfessionalUser(@PathVariable("userId") String userId,@ModelAttribute("professionalDTO") ProfessionalDTO professionalDTO) {
         userService.assignProfessionalUser(userId, professionalDTO);
-        return "redirect:../admin/users";
+        return "redirect:/admin/users";
     }
 
 
