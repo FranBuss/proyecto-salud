@@ -23,18 +23,10 @@
 <main>
     <form th:action="@{/professional/changeRol/__${newProfessional.id}__}" method="POST" th:object="${professionalDTO}" class="form-professional">
         <p class="form-professional__title">REGISTRO DE PROFESIONAL</p>
-<<<<<<< HEAD
-         <input hidden th:value="${newProfessional.id}"/>
-        <div class="cont">
-            <img th:if="${newProfessional.image == null}" src="/static/img/profile.png" alt="image" class="img">
-            <img th:if="${newProfessional.image != null}" th:src="@{/image/__${newProfessional.id}__}" alt="image" class="img">
-=======
-        <!-- <input hidden th:value="${newProfessional.id}"> -->
         <input type="hidden" th:value="${newProfessional.id}">
         <div class="form-professional__name-cont">
             <img th:if="${newProfessional.image == null}" src="/static/img/profile.png" alt="image" class="form-professional__img">
             <img th:if="${newProfessional.image != null}" th:src="@{/image/__${newProfessional.id}__}" alt="image" class="form-professional__img">
->>>>>>> dev
             <p th:text="${newProfessional.name + ' ' + newProfessional.surname}" class="form-professional__name"></p>
         </div>
         <div class="form-professional__inp-cont">

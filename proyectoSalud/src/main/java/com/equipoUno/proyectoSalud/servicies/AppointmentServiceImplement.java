@@ -46,7 +46,6 @@ public class AppointmentServiceImplement implements AppointmentService {
     public AppointmentDTO addAppointment(AppointmentDTO dto, String patientId) throws MiException{
         Patient patient = patientRepository.findById(patientId).orElse(null);
 
-
         Appointment appointment = modelMapper.map(dto, Appointment.class);
         appointment.setState(false);
         appointment.setPatient(patient);
@@ -68,8 +67,8 @@ public class AppointmentServiceImplement implements AppointmentService {
             while (appointmentDateTime.toLocalTime().isBefore(exitTime)) {
                 Appointment appointment = new Appointment();
                 appointment.setProfessional(professional);
-                appointment.setState(false);
-                appointment.setDay(currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault()));
+                appointment.setState(true);
+                appointment.setDay(currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("es","ES")));
 
                 appointment.setAppointment(appointmentDateTime.toLocalTime());
                 appointment.setDate(appointmentDateTime.toLocalDate());
