@@ -2,10 +2,14 @@ package com.equipoUno.proyectoSalud.controllers;
 
 import com.equipoUno.proyectoSalud.dto.AppointmentDTO;
 import com.equipoUno.proyectoSalud.entities.Appointment;
+import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
+import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.servicies.AppointmentService;
+import com.equipoUno.proyectoSalud.servicies.AppointmentServiceImplement;
+import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,13 +26,15 @@ import java.util.List;
 @RequestMapping("/appointment")
 public class AppointmentController {
 
-    private final AppointmentService appointmentService;
+    private final AppointmentServiceImplement appointmentService;
     private final ProfessionalServiceImplement profesionalService;
+    private final PatientServiceImplement patientServiceImplement;
 
     @Autowired
-    AppointmentController(AppointmentService appointmentService, ProfessionalServiceImplement professionalService) {
+    AppointmentController(PatientServiceImplement patientServiceImplement ,AppointmentServiceImplement appointmentService, ProfessionalServiceImplement professionalService) {
         this.appointmentService = appointmentService;
         this.profesionalService = professionalService;
+        this.patientServiceImplement = patientServiceImplement;
     }
 
     @GetMapping("/getProfessionals")
@@ -48,6 +55,17 @@ public class AppointmentController {
         model.put("appointments", appointments);
         model.put("page", "getAppointment2");
         return "appointments";
+    }
+
+    @PostMapping("/assignAppointments/{appId}")
+    public String assignAppointment(@PathVariable String appId,
+                                    @ModelAttribute("appointmentDTO") AppointmentDTO appointmentDTO, HttpSession session){
+        User user = (User) session.getAttribute("userSession");
+        Patient patient = patientServiceImplement.getPatientByUserId(user.getId());
+
+        appointmentService.assignAppointment(appointmentDTO, patient, appId);
+
+        return "redirect:/patient/appointments";
     }
 
 //    @PostMapping("/addAppointment")

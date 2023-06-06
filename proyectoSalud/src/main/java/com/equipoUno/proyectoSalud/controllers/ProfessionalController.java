@@ -39,27 +39,34 @@ public class ProfessionalController {
         }
         return null;
     }
+//
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @GetMapping("/create")
+//    public String professionalRegister(){
+//        return "professional_form";
+//    }
+//
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @PostMapping("/create")
+//    public String create(@RequestParam ProfessionalDTO professionalDTO, ModelMap model){
+//        try {
+//
+//            professionalService.createProfessional(professionalDTO);
+//            model.put("success", "The professional has been created correctly");
+//
+//        } catch (MiException ex){
+//
+//            model.put("error", ex.getMessage());
+//            return "professional_form";
+//
+//        }
+//        return "index";
+//    }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/create")
-    public String professionalRegister(){
-        return "professional_form";
-    }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/create")
-    public String create(@RequestParam ProfessionalDTO professionalDTO, ModelMap model){
-        try {
-
-            professionalService.createProfessional(professionalDTO);
-            model.put("success", "The professional has been created correctly");
-
-        } catch (MiException ex){
-
-            model.put("error", ex.getMessage());
-            return "professional_form";
-
-        }
-        return "index";
+    @GetMapping("/dashboard")
+    public String professionalDashboard(HttpSession session, ModelMap model){
+        userService.getUserData(session, model);
+        return "professional_dash";
     }
 
 
@@ -77,16 +84,13 @@ public class ProfessionalController {
         return "/admin/professionals";
     }
 
-    @PostMapping(value = "/updateDropOut/{id}", params = "_method=put")
-    public String updateDropOut(@PathVariable String id)  throws MiException {
-        ProfessionalDTO professionalUpdate = professionalService.updateDropOut(id);
-        if (professionalUpdate != null) {
-            return "/admin/professionals";
-        } else {
-            return "/error";
-        }
+    @PostMapping(value = "/updateDropOut/{id}")
+    public String updateDropOut(@PathVariable("id") String id)  throws MiException {
+        professionalService.updateDropOut(id);
+        return "redirect:/professional/dashboard";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/changeRolToProfessional/{userId}")
     public String assignProfessionalUser(@PathVariable String userId, HttpSession session, ModelMap model){
         model = userService.getUserData(session, model);

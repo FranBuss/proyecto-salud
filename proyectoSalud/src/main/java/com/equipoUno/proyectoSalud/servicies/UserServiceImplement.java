@@ -150,8 +150,10 @@ public class UserServiceImplement implements UserService, UserDetailsService {
             patient.setUser(user);
             patientRepository.save(patient);
         }
+
 //        Patient savePatient = patientRepository.save(patient);
 //        return modelMapper.map(savePatient, PatientDTO.class);
+
         return null;
     }
 
