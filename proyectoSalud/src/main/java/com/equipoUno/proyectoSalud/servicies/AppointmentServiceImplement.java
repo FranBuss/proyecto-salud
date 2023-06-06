@@ -43,7 +43,7 @@ public class AppointmentServiceImplement implements AppointmentService {
         this.patientRepository = patientRepository;
     }
 
-    public AppointmentDTO addAppointment(AppointmentDTO dto, String patientId) throws MiException{
+    public AppointmentDTO assignAppointment(AppointmentDTO dto, String patientId) throws MiException{
         Patient patient = patientRepository.findById(patientId).orElse(null);
 
         Appointment appointment = modelMapper.map(dto, Appointment.class);
@@ -88,8 +88,14 @@ public class AppointmentServiceImplement implements AppointmentService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public void deleteAppointment(String id) {
         appointmentRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAppointmentAvailable(String id){
+        appointmentRepository.deleteAllAppointmentsAvailable(id);
     }
 
 //    public AppointmentDTO addAppointment(AppointmentDTO dto) throws MiException{
@@ -145,13 +151,6 @@ public class AppointmentServiceImplement implements AppointmentService {
 //    }
 
 
-    public void deleteAppointment(String id) {
-        appointmentRepository.deleteById(id);
-    }
-
-    public void deleteAppointmentAvailable(String id){
-        appointmentRepository.deleteAllAppointmentsAvailable(id);
-    }
 
 
 //    public AppointmentDTO updateAppointmentDate(String id,AppointmentDTO dto, LocalDateTime newTime) throws MiException {

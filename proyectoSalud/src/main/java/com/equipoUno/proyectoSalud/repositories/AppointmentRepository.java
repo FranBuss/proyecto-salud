@@ -16,8 +16,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, String
     @Query("SELECT a FROM Appointment a ORDER BY a.date ASC, a.appointment ASC")
     public List<Appointment> getAllAppointmentsByOrder();
 
-
-    @Query("DELETE FROM Appointment a WHERE a.state = 1 AND a.id_professional = :id")
+    @Query("DELETE FROM Appointment a WHERE a.state = true AND a.professional.id = :id")
     public List<Appointment> deleteAllAppointmentsAvailable(@Param("id") String id);
   
     @Query("SELECT a FROM Appointment a JOIN a.professional AS p " +

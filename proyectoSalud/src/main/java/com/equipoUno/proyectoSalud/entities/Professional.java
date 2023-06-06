@@ -31,7 +31,7 @@ public class Professional {
     private Appointment appointment;
 
     @Column(name = "drop_out")
-    private boolean dropOut = false;
+    private boolean dropOut = true;
 
     @Column(name = "specialization")
     @Enumerated(EnumType.STRING)
