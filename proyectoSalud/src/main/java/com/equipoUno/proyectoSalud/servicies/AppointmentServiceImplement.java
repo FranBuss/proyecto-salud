@@ -22,6 +22,7 @@ import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,14 +44,16 @@ public class AppointmentServiceImplement implements AppointmentService {
         this.patientRepository = patientRepository;
     }
 
-    public AppointmentDTO assignAppointment(AppointmentDTO dto, String patientId) throws MiException{
-        Patient patient = patientRepository.findById(patientId).orElse(null);
-
-        Appointment appointment = modelMapper.map(dto, Appointment.class);
-        appointment.setState(false);
-        appointment.setPatient(patient);
-        appointmentRepository.save(appointment);
-        return modelMapper.map(appointment, AppointmentDTO.class);
+    public AppointmentDTO assignAppointment(AppointmentDTO dto, Patient patient, String appointmentId){
+        Optional<Appointment> appointmentResponse = appointmentRepository.findById(appointmentId);
+        if (appointmentResponse.isPresent()){
+            Appointment appointment = modelMapper.map(dto, Appointment.class);
+            appointment.setState(false);
+            appointment.setPatient(patient);
+            appointmentRepository.save(appointment);
+            return modelMapper.map(appointment, AppointmentDTO.class);
+        }
+        return null;
     }
 
     public void generateAppointments(Professional professional) {

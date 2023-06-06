@@ -26,9 +26,9 @@ public class Professional {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "appointment_id")
-    private Appointment appointment;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idProfessional")
+    private List<Appointment> appointment;
 
     @Column(name = "drop_out")
     private boolean dropOut = true;

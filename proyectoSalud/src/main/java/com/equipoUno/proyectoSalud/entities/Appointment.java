@@ -48,22 +48,11 @@ public class Appointment {
     @Column(name = "duration")
     private int duration = 30;
 
-    @Column(name = "state")
+    @Column(name = "state",  columnDefinition = "TINYINT", length = 1)
     private boolean state;
 
     @Column(name = "comments")
     private String comments;
-
-//    @ElementCollection
-//    @Column(name = "available_day")
-//    @Enumerated(EnumType.STRING)
-//    private Set<DayOfWeek> availableDays = new HashSet<>(Arrays.asList(
-//            DayOfWeek.MONDAY,
-//            DayOfWeek.TUESDAY,
-//            DayOfWeek.WEDNESDAY,
-//            DayOfWeek.THURSDAY,
-//            DayOfWeek.FRIDAY
-//    ));
 
 
 }
