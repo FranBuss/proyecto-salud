@@ -72,57 +72,64 @@
         <div class="appointment-view">
             <div class="getAppointment">
                 <form action="/appointment/getProfessionals" class="getAppointment__form">
-                    <label for="">Seleccione la especialidad</label>
-                    <select name="specialization">
-                        <option value="Seleccione">Seleccione</option>
-                        <option th:each="specialty : ${T(com.equipoUno.proyectoSalud.enumerations.Specialization).values()}"
-                            th:value="${specialty}" th:text="${specialty.displayName}">
-                        </option>
-                    </select>
-                    <button type="submit">Buscar</button>
+                    <label for="getAppointment-select" class="getAppointment__label">Seleccione la especialidad</label>
+                    <div class="getAppointment__select-cont">
+                        <select name="specialization" class="getAppointment__select">
+                            <option value="Seleccione">Seleccione</option>
+                            <option th:each="specialty : ${T(com.equipoUno.proyectoSalud.enumerations.Specialization).values()}"
+                                th:value="${specialty}" th:text="${specialty.displayName}" id="getAppointment-select">
+                            </option>
+                        </select>
+                        <button type="submit" class="getAppointment__select-btn">Buscar</button>
+                    </div>
                 </form>
-                <table th:if="${page == 'getAppointment'}" class="getAppointment__table">
-                    <thead class="getAppointment__thead">
-                        <tr class="getAppointment__thead-row">
-                            <th class="getAppointment__thead-cell">Nombre</th>
-                            <th class="getAppointment__thead-cell">Especialidad</th>
-                            <th class="getAppointment__thead-cell">Horario</th>
-                            <th class="getAppointment__thead-cell">Costo</th>
-                            <th class="getAppointment__thead-cell">Calificación</th>
-                            <th class="getAppointment__thead-cell"></th>
-                        </tr>
-                    </thead>
-                    <tbody class="getAppointment__tbody">
-                        <tr th:each="professional : ${professionals}" class="getAppointment__tbody-row">
-                            <td th:text="${professional.user.name + ' ' + professional.user.surname}" class="getAppointment__tbody-cell"></td>
-                            <td th:text="${professional.specialization.displayName}" class="getAppointment__tbody-cell"></td>
-                            <td th:text="${professional.entryTime + ' - ' + professional.exitTime}" class="getAppointment__tbody-cell"></td>
-                            <td th:text="${professional.charge}" class="getAppointment__tbody-cell"></td>
-                            <td th:text="${professional.qualification}" class="getAppointment__tbody-cell"></td>
-                            <td class="getAppointment__tbody-cell"><a th:href="@{/appointment/allAppointments/__${professional.id}__}">Ver turnos disponibles</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table th:if="${page == 'getAppointment2'}" class="getAppointment__table">
-                    <thead class="getAppointment__thead">
-                        <tr class="getAppointment__thead-row">
-                            <th class="getAppointment__thead-cell">Horario</th>
-                            <th class="getAppointment__thead-cell">Dia semanal</th>
-                            <th class="getAppointment__thead-cell">Fecha</th>
-                            <th class="getAppointment__thead-cell">Estado</th>
-                            <th class="getAppointment__thead-cell"></th>
-                        </tr>
-                    </thead>
-                    <tbody class="getAppointment__tbody">
-                        <tr th:each="appointment : ${appointments}" class="getAppointment__tbody-row">
-                            <td th:text="${appointment.appointment}" class="getAppointment__tbody-cell"></td>
-                            <td th:text="${appointment.day}" class="getAppointment__tbody-cell"></td>
-                            <td th:text="${appointment.date}" class="getAppointment__tbody-cell"></td>
-                            <td th:text="${appointment.state}" class="getAppointment__tbody-cell"></td>
-                            <td class="getAppointment__tbody-cell"><a th:href="${appointment.id}" id="getAppointment-btn">Seleccionar</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div th:if="${page == 'getAppointment'}" class="table-wrapper1">
+                    <table class="getAppointment__table1">
+                        <thead class="table1__thead">
+                            <tr class="table1__thead-row">
+                                <th class="table1__thead-cell">Nombre</th>
+                                <th class="table1__thead-cell">Especialidad</th>
+                                <th class="table1__thead-cell">Horario</th>
+                                <th class="table1__thead-cell">Costo</th>
+                                <th class="table1__thead-cell">Calificación</th>
+                                <th class="table1__thead-cell"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="table1__tbody">
+                            <tr th:each="professional : ${professionals}" class="table1__tbody-row">
+                                <td th:text="${professional.user.name + ' ' + professional.user.surname}" class="table1__tbody-cell"></td>
+                                <td th:text="${professional.specialization.displayName}" class="table1__tbody-cell"></td>
+                                <td th:text="${professional.entryTime + ' - ' + professional.exitTime}" class="table1__tbody-cell"></td>
+                                <td th:text="${professional.charge}" class="table1__tbody-cell"></td>
+                                <td th:text="${professional.qualification}" class="table1__tbody-cell"></td>
+                                <td class="table1__tbody-cell table1__cell--last"><a th:href="@{/appointment/allAppointments/__${professional.id}__}" class="table1__tbody-cell-btn">Ver turnos disponibles</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${page == 'getAppointment2'}" class="table-wrapper2">
+                    <table class="getAppointment__table2">
+                        <thead class="table2__thead">
+                            <tr class="table2__thead-row">
+                                <th class="table2__thead-cell">Horario</th>
+                                <th class="table2__thead-cell">Dia semanal</th>
+                                <th class="table2__thead-cell">Fecha</th>
+                                <th class="table2__thead-cell">Estado</th>
+                                <th class="table2__thead-cell"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="table2__tbody">
+                            <tr th:each="appointment : ${appointments}" class="table2__tbody-row">
+                                <td th:text="${appointment.appointment}" class="table2__tbody-cell"></td>
+                                <td th:text="${appointment.day}" class="table2__tbody-cell"></td>
+                                <td th:text="${appointment.date}" class="table2__tbody-cell"></td>
+                                <td th:if="${appointment.state == false}" th:text="${'Ocupado'}" class="table2__tbody-cell"></td>
+                                <td th:if="${appointment.state == true}" th:text="${'Disponible'}" class="table2__tbody-cell"></td>
+                                <td class="table2__tbody-cell table2__cell--last"><a th:href="${appointment.id}" id="getAppointment-btn" class="table2__tbody-cell-btn">Seleccionar</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

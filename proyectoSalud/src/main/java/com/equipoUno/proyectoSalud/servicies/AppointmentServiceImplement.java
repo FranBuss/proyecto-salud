@@ -99,17 +99,14 @@ public class AppointmentServiceImplement implements AppointmentService {
     }
 
 //    public AppointmentDTO addAppointment(AppointmentDTO dto) throws MiException{
-//
 //        List<LocalDateTime> availableAppointments = generateAppointments(dto);
-//
 //        if (availableAppointments.contains(dto.getAppointment())) {
 //            Appointment appointment = modelMapper.map(dto, Appointment.class);
-//            appointment.setState("ocupado");
+//            appointment.setState(false);
 //            appointmentRepository.save(appointment);
 //            return modelMapper.map(appointment, AppointmentDTO.class);
 //        } else {
 //            throw new MiException("El turno no esta disponible");
-//
 //        }
 //    }
 
