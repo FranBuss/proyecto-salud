@@ -130,7 +130,6 @@ public class UserServiceImplement implements UserService, UserDetailsService {
                 userRepository.deleteById(id);
             }
         }
-
     }
 
     @Override

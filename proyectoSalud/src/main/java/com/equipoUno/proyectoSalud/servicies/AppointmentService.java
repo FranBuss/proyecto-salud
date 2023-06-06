@@ -20,7 +20,6 @@ public interface AppointmentService {
 //    AppointmentDTO addAppointment(AppointmentDTO dto) throws MiException;
 //    List<LocalDateTime> generateAppointments(AppointmentDTO dto);
 
-//    List<Appointment> getAllAppointments(String id);
 
 //    boolean isAppointmentAvailable(AppointmentDTO dto);
 //

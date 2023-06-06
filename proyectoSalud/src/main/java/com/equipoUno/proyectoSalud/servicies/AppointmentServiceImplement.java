@@ -3,9 +3,13 @@ package com.equipoUno.proyectoSalud.servicies;
 import com.equipoUno.proyectoSalud.dto.AppointmentDTO;
 
 import com.equipoUno.proyectoSalud.entities.Appointment;
+import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
+import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.repositories.AppointmentRepository;
+import com.equipoUno.proyectoSalud.repositories.PatientRepository;
+import com.equipoUno.proyectoSalud.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +30,27 @@ public class AppointmentServiceImplement implements AppointmentService {
     private final ModelMapper modelMapper;
     private final AppointmentRepository appointmentRepository;
 
+    private final PatientRepository patientRepository;
+
     private ProfessionalServiceImplement professionalServiceImplement;
 
     @Autowired
-    public AppointmentServiceImplement(ProfessionalServiceImplement professionalServiceImplement, ModelMapper modelMapper, AppointmentRepository appointmentRepository) {
+    public AppointmentServiceImplement(PatientRepository patientRepository, ProfessionalServiceImplement professionalServiceImplement ,ModelMapper modelMapper, AppointmentRepository appointmentRepository){
+
         this.modelMapper = modelMapper;
         this.appointmentRepository = appointmentRepository;
         this.professionalServiceImplement = professionalServiceImplement;
+        this.patientRepository = patientRepository;
+    }
+
+    public AppointmentDTO addAppointment(AppointmentDTO dto, String patientId) throws MiException{
+        Patient patient = patientRepository.findById(patientId).orElse(null);
+
+        Appointment appointment = modelMapper.map(dto, Appointment.class);
+        appointment.setState(false);
+        appointment.setPatient(patient);
+        appointmentRepository.save(appointment);
+        return modelMapper.map(appointment, AppointmentDTO.class);
     }
 
     public void generateAppointments(Professional professional) {
@@ -49,8 +67,8 @@ public class AppointmentServiceImplement implements AppointmentService {
             while (appointmentDateTime.toLocalTime().isBefore(exitTime)) {
                 Appointment appointment = new Appointment();
                 appointment.setProfessional(professional);
-                appointment.setState(false);
-                appointment.setDay(currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault()));
+                appointment.setState(true);
+                appointment.setDay(currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("es","ES")));
 
                 appointment.setAppointment(appointmentDateTime.toLocalTime());
                 appointment.setDate(appointmentDateTime.toLocalDate());
@@ -93,6 +111,10 @@ public class AppointmentServiceImplement implements AppointmentService {
 //        return appointments.stream().map(appointment -> modelMapper.map(appointment, Appointment.class))
 //                .collect(Collectors.toList());
 //    }
+
+
+
+
 
 //    public boolean isAppointmentAvailable(AppointmentDTO dto) {
 //        if(dto.getAvailableDays().contains(dto.getAppointment().getDayOfWeek()) && dto.getState().equals("disponible")){
