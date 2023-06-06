@@ -1,6 +1,7 @@
 package com.equipoUno.proyectoSalud.controllers;
 
 import com.equipoUno.proyectoSalud.dto.PatientDTO;
+import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
 import com.equipoUno.proyectoSalud.dto.UserDTO;
 import com.equipoUno.proyectoSalud.entities.Image;
 import com.equipoUno.proyectoSalud.entities.Patient;
@@ -127,19 +128,26 @@ public class RouteController {
 //        Image image = user.getImage();
         UserDTO userDTO = new UserDTO();
         PatientDTO patientDTO = new PatientDTO();
+        ProfessionalDTO professionalDTO = new ProfessionalDTO();
         Patient patient = patientService.getPatientByUserId(user.getId());
+        Professional professional = professionalService.getProfessionalByUserId(user.getId());
 
         if (patient != null) {
             model.addAttribute("patient", patient);
+        } else if (professional != null) {
+            model.addAttribute("professional", professional);
         } else {
             model.addAttribute("patient", null);
+            model.addAttribute("professional", null);
         }
+
 //        if (image != null) {
 //            model.addAttribute("image", "notNull");
 //        }
 //        model.addAttribute("user", user);
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("patientDTO", patientDTO);
+        model.addAttribute("professionalDTO", professionalDTO);
         return "profile";
     }
 

@@ -16,11 +16,6 @@ public interface AppointmentService {
 
     void deleteAppointment(String id);
 
-
-//    AppointmentDTO addAppointment(AppointmentDTO dto) throws MiException;
-//    List<LocalDateTime> generateAppointments(AppointmentDTO dto);
-
-
     void deleteAppointmentAvailable(String id);
 
 //    boolean isAppointmentAvailable(AppointmentDTO dto);
