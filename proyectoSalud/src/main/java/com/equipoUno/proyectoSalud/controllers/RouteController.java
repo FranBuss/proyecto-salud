@@ -53,7 +53,6 @@ public class RouteController {
             model.addAttribute("error", "Usuario o Contraseña invalidos");
         }
         try {
-
             return "login";
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -147,6 +146,7 @@ public class RouteController {
     @GetMapping("/patient/appointments")
     public String adminAppointments(HttpSession session, ModelMap model) {
         model = userService.getUserData(session, model);
+        model.put("page", null);
         return "appointments";
     }
 

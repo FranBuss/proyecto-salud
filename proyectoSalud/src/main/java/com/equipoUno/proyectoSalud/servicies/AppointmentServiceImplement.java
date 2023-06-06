@@ -21,7 +21,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
-public class AppointmentServiceImplement implements AppointmentService{
+public class AppointmentServiceImplement implements AppointmentService {
 
     private final ModelMapper modelMapper;
     private final AppointmentRepository appointmentRepository;
@@ -29,10 +29,47 @@ public class AppointmentServiceImplement implements AppointmentService{
     private ProfessionalServiceImplement professionalServiceImplement;
 
     @Autowired
-    public AppointmentServiceImplement(ProfessionalServiceImplement professionalServiceImplement ,ModelMapper modelMapper, AppointmentRepository appointmentRepository){
+    public AppointmentServiceImplement(ProfessionalServiceImplement professionalServiceImplement, ModelMapper modelMapper, AppointmentRepository appointmentRepository) {
         this.modelMapper = modelMapper;
         this.appointmentRepository = appointmentRepository;
         this.professionalServiceImplement = professionalServiceImplement;
+    }
+
+    public void generateAppointments(Professional professional) {
+        LocalTime entryTime = professional.getEntryTime();
+        LocalTime exitTime = professional.getExitTime();
+        LocalDate currentDate = LocalDate.now();
+
+        while (currentDate.getDayOfWeek() != DayOfWeek.MONDAY) {
+            currentDate = currentDate.plusDays(1);
+        }
+        while (currentDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()) {
+            LocalDateTime appointmentDateTime = LocalDateTime.of(currentDate, entryTime);
+
+            while (appointmentDateTime.toLocalTime().isBefore(exitTime)) {
+                Appointment appointment = new Appointment();
+                appointment.setProfessional(professional);
+                appointment.setState(false);
+                appointment.setDay(currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault()));
+
+                appointment.setAppointment(appointmentDateTime.toLocalTime());
+                appointment.setDate(appointmentDateTime.toLocalDate());
+                appointmentRepository.save(appointment);
+                appointmentDateTime = appointmentDateTime.plusMinutes(30);
+            }
+            currentDate = currentDate.plusDays(1);
+        }
+    }
+
+    @Override
+    public List<Appointment> getAppointmentsByProfessional(String id) {
+        List<Appointment> appointments = appointmentRepository.getAppointmentsByProfessional(id);
+        return appointments.stream().map(appointment -> modelMapper.map(appointment, Appointment.class))
+                .collect(Collectors.toList());
+    }
+
+    public void deleteAppointment(String id) {
+        appointmentRepository.deleteById(id);
     }
 
 //    public AppointmentDTO addAppointment(AppointmentDTO dto) throws MiException{
@@ -50,44 +87,12 @@ public class AppointmentServiceImplement implements AppointmentService{
 //        }
 //    }
 
-    public void generateAppointments(Professional professional) {
-        LocalTime entryTime = professional.getEntryTime();
-        LocalTime exitTime = professional.getExitTime();
-        LocalDate currentDate = LocalDate.now();
-
-        while (currentDate.getDayOfWeek() != DayOfWeek.MONDAY){
-            currentDate = currentDate.plusDays(1);
-
-        }
-
-        while (currentDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()) {
-
-            LocalDateTime appointmentDateTime = LocalDateTime.of(currentDate, entryTime);
-
-            while (appointmentDateTime.toLocalTime().isBefore(exitTime)) {
-                Appointment appointment = new Appointment();
-                appointment.setProfessional(professional);
-                appointment.setState(false);
-                appointment.setDay(currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault()));
-
-                appointment.setAppointment(appointmentDateTime.toLocalTime());
-                appointment.setDate(appointmentDateTime.toLocalDate());
-
-                appointmentRepository.save(appointment);
-
-                appointmentDateTime = appointmentDateTime.plusMinutes(30);
-            }
-
-            currentDate = currentDate.plusDays(1);
-        }
-    }
-
-    @Override
-    public List<Appointment> getAllAppointments(){
-        List<Appointment> appointments = appointmentRepository.getAllAppointmentsByOrder();;
-        return appointments.stream().map(appointment -> modelMapper.map(appointment, Appointment.class))
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<Appointment> getAllAppointments(String id){
+//        List<Appointment> appointments = appointmentRepository.getAllAppointmentsByOrder();
+//        return appointments.stream().map(appointment -> modelMapper.map(appointment, Appointment.class))
+//                .collect(Collectors.toList());
+//    }
 
 //    public boolean isAppointmentAvailable(AppointmentDTO dto) {
 //        if(dto.getAvailableDays().contains(dto.getAppointment().getDayOfWeek()) && dto.getState().equals("disponible")){
@@ -100,8 +105,6 @@ public class AppointmentServiceImplement implements AppointmentService{
 //        }
 //        return false;
 //    }
-
-
 
 //    public List<AppointmentDTO> occupiedAppointmentsDTO(){
 //
@@ -117,12 +120,6 @@ public class AppointmentServiceImplement implements AppointmentService{
 //        return occupiedAppointmentsDTO;
 //    }
 
-
-    public void deleteAppointment(String id) {
-        appointmentRepository.deleteById(id);
-    }
-
-
 //    public AppointmentDTO updateAppointmentDate(String id,AppointmentDTO dto, LocalDateTime newTime) throws MiException {
 //        List<LocalDateTime> availableAppointments = generateAppointments(dto);
 //
@@ -136,7 +133,6 @@ public class AppointmentServiceImplement implements AppointmentService{
 //            throw new MiException("El nuevo horario no está disponible");
 //        }
 //    }
-
 
 
 //    public List<AppointmentDTO> availableAppointments() {
@@ -155,9 +151,6 @@ public class AppointmentServiceImplement implements AppointmentService{
 //        return availableAppointmentsDTO;
 //
 //    }
-
-
-
 
 
 }

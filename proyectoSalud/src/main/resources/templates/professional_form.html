@@ -23,10 +23,11 @@
 <main>
     <form th:action="@{/professional/changeRol/__${newProfessional.id}__}" method="POST" th:object="${professionalDTO}" class="form-professional">
         <p class="form-professional__title">REGISTRO DE PROFESIONAL</p>
-        <!-- <input hidden th:value="${userId}"/> -->
-        <div class="cont">
-            <img th:if="${newProfessional.image == null}" src="/static/img/profile.png" alt="image" class="img">
-            <img th:if="${newProfessional.image != null}" th:src="@{/image/__${newProfessional.id}__}" alt="image" class="img">
+        <!-- <input hidden th:value="${newProfessional.id}"> -->
+        <input type="hidden" th:value="${newProfessional.id}">
+        <div class="form-professional__name-cont">
+            <img th:if="${newProfessional.image == null}" src="/static/img/profile.png" alt="image" class="form-professional__img">
+            <img th:if="${newProfessional.image != null}" th:src="@{/image/__${newProfessional.id}__}" alt="image" class="form-professional__img">
             <p th:text="${newProfessional.name + ' ' + newProfessional.surname}" class="form-professional__name"></p>
         </div>
         <div class="form-professional__inp-cont">
@@ -44,6 +45,12 @@
                     <option>Seleccione</option>
                     <option th:each="specialization : ${specializations}" th:value="${specialization}" th:text="${specialization}">
                 </select>
+            </div>
+            <div class="form-professional__charge-cont">
+                <label for="form_select">Honorarios p/consulta:</label>
+                <div class="form-professional__charge-inp-cont">
+                    <span>$</span><input type="number" th:field="*{charge}" class="form-professional__charge">
+                </div>
             </div>
         </div>
         <div class="form-professional__cont-submit">
