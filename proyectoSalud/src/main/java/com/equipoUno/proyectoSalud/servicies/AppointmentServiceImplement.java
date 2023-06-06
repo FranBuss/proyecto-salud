@@ -67,7 +67,7 @@ public class AppointmentServiceImplement implements AppointmentService{
             while (appointmentDateTime.toLocalTime().isBefore(exitTime)) {
                 Appointment appointment = new Appointment();
                 appointment.setProfessional(professional);
-                appointment.setState(false);
+                appointment.setState(true);
                 appointment.setDay(currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault()));
 
                 appointment.setAppointment(appointmentDateTime.toLocalTime());
@@ -120,6 +120,10 @@ public class AppointmentServiceImplement implements AppointmentService{
 
     public void deleteAppointment(String id) {
         appointmentRepository.deleteById(id);
+    }
+
+    public void deleteAppointmentAvailable(String id){
+        appointmentRepository.deleteAllAppointmentsAvailable(id);
     }
 
 

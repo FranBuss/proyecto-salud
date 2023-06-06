@@ -7,6 +7,7 @@ import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.enumerations.Rol;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
+import com.equipoUno.proyectoSalud.repositories.AppointmentRepository;
 import com.equipoUno.proyectoSalud.repositories.ProfessionalRepository;
 import com.equipoUno.proyectoSalud.utils.ProfessionalUtil;
 import org.modelmapper.ModelMapper;
@@ -22,14 +23,17 @@ import java.util.Optional;
 public class ProfessionalServiceImplement implements ProfessionalService{
 
     private final ProfessionalRepository professionalRepository;
+
+    private final AppointmentService appointmentService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ProfessionalServiceImplement(ProfessionalRepository professionalRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public ProfessionalServiceImplement(ProfessionalRepository professionalRepository, AppointmentService appointmentService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.professionalRepository = professionalRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
+        this.appointmentService = appointmentService;
     }
 
 
@@ -73,7 +77,9 @@ public class ProfessionalServiceImplement implements ProfessionalService{
     public Professional updateProfessional(String id){
         Optional<Professional> professionalInfo = professionalRepository.findById(id);
         if (professionalInfo.isPresent()) {
+            appointmentService.deleteAppointmentAvailable(id);
             Professional professional = professionalRepository.save(professionalInfo.get());
+            appointmentService.generateAppointments(professional);
             return professional;
         }
         return null;

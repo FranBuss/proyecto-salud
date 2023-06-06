@@ -17,6 +17,8 @@ public interface AppointmentService {
 
     List<Appointment> getAllAppointments();
 
+    void deleteAppointmentAvailable(String id);
+
 //    boolean isAppointmentAvailable(AppointmentDTO dto);
 //
 //    List<AppointmentDTO> occupiedAppointmentsDTO();
