@@ -21,5 +21,4 @@ public interface AppointmentRepository extends JpaRepository<Appointment, String
             " ORDER BY a.date ASC, a.appointment ASC")
     public List<Appointment> getAppointmentsByProfessional(@Param("professionalId") String id);
 
-
 }

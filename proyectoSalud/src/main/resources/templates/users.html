@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +26,8 @@
 				<thead>
 					<tr>
 						<th>Nombre</th>
-						<th>Email</th>
+						<th>Apellido</th>
+						<th>Correo electrónico</th>
 						<th>Rol</th>
 						<th>Convertir</th>
 						<th>Eliminar</th>
@@ -36,12 +36,22 @@
 				<tbody>
 					<tr th:each="user : ${users}">
 						<td th:text="${user.name}"></td>
+						<td th:text="${user.surname}"></td>
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.rol}"></td>
 						<td>
+<<<<<<< HEAD
 							<a th:href="@{/professional/changeRolToProfessional/__${user.id}__}"
 							th:if="${user.rol != T(com.equipoUno.proyectoSalud.enumerations.Rol).PROFESSIONAL}">
 								registrar como professional
+=======
+							<a th:href="@{/professional/changeRolToProfessional/__${user.id}__}" 
+							th:if="${user.rol != T(com.equipoUno.proyectoSalud.enumerations.Rol).PROFESSIONAL}">
+								Registrar como profesional
+							</a>
+							<a th:if="${user.rol == T(com.equipoUno.proyectoSalud.enumerations.Rol).PROFESSIONAL}">
+								Registrado
+>>>>>>> dev
 							</a>
 							<span th:if="${user.rol == T(com.equipoUno.proyectoSalud.enumerations.Rol).PROFESSIONAL}">
 								REGISTRADO
