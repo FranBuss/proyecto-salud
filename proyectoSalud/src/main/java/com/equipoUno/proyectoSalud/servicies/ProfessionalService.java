@@ -13,11 +13,12 @@ public interface ProfessionalService {
     List<Professional> searchProfessionals();
 
 
+
     List<Professional> searchProfessionalsBySpecialization(String specializationString) throws MiException;
 
     ProfessionalDTO createProfessional(ProfessionalDTO dto) throws MiException;
 
-    Professional updateProfessional(String id) throws MiException;
+    ProfessionalDTO updateProfessional(String id, ProfessionalDTO professionalDTO);
 
     void deleteProfessional(String id) throws MiException;
 

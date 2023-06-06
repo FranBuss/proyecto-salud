@@ -130,7 +130,6 @@ public class UserServiceImplement implements UserService, UserDetailsService {
                 userRepository.deleteById(id);
             }
         }
-
     }
 
     @Override
@@ -174,9 +173,6 @@ public class UserServiceImplement implements UserService, UserDetailsService {
 
     @Override
     public List<User> findAllUsers() {
-//        List<User> users = userRepository.findAll();
-//        return users.stream().map(user -> modelMapper.map(user, User.class))
-//                .collect(Collectors.toList());
         List<User> users = userRepository.getUsers();
         return users.stream().map(user -> modelMapper.map(user, User.class))
                 .collect(Collectors.toList());

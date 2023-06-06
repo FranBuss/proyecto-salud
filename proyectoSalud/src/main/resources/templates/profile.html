@@ -117,6 +117,50 @@
 				</div>
 			</form>
 		</div>
+
+<!--		TEST         -->
+		<div th:if="${rol == 'PROFESSIONAL'}" class="container form-profile__cont form-profile__contact-cont">
+			<form th:action="@{/professionals/update/__${user.id}__}" th:object="${professionalDTO}" method="POST" class="row d-flex justify-content-center form-profile__form">
+				<div class="col-md-8 mt-5 patient-profile__sd-cont">
+					<div class="d-flex justify-content-center align-items-center mb-4">
+						<h4 th:text="${'Datos del profesional'}" class="text-center form-profile__title"></h4>
+					</div>
+					<div class="row m-0 mt-2 w-100 d-flex justify-content-center patient-profile__inp-cont">
+						<div class="patient-profile__insurance-cont">
+							<div class="d-flex align-items-center patient-profile__insurance-txt-cont">
+								<label for="patient-profile__insurance-select" class="form-profile__label">Hora de entrada<span th:if="${professional != null}">:</span></label>
+								<span th:if="${professional != null}" th:text="${professional.getEntryTime()}" class="form-profile__span"></span>
+								<i id="form-profile__insurance-edit-icon" class="fa-solid fa-pen-to-square form-profile__edit-icon"></i>
+								<i id="form-profile__insurance-cancel-icon" class="fa-solid fa-xmark form-profile__cancel-icon form-profile--hidden"></i>
+							</div>
+							<input th:field="*{entryTime}" type="time" id="entryTime" name="entryTime" class="mt-1 w-100 patient-profile__insurance-select form-profile--hidden">
+						</div>
+						<div class="patient-profile__contact-cont">
+							<div class="d-flex align-items-center patient-profile__contact-txt-cont">
+								<label for="form-profile__contact-inp" class="form-profile__label">Hora de salida<span th:if="${professional != null}">:</span></label>
+								<span th:if="${professional != null}" th:text="${professional.getExitTime()}" class="form-profile__span"></span>
+								<i id="form-profile__contact-edit-icon" class="fa-solid fa-pen-to-square form-profile__edit-icon"></i>
+								<i id="form-profile__contact-cancel-icon" class="fa-solid fa-xmark form-profile__cancel-icon form-profile--hidden"></i>
+							</div>
+							<input th:field="*{exitTime}" type="time" id="exitTime" name="exitTime" class="mt-1 w-100 form-profile__input form-profile--hidden">
+						</div>
+						<div>
+							<div>
+								<label class="form-profile__label">Carga horaria<span th:if="${professional != null}">:</span></label>
+								<span th:if="${professional != null}" th:text="${professional.getCharge()}" class="form-profile__span"></span>
+								<input th:field="*{charge}" type="number" name="exitTime" class="mt-1 w-100 form-profile__input form-profile--hidden">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="text-center mt-1 form-profile__submit">
+					<button type="submit" class="form-profile__button">Guardar</button>
+				</div>
+			</form>
+		</div>
+
+<!--		TEST              -->
+
 	</main>
 	<th:block th:replace="/fragments/footer :: footer"></th:block>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

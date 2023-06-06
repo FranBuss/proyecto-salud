@@ -65,13 +65,9 @@ public class ProfessionalController {
 
     //Update a Professional
     @PostMapping(value = ("/update/{id}"))
-    public String update(@RequestBody @PathVariable String id) throws MiException {
-        Professional professionalUpdate = professionalService.updateProfessional(id);
-        if (professionalUpdate != null) {
-            return "/admin/professionals";
-        } else {
-            return "/error";
-        }
+    public String update(@PathVariable("id") String id, @ModelAttribute("professionalDTO") ProfessionalDTO professionalDTO) throws MiException {
+       professionalService.updateProfessional(id, professionalDTO);
+       return "redirect:/profile";
     }
 
 
