@@ -10,12 +10,16 @@ import java.util.List;
 
 public interface AppointmentService {
 
+    void generateAppointments(Professional professional);
+
+    List<Appointment> getAppointmentsByProfessional(String id);
+
+    void deleteAppointment(String id);
+
+
 //    AppointmentDTO addAppointment(AppointmentDTO dto) throws MiException;
 //    List<LocalDateTime> generateAppointments(AppointmentDTO dto);
 
-    void generateAppointments(Professional professional);
-
-    List<Appointment> getAllAppointments();
 
     void deleteAppointmentAvailable(String id);
 
@@ -23,10 +27,7 @@ public interface AppointmentService {
 //
 //    List<AppointmentDTO> occupiedAppointmentsDTO();
 //
-//    void deleteAppointment(String id);
-//
 //    AppointmentDTO updateAppointmentDate(String id, AppointmentDTO dto, LocalDateTime newTime) throws MiException;
 //
 //    List<AppointmentDTO> availableAppointments();
-
 }

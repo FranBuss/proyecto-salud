@@ -70,7 +70,60 @@
             </div> -->
         </div>
         <div class="appointment-view">
-
+            <div class="getAppointment">
+                <form action="/appointment/getProfessionals" class="getAppointment__form">
+                    <label for="">Seleccione la especialidad</label>
+                    <select name="specialization">
+                        <option value="Seleccione">Seleccione</option>
+                        <option th:each="specialty : ${T(com.equipoUno.proyectoSalud.enumerations.Specialization).values()}"
+                            th:value="${specialty}" th:text="${specialty.displayName}">
+                        </option>
+                    </select>
+                    <button type="submit">Buscar</button>
+                </form>
+                <table th:if="${page == 'getAppointment'}" class="getAppointment__table">
+                    <thead class="getAppointment__thead">
+                        <tr class="getAppointment__thead-row">
+                            <th class="getAppointment__thead-cell">Nombre</th>
+                            <th class="getAppointment__thead-cell">Especialidad</th>
+                            <th class="getAppointment__thead-cell">Horario</th>
+                            <th class="getAppointment__thead-cell">Costo</th>
+                            <th class="getAppointment__thead-cell">Calificación</th>
+                            <th class="getAppointment__thead-cell"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="getAppointment__tbody">
+                        <tr th:each="professional : ${professionals}" class="getAppointment__tbody-row">
+                            <td th:text="${professional.user.name + ' ' + professional.user.surname}" class="getAppointment__tbody-cell"></td>
+                            <td th:text="${professional.specialization.displayName}" class="getAppointment__tbody-cell"></td>
+                            <td th:text="${professional.entryTime + ' - ' + professional.exitTime}" class="getAppointment__tbody-cell"></td>
+                            <td th:text="${professional.charge}" class="getAppointment__tbody-cell"></td>
+                            <td th:text="${professional.qualification}" class="getAppointment__tbody-cell"></td>
+                            <td class="getAppointment__tbody-cell"><a th:href="@{/appointment/allAppointments/__${professional.id}__}">Ver turnos disponibles</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table th:if="${page == 'getAppointment2'}" class="getAppointment__table">
+                    <thead class="getAppointment__thead">
+                        <tr class="getAppointment__thead-row">
+                            <th class="getAppointment__thead-cell">Horario</th>
+                            <th class="getAppointment__thead-cell">Dia semanal</th>
+                            <th class="getAppointment__thead-cell">Fecha</th>
+                            <th class="getAppointment__thead-cell">Estado</th>
+                            <th class="getAppointment__thead-cell"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="getAppointment__tbody">
+                        <tr th:each="appointment : ${appointments}" class="getAppointment__tbody-row">
+                            <td th:text="${appointment.appointment}" class="getAppointment__tbody-cell"></td>
+                            <td th:text="${appointment.day}" class="getAppointment__tbody-cell"></td>
+                            <td th:text="${appointment.date}" class="getAppointment__tbody-cell"></td>
+                            <td th:text="${appointment.state}" class="getAppointment__tbody-cell"></td>
+                            <td class="getAppointment__tbody-cell"><a th:href="${appointment.id}" id="getAppointment-btn">Seleccionar</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <th:block th:replace="/fragments/footer :: footer"></th:block>

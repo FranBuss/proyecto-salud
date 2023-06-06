@@ -29,13 +29,13 @@ main {
     color: var(--celeste-oscuro);
 }
 
-.cont {
+.form-professional__name-cont {
     display: flex;
     align-items: center;
     margin: 10px 0 20px 0;
 }
 
-.img {
+.form-professional__img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -56,14 +56,17 @@ main {
 
 .form-professional__entry-cont,
 .form-professional__exit-cont,
-.form-professional__spe-cont {
+.form-professional__spe-cont,
+.form-professional__charge-cont {
     color: var(--azul-oscuro);
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
 }
 
-.form-professional__time {
+.form-professional__time,
+.form-professional__charge {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -77,6 +80,16 @@ main {
     background-color: transparent;
     border: 0;
     border-bottom: 2px solid var(--celeste-oscuro);
+}
+
+.form-professional__charge-inp-cont {
+    display: flex;
+    align-items: center;
+}
+
+.form-professional__charge-inp-cont span {
+    font-size: 20px;
+    margin-right: 5px;
 }
 
 .form-professional__cont-submit {
