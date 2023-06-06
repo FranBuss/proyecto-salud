@@ -21,6 +21,8 @@ public interface AppointmentService {
 //    List<LocalDateTime> generateAppointments(AppointmentDTO dto);
 
 
+    void deleteAppointmentAvailable(String id);
+
 //    boolean isAppointmentAvailable(AppointmentDTO dto);
 //
 //    List<AppointmentDTO> occupiedAppointmentsDTO();

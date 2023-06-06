@@ -68,7 +68,9 @@ public class AppointmentServiceImplement implements AppointmentService {
                 Appointment appointment = new Appointment();
                 appointment.setProfessional(professional);
                 appointment.setState(true);
+              
                 appointment.setDay(currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("es","ES")));
+
 
                 appointment.setAppointment(appointmentDateTime.toLocalTime());
                 appointment.setDate(appointmentDateTime.toLocalDate());
@@ -141,6 +143,16 @@ public class AppointmentServiceImplement implements AppointmentService {
 //        }
 //        return occupiedAppointmentsDTO;
 //    }
+
+
+    public void deleteAppointment(String id) {
+        appointmentRepository.deleteById(id);
+    }
+
+    public void deleteAppointmentAvailable(String id){
+        appointmentRepository.deleteAllAppointmentsAvailable(id);
+    }
+
 
 //    public AppointmentDTO updateAppointmentDate(String id,AppointmentDTO dto, LocalDateTime newTime) throws MiException {
 //        List<LocalDateTime> availableAppointments = generateAppointments(dto);
