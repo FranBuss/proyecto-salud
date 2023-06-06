@@ -39,9 +39,13 @@
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.rol}"></td>
 						<td>
-							<a th:href="@{/professional/changeRolToProfessional/__${user.id}__}">
+							<a th:href="@{/professional/changeRolToProfessional/__${user.id}__}"
+							th:if="${user.rol != T(com.equipoUno.proyectoSalud.enumerations.Rol).PROFESSIONAL}">
 								registrar como professional
 							</a>
+							<span th:if="${user.rol == T(com.equipoUno.proyectoSalud.enumerations.Rol).PROFESSIONAL}">
+								REGISTRADO
+							</span>
 						</td>
 						<td>
 							<a th:href="@{/user/delete(id=${user.id})}">Eliminar</a>

@@ -15,7 +15,7 @@ public interface AppointmentService {
 
     void generateAppointments(Professional professional);
 
-    List<Appointment> getAllAppointments();
+    List<Appointment> getAppointmentsByProfessional(String id);
 
 //    boolean isAppointmentAvailable(AppointmentDTO dto);
 //

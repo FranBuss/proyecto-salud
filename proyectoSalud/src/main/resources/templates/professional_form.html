@@ -23,7 +23,7 @@
 <main>
     <form th:action="@{/professional/changeRol/__${newProfessional.id}__}" method="POST" th:object="${professionalDTO}" class="form-professional">
         <p class="form-professional__title">REGISTRO DE PROFESIONAL</p>
-        <!-- <input hidden th:value="${userId}"/> -->
+         <input hidden th:value="${newProfessional.id}"/>
         <div class="cont">
             <img th:if="${newProfessional.image == null}" src="/static/img/profile.png" alt="image" class="img">
             <img th:if="${newProfessional.image != null}" th:src="@{/image/__${newProfessional.id}__}" alt="image" class="img">
