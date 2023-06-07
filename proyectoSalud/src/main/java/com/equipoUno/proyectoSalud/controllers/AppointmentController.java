@@ -5,6 +5,7 @@ import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
+import com.equipoUno.proyectoSalud.repositories.AppointmentRepository;
 import com.equipoUno.proyectoSalud.servicies.AppointmentServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalServiceImplement;
@@ -25,7 +26,8 @@ public class AppointmentController {
     private final PatientServiceImplement patientService;
 
     @Autowired
-    AppointmentController(PatientServiceImplement patientService ,AppointmentServiceImplement appointmentService, ProfessionalServiceImplement professionalService) {
+    AppointmentController(PatientServiceImplement patientService, AppointmentServiceImplement appointmentService,
+            ProfessionalServiceImplement professionalService) {
         this.appointmentService = appointmentService;
         this.professionalService = professionalService;
         this.patientService = patientService;
@@ -33,7 +35,8 @@ public class AppointmentController {
 
     @GetMapping("/getProfessionals")
     public String getProfessionalsBySpecialty(@RequestParam Specialization specialization, ModelMap model) {
-        List<Professional> professionals = professionalService.searchProfessionalsBySpecialization(specialization.toString());
+        List<Professional> professionals = professionalService
+                .searchProfessionalsBySpecialization(specialization.toString());
         if (!professionals.isEmpty()) {
             model.put("professionals", professionals);
         } else {
@@ -65,7 +68,7 @@ public class AppointmentController {
     }
 
     @PostMapping("/assignAppointments/{appId}")
-    public String assignAppointment(@PathVariable String appId, HttpSession session, ModelMap model){
+    public String assignAppointment(@PathVariable String appId, HttpSession session, ModelMap model) {
         User user = (User) session.getAttribute("userSession");
         Patient patient = patientService.getPatientByUserId(user.getId());
         appointmentService.assignAppointment(patient, appId);
@@ -89,40 +92,60 @@ public class AppointmentController {
         return "appointments";
     }
 
-//    @PostMapping("/addAppointment")
-//    public String addAppointment(@ModelAttribute("appointmentDTO") AppointmentDTO appointmentDto, Model model) throws MiException {
-//        try {
-//            AppointmentDTO createdAppointment = appointmentService.addAppointment(appointmentDto);
-//            model.addAttribute("createdAppointment", createdAppointment);
-//            return "appointment-success";
-//        } catch (MiException e) {
-//            model.addAttribute("error", e.getMessage());
-//            return "appointment-error";
-//        }
-//    }
-//
-//    @PostMapping("/{id}/date")
-//    public ResponseEntity<AppointmentDTO> updateAppointment(@PathVariable String id, @ModelAttribute("appointmentDTO") AppointmentDTO appointmentDTO, @RequestParam LocalDateTime newDate, Model model) {
-//        try {
-//            AppointmentDTO updateAppointment = appointmentService.updateAppointmentDate(id, appointmentDTO, newDate);
-//            model.addAttribute("exito", "El turno se actualizó correctamente");
-//        } catch (MiException e) {
-//            model.addAttribute("error", "Error al actualizar el turno");
-//        }
-//        return null; //Vista del form para cambiar el turno
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteAppointment(@PathVariable String id, Model model) {
-//        appointmentService.deleteAppointment(id);
-//        model.addAttribute("exito", "El turno se eliminó correctamente");
-//        return null; // vista de la lista de turnos
-//    }
+    @GetMapping("/modify/{id}")
+    public String modifyAppointment(@PathVariable String id) {
+        String professionalID = appointmentService.getProfessionalByIdAppointment(id);
+        appointmentService.resetAppointmentById(id);
+        String url = "redirect:/appointment/allAppointments/" + professionalID;
+        return url;
+    }
 
-//    @GetMapping("/occupiedAppointments")
-//    public String occupiedAppointments(ModelMap model) {
-//        List<AppointmentDTO> occupiedAppointments = appointmentService.occupiedAppointmentsDTO();
-//        model.addAttribute("appointments", occupiedAppointments);
-//        return "occupiedAppointments";
-//    }
+    @GetMapping("/delete/{id}")
+    public String deleteAppointment(@PathVariable String id) {
+        return "redirect:/appointment/patientAppointments/list";
+    }
+
+    // @PostMapping("/addAppointment")
+    // public String addAppointment(@ModelAttribute("appointmentDTO") AppointmentDTO
+    // appointmentDto, Model model) throws MiException {
+    // try {
+    // AppointmentDTO createdAppointment =
+    // appointmentService.addAppointment(appointmentDto);
+    // model.addAttribute("createdAppointment", createdAppointment);
+    // return "appointment-success";
+    // } catch (MiException e) {
+    // model.addAttribute("error", e.getMessage());
+    // return "appointment-error";
+    // }
+    // }
+    //
+    // @PostMapping("/{id}/date")
+    // public ResponseEntity<AppointmentDTO> updateAppointment(@PathVariable String
+    // id, @ModelAttribute("appointmentDTO") AppointmentDTO appointmentDTO,
+    // @RequestParam LocalDateTime newDate, Model model) {
+    // try {
+    // AppointmentDTO updateAppointment =
+    // appointmentService.updateAppointmentDate(id, appointmentDTO, newDate);
+    // model.addAttribute("exito", "El turno se actualizó correctamente");
+    // } catch (MiException e) {
+    // model.addAttribute("error", "Error al actualizar el turno");
+    // }
+    // return null; //Vista del form para cambiar el turno
+    // }
+    //
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<Void> deleteAppointment(@PathVariable String id, Model
+    // model) {
+    // appointmentService.deleteAppointment(id);
+    // model.addAttribute("exito", "El turno se eliminó correctamente");
+    // return null; // vista de la lista de turnos
+    // }
+
+    // @GetMapping("/occupiedAppointments")
+    // public String occupiedAppointments(ModelMap model) {
+    // List<AppointmentDTO> occupiedAppointments =
+    // appointmentService.occupiedAppointmentsDTO();
+    // model.addAttribute("appointments", occupiedAppointments);
+    // return "occupiedAppointments";
+    // }
 }
