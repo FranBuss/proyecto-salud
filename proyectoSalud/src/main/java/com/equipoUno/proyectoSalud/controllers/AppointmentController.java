@@ -57,15 +57,22 @@ public class AppointmentController {
         return "appointments";
     }
 
+    @GetMapping("/confirmAppointment/{id}")
+    public String confirmAppointment(@PathVariable String id, ModelMap model) {
+        Appointment appointment = appointmentService.getAppointmentById(id);
+        model.put("appointment", appointment);
+        model.put("page", "getAppointment3");
+        return "appointments";
+    }
+
     @PostMapping("/assignAppointments/{appId}")
-    public String assignAppointment(@PathVariable String appId,
-                                    @ModelAttribute("appointmentDTO") AppointmentDTO appointmentDTO, HttpSession session){
+    public String assignAppointment(@PathVariable String appId, @ModelAttribute("appointmentDTO") AppointmentDTO appointmentDTO, HttpSession session, ModelMap model){
         User user = (User) session.getAttribute("userSession");
         Patient patient = patientServiceImplement.getPatientByUserId(user.getId());
-
-        appointmentService.assignAppointment(appointmentDTO, patient, appId);
-
-        return "redirect:/patient/appointments";
+        appointmentService.assignAppointment(patient, appId);
+        model.put("exito", "El turno ha sido confirmado.");
+        model.put("page", "getAppointmentSuccess");
+        return "appointments";
     }
 
 //    @PostMapping("/addAppointment")
