@@ -62,6 +62,12 @@ public class ProfessionalController {
         return "index";
     }
 
+    @GetMapping("/dashboard")
+    public String professionalDashboard(HttpSession session, ModelMap model){
+        userService.getUserData(session, model);
+        return "professional_dash";
+    }
+
 
     //Update a Professional
     @PostMapping(value = ("/update/{id}"))
