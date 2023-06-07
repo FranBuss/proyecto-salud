@@ -28,9 +28,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment, String
     @Query("SELECT a FROM Appointment a WHERE a.professional.id = :professionalId ORDER BY a.date ASC, a.appointment ASC")
     public List<Appointment> getAppointmentsByProfessional(@Param("professionalId") String id);
 
+    @Query("SELECT a FROM Appointment a WHERE a.patient.id = :patientId ORDER BY a.date ASC, a.appointment ASC")
+    public List<Appointment> getAppointmentsByPatient(@Param("patientId") String id);
+
     @Query("SELECT a FROM Appointment a WHERE a.professional.id = :professionalId AND a.state = FALSE" +
             " ORDER BY a.date ASC, a.appointment ASC")
     public List<Appointment> getAssingAppointment(@Param("professionalId") String id);
 
-    public Appointment getAppointmentById(String id);
+//    public Appointment getAppointmentById(String id);
 }

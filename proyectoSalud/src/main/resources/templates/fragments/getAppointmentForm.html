@@ -1,0 +1,12 @@
+<form th:if="${page == 'getAppointment' || page == 'getAppointment1'}" th:fragment="getAppointmentForm" action="/appointment/getProfessionals" class="getAppointment__form">
+    <label for="getAppointment-select" class="getAppointment__label">Seleccione la especialidad</label>
+    <div class="getAppointment__select-cont">
+        <select name="specialization" class="getAppointment__select">
+            <option value="Seleccione">Seleccione</option>
+            <option th:each="specialty : ${T(com.equipoUno.proyectoSalud.enumerations.Specialization).values()}"
+                th:value="${specialty}" th:text="${specialty.displayName}" id="getAppointment-select">
+            </option>
+        </select>
+        <button type="submit" class="getAppointment__select-btn">Buscar</button>
+    </div>
+</form>

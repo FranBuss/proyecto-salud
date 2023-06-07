@@ -1,52 +1,46 @@
 package com.equipoUno.proyectoSalud.controllers;
 
-import com.equipoUno.proyectoSalud.dto.AppointmentDTO;
 import com.equipoUno.proyectoSalud.entities.Appointment;
 import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
-import com.equipoUno.proyectoSalud.exceptions.MiException;
-import com.equipoUno.proyectoSalud.servicies.AppointmentService;
 import com.equipoUno.proyectoSalud.servicies.AppointmentServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/appointment")
 public class AppointmentController {
 
     private final AppointmentServiceImplement appointmentService;
-    private final ProfessionalServiceImplement profesionalService;
-    private final PatientServiceImplement patientServiceImplement;
+    private final ProfessionalServiceImplement professionalService;
+    private final PatientServiceImplement patientService;
 
     @Autowired
-    AppointmentController(PatientServiceImplement patientServiceImplement ,AppointmentServiceImplement appointmentService, ProfessionalServiceImplement professionalService) {
+    AppointmentController(PatientServiceImplement patientService ,AppointmentServiceImplement appointmentService, ProfessionalServiceImplement professionalService) {
         this.appointmentService = appointmentService;
-        this.profesionalService = professionalService;
-        this.patientServiceImplement = patientServiceImplement;
+        this.professionalService = professionalService;
+        this.patientService = patientService;
     }
 
     @GetMapping("/getProfessionals")
     public String getProfessionalsBySpecialty(@RequestParam Specialization specialization, ModelMap model) {
-        List<Professional> professionals = profesionalService.searchProfessionalsBySpecialization(specialization.toString());
+        List<Professional> professionals = professionalService.searchProfessionalsBySpecialization(specialization.toString());
         if (!professionals.isEmpty()) {
             model.put("professionals", professionals);
         } else {
             model.put("professionals", null);
         }
-        model.put("page", "getAppointment");
-        return "appointments";
+        model.put("page", "getAppointment1");
+        return "getAppointment";
     }
 
     @GetMapping("/allAppointments/{id}")
@@ -54,24 +48,44 @@ public class AppointmentController {
         List<Appointment> appointments = appointmentService.getAppointmentsByProfessional(id);
         model.put("appointments", appointments);
         model.put("page", "getAppointment2");
-        return "appointments";
+        return "getAppointment";
     }
 
     @GetMapping("/confirmAppointment/{id}")
     public String confirmAppointment(@PathVariable String id, ModelMap model) {
-        Appointment appointment = appointmentService.getAppointmentById(id);
-        model.put("appointment", appointment);
+        Optional<Appointment> appointmentResponse = appointmentService.getAppointmentById(id);
+        if (appointmentResponse.isPresent()) {
+            Appointment appointment = appointmentResponse.get();
+            model.put("appointment", appointment);
+        } else {
+            model.put("appointment", null);
+        }
         model.put("page", "getAppointment3");
-        return "appointments";
+        return "getAppointment";
     }
 
     @PostMapping("/assignAppointments/{appId}")
-    public String assignAppointment(@PathVariable String appId, @ModelAttribute("appointmentDTO") AppointmentDTO appointmentDTO, HttpSession session, ModelMap model){
+    public String assignAppointment(@PathVariable String appId, HttpSession session, ModelMap model){
         User user = (User) session.getAttribute("userSession");
-        Patient patient = patientServiceImplement.getPatientByUserId(user.getId());
+        Patient patient = patientService.getPatientByUserId(user.getId());
         appointmentService.assignAppointment(patient, appId);
-        model.put("exito", "El turno ha sido confirmado.");
+        model.put("success", "El turno ha sido confirmado.");
         model.put("page", "getAppointmentSuccess");
+        return "getAppointment";
+    }
+
+    @GetMapping("/patientAppointments")
+    public String listPatientAppointments(HttpSession session, ModelMap model) {
+        System.out.println("entre");
+        User user = (User) session.getAttribute("userSession");
+        Patient patient = patientService.getPatientByUserId(user.getId());
+        List<Appointment> appointments = appointmentService.getAppointmentsByPatient(patient.getId());
+        if (!appointments.isEmpty()) {
+            model.put("appointments", appointments);
+        } else {
+            model.put("appointments", null);
+        }
+        model.put("page", "patientAppointments");
         return "appointments";
     }
 

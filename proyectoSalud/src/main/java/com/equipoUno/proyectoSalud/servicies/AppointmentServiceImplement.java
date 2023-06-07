@@ -87,13 +87,16 @@ public class AppointmentServiceImplement implements AppointmentService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Appointment> getAppointmentById(String id){
-        return appointmentRepository.findById(id);
+    @Override
+    public List<Appointment> getAppointmentsByPatient(String id) {
+        List<Appointment> appointments = appointmentRepository.getAppointmentsByPatient(id);
+        return appointments.stream().map(appointment -> modelMapper.map(appointment, Appointment.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Appointment getAppointmentById(String id) {
-        return appointmentRepository.getAppointmentById(id);
+    public Optional<Appointment> getAppointmentById(String id){
+        return appointmentRepository.findById(id);
     }
 
     @Override
