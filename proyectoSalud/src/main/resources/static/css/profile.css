@@ -80,7 +80,10 @@
 .user-profile__pass-cont,
 .user-profile__confpass-cont,
 .patient-profile__insurance-cont,
-.patient-profile__contact-cont {
+.patient-profile__contact-cont,
+.professional-profile__entry-cont,
+.professional-profile__exit-cont,
+.professional-profile__charge-cont {
 	margin-bottom: 15px;
 	width: 85%;
 }
@@ -143,6 +146,18 @@
 	background-color: transparent;
 	border: 0;
 	border-bottom: 2px solid var(--celeste-oscuro);
+}
+
+.professional-profile__entry,
+.professional-profile__exit,
+.professional-profile__charge {
+	display: flex;
+    justify-content: center;
+    text-align: center;
+    padding-left: 15px;
+    color: var(--azul-oscuro);
+    width: 120px;
+    border: 2px solid var(--celeste-oscuro);
 }
 
 .form-profile__button {
