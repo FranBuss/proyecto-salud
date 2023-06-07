@@ -162,4 +162,14 @@ public class RouteController {
     public String getAppointments() {
         return "getAppointment";
     }
+
+    @GetMapping("/history")
+    public String history() {
+        return "history.html";
+    }
+
+    @GetMapping("/noticias")
+    public String noticias() {
+        return "noticias.html";
+    }
 }
