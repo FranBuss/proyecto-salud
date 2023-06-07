@@ -21,61 +21,51 @@
     <th:block th:replace="/fragments/navbar :: navbar"></th:block>
     <div class="cont-sidebar">
         <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
-            <!-- <a href="/" class="mb-3 mb-md-0 me-md-auto text-center text-decoration-none"> -->
-                <span class="fs-4 text-center sidebar__title">Administración</span>
-            <!-- </a> -->
+            <span class="fs-3 text-center sidebar__title">Administración</span>
             <hr>
-            <ul class="nav nav-pills flex-column mb-auto sidebar__ul">
-                <li class="nav-item sidebar__li">
-                    <a href="/patient/appointments" class="nav-link sidebar__link" aria-current="page">
-                        <i class="fa-solid fa-calendar-days me-2 sidebar__icon"></i>
+            <ul id="sidebar-ul" class="nav nav-pills flex-column mb-auto sidebar__ul">
+                <li class="sidebar__li">
+                    <a href="/appointment/patientAppointments" id="appointments" class="nav-link sidebar__link">
+                        <i id="appointments-icon" class="fa-solid fa-calendar-days me-2 sidebar__icon"></i>
                         Ver turnos
                     </a>
                 </li>
                 <li class="sidebar__li">
-                    <a href="/patient/getAppointment" class="nav-link sidebar__link sidebar__link--active">
-                        <i class="fa-regular fa-calendar-check me-2 sidebar__icon"></i>
+                    <a href="/patient/appointments" id="getAppointment" class="nav-link sidebar__link sidebar__link--active">
+                        <i id="getAppointment-icon" class="fa-regular fa-calendar-check me-2 sidebar__icon sidebar__icon--active"></i>
                         Sacar turno
                     </a>
                 </li>
                 <li class="sidebar__li">
-                    <a href="#" class="nav-link sidebar__link sidebar__link--padding">
-                        <i class="fa-solid fa-clock-rotate-left me-2 sidebar__icon"></i>
+                    <a id="editAppointment" class="nav-link sidebar__link sidebar__link--padding">
+                        <i id="editAppointment-icon" class="fa-solid fa-clock-rotate-left me-2 sidebar__icon"></i>
                         Modificar turno
                     </a>
                 </li>
                 <li class="sidebar__li">
-                    <a href="#" class="nav-link sidebar__link">
-                        <i class="fa-solid fa-clipboard-user me-2 sidebar__icon"></i>
+                    <a id="editContact" class="nav-link sidebar__link">
+                        <i id="editContact-icon" class="fa-solid fa-clipboard-user me-2 sidebar__icon"></i>
                         Modificar contacto
                     </a>
                 </li>
             </ul>
-            <!-- <hr>
-            <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>mdo</strong>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
-                </ul>
-            </div> -->
         </div>
         <div class="appointment-view">
-
+            <div class="getAppointment">
+                <th:block th:replace="/fragments/getAppointmentForm :: getAppointmentForm"></th:block>
+                <th:block th:replace="/fragments/getAppointmentPage1 :: getAppointmentPage1"></th:block>
+                <th:block th:replace="/fragments/getAppointmentPage2 :: getAppointmentPage2"></th:block>
+                <th:block th:replace="/fragments/getAppointmentPage3 :: getAppointmentPage3"></th:block>
+                <div th:if="${page == 'getAppointmentSuccess'}">
+                    <p th:text="${success}"></p>
+                </div>
+            </div>
         </div>
     </div>
     <th:block th:replace="/fragments/footer :: footer"></th:block>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
-	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" 
-	crossorigin="anonymous"></script>
+	    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+    </script>
+    <script src="/static/js/appointments.js"></script>
 </body>
 </html>

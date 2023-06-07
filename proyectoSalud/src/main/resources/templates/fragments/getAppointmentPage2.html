@@ -1,0 +1,29 @@
+<div th:if="${page == 'getAppointment2'}" th:fragment="getAppointmentPage2" class="table-wrapper2">
+    <table class="getAppointment__table2">
+        <thead class="table2__thead">
+            <tr class="table2__thead-row">
+                <th class="table2__thead-cell">Horario</th>
+                <th class="table2__thead-cell">Dia semanal</th>
+                <th class="table2__thead-cell">Fecha</th>
+                <th class="table2__thead-cell">Estado</th>
+                <th class="table2__thead-cell"></th>
+            </tr>
+        </thead>
+        <tbody class="table2__tbody">
+            <tr th:each="appointment : ${appointments}" class="table2__tbody-row">
+                <td th:text="${appointment.appointment}" class="table2__tbody-cell"></td>
+                <td th:text="${appointment.day}" class="table2__tbody-cell"></td>
+                <td th:text="${appointment.date}" class="table2__tbody-cell"></td>
+                <td th:if="${appointment.state == false}" th:text="${'Ocupado'}" class="table2__tbody-cell"></td>
+                <td th:if="${appointment.state == true}" th:text="${'Disponible'}" class="table2__tbody-cell"></td>
+                <td th:if="${appointment.state == false}" class="table2__tbody-cell--disable">
+                    <a class="table1__tbody-cell-btn--disable">Seleccionar</a>
+                </td>
+                <td th:if="${appointment.state == true}" class="table2__tbody-cell table2__cell--last">
+                    <a th:href="@{/appointment/confirmAppointment/__${appointment.id}__}"
+                        class="table2__tbody-cell-btn">Seleccionar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -21,135 +21,75 @@
     <th:block th:replace="/fragments/navbar :: navbar"></th:block>
     <div class="cont-sidebar">
         <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
-            <!-- <a href="/" class="mb-3 mb-md-0 me-md-auto text-center text-decoration-none"> -->
-                <span class="fs-3 text-center sidebar__title">Administración</span>
-            <!-- </a> -->
+            <span class="fs-3 text-center sidebar__title">Administración</span>
             <hr>
-            <ul class="nav nav-pills flex-column mb-auto sidebar__ul">
-                <li class="nav-item sidebar__li">
-                    <a id="appointments" class="nav-link sidebar__link sidebar__link--active">
-                        <i id="apps_icon" class="fa-solid fa-calendar-days me-2 sidebar__icon sidebar__icon--active"></i>
+            <ul id="sidebar-ul" class="nav nav-pills flex-column mb-auto sidebar__ul">
+                <li class="sidebar__li">
+                    <a href="/appointment/patientAppointments" id="appointments" class="nav-link sidebar__link sidebar__link--active">
+                        <i id="appointments-icon" class="fa-solid fa-calendar-days me-2 sidebar__icon sidebar__icon--active"></i>
                         Ver turnos
                     </a>
                 </li>
                 <li class="sidebar__li">
-                    <a id="getAppointment" class="nav-link sidebar__link">
-                        <i id="getApp_icon" class="fa-regular fa-calendar-check me-2 sidebar__icon"></i>
+                    <a href="/patient/appointments" id="getAppointment" class="nav-link sidebar__link">
+                        <i id="getAppointment-icon" class="fa-regular fa-calendar-check me-2 sidebar__icon"></i>
                         Sacar turno
                     </a>
                 </li>
                 <li class="sidebar__li">
                     <a id="editAppointment" class="nav-link sidebar__link sidebar__link--padding">
-                        <i id="editApp_icon" class="fa-solid fa-clock-rotate-left me-2 sidebar__icon"></i>
+                        <i id="editAppointment-icon" class="fa-solid fa-clock-rotate-left me-2 sidebar__icon"></i>
                         Modificar turno
                     </a>
                 </li>
                 <li class="sidebar__li">
                     <a id="editContact" class="nav-link sidebar__link">
-                        <i id="editCon_icon" class="fa-solid fa-clipboard-user me-2 sidebar__icon"></i>
+                        <i id="editContact-icon" class="fa-solid fa-clipboard-user me-2 sidebar__icon"></i>
                         Modificar contacto
                     </a>
                 </li>
             </ul>
-            <!-- <hr>
-            <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>mdo</strong>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
-                </ul>
-            </div> -->
         </div>
         <div class="appointment-view">
-            <div class="getAppointment">
-                <form action="/appointment/getProfessionals" class="getAppointment__form">
-                    <label for="getAppointment-select" class="getAppointment__label">Seleccione la especialidad</label>
-                    <div class="getAppointment__select-cont">
-                        <select name="specialization" class="getAppointment__select">
-                            <option value="Seleccione">Seleccione</option>
-                            <option th:each="specialty : ${T(com.equipoUno.proyectoSalud.enumerations.Specialization).values()}"
-                                th:value="${specialty}" th:text="${specialty.displayName}" id="getAppointment-select">
-                            </option>
-                        </select>
-                        <button type="submit" class="getAppointment__select-btn">Buscar</button>
-                    </div>
-                </form>
-                <div th:if="${page == 'getAppointment'}" class="table-wrapper1">
-                    <table class="getAppointment__table1">
-                        <thead class="table1__thead">
-                            <tr class="table1__thead-row">
-                                <th class="table1__thead-cell">Nombre</th>
-                                <th class="table1__thead-cell">Especialidad</th>
-                                <th class="table1__thead-cell">Horario</th>
-                                <th class="table1__thead-cell">Costo</th>
-                                <th class="table1__thead-cell">Calificación</th>
-                                <th class="table1__thead-cell"></th>
-                            </tr>
-                        </thead>
-                        <tbody class="table1__tbody">
-                            <tr th:each="professional : ${professionals}" class="table1__tbody-row">
-                                <td th:text="${professional.user.name + ' ' + professional.user.surname}" class="table1__tbody-cell"></td>
-                                <td th:text="${professional.specialization.displayName}" class="table1__tbody-cell"></td>
-                                <td th:text="${professional.entryTime + ' - ' + professional.exitTime}" class="table1__tbody-cell"></td>
-                                <td th:text="${professional.charge}" class="table1__tbody-cell"></td>
-                                <td th:text="${professional.qualification}" class="table1__tbody-cell"></td>
-                                <td class="table1__tbody-cell table1__cell--last"><a th:href="@{/appointment/allAppointments/__${professional.id}__}" class="table1__tbody-cell-btn">Ver turnos disponibles</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div th:if="${page == 'getAppointment2'}" class="table-wrapper2">
-                    <table class="getAppointment__table2">
-                        <thead class="table2__thead">
-                            <tr class="table2__thead-row">
-                                <th class="table2__thead-cell">Horario</th>
-                                <th class="table2__thead-cell">Dia semanal</th>
-                                <th class="table2__thead-cell">Fecha</th>
-                                <th class="table2__thead-cell">Estado</th>
-                                <th class="table2__thead-cell"></th>
-                            </tr>
-                        </thead>
-                        <tbody class="table2__tbody">
-                            <tr th:each="appointment : ${appointments}" class="table2__tbody-row">
-                                <td th:text="${appointment.appointment}" class="table2__tbody-cell"></td>
-                                <td th:text="${appointment.day}" class="table2__tbody-cell"></td>
-                                <td th:text="${appointment.date}" class="table2__tbody-cell"></td>
-                                <td th:if="${appointment.state == false}" th:text="${'Ocupado'}" class="table2__tbody-cell"></td>
-                                <td th:if="${appointment.state == true}" th:text="${'Disponible'}" class="table2__tbody-cell"></td>
-                                <td class="table2__tbody-cell table2__cell--last"><a th:href="@{/appointment/confirmAppointment/__${appointment.id}__}" class="table2__tbody-cell-btn">Seleccionar</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div th:if="${page == 'getAppointment3'}">
-                    <form th:action="@{/appointment/assignAppointments/__${appointment.id}__}" method="POST">
-                        <p>Desea confirmar el turno</p>
-                        <p>Horario: <span th:text="${appointment.appointment}"></span></p>
-                        <p>Dia: <span th:text="${appointment.day}"></span></p>
-                        <p>Fecha: <span th:text="${appointment.date}"></span></p>
-                        <p>Medico: <span th:text="${appointment.professional.user.name + ' ' + appointment.professional.user.surname}"></span></p>
-                        <button type="submit">Confirmar</button>
-                    </form>
-                </div>
-                <div th:if="${page == 'getAppointmentSuccess'}">
-                    <p th:text="${exito}"></p>
+            <div th:if="${page == 'patientAppointments'}" class="getAppointment">
+                <table th:if="${appointments != null}" class="getAppointment__table2">
+                    <thead class="table2__thead">
+                        <tr class="table2__thead-row">
+                            <th class="table2__thead-cell">Medico</th>
+                            <th class="table2__thead-cell">Horario</th>
+                            <th class="table2__thead-cell">Dia semanal</th>
+                            <th class="table2__thead-cell">Fecha</th>
+                            <th class="table2__thead-cell"></th>
+                            <th class="table2__thead-cell"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="table2__tbody">
+                        <tr th:each="appointment : ${appointments}" class="table2__tbody-row">
+                            <td th:text="${appointment.professional.user.name + ' ' + appointment.professional.user.surname}"></td>
+                            <td th:text="${appointment.appointment}" class="table2__tbody-cell"></td>
+                            <td th:text="${appointment.day}" class="table2__tbody-cell"></td>
+                            <td th:text="${appointment.date}" class="table2__tbody-cell"></td>
+                            <td class="table2__tbody-cell table2__cell--last">
+                                <a th:href="@{/appointment/allAppointments/__${appointment.id}__}" class="table2__tbody-cell-btn">Modificar</a>
+                            </td>
+                            <td class="table2__tbody-cell table2__cell--last">
+                                <a href="#" class="table2__tbody-cell-btn">Cancelar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div th:if="${appointments == null}">
+                    <p>No tiene turnos asignados</p>
                 </div>
             </div>
         </div>
     </div>
     <th:block th:replace="/fragments/footer :: footer"></th:block>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
-	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" 
-	crossorigin="anonymous"></script>
-    <!--<script src="/static/js/appointments.js"></script>*/-->
+
+	    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+    </script>
+    <script src="/static/js/appointments.js"></script>
+
 </body>
 </html>

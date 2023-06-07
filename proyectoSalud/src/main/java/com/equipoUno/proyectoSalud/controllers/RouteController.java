@@ -125,7 +125,6 @@ public class RouteController {
     public String perfil(ModelMap model, HttpSession session){
         User user = (User) session.getAttribute("userSession");
         model = userService.getUserData(session, model);
-//        Image image = user.getImage();
         UserDTO userDTO = new UserDTO();
         PatientDTO patientDTO = new PatientDTO();
         ProfessionalDTO professionalDTO = new ProfessionalDTO();
@@ -140,11 +139,6 @@ public class RouteController {
             model.addAttribute("patient", null);
             model.addAttribute("professional", null);
         }
-
-//        if (image != null) {
-//            model.addAttribute("image", "notNull");
-//        }
-//        model.addAttribute("user", user);
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("patientDTO", patientDTO);
         model.addAttribute("professionalDTO", professionalDTO);
@@ -154,14 +148,14 @@ public class RouteController {
     @GetMapping("/patient/appointments")
     public String adminAppointments(HttpSession session, ModelMap model) {
         model = userService.getUserData(session, model);
-        model.put("page", null);
-        return "appointments";
-    }
-
-    @GetMapping("/patient/getAppointment")
-    public String getAppointments() {
+        model.put("page", "getAppointment");
         return "getAppointment";
     }
+
+//    @GetMapping("/patient/getAppointment")
+//    public String getAppointments() {
+//        return "getAppointment";
+//    }
 
     @GetMapping("/history")
     public String history() {
