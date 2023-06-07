@@ -38,6 +38,9 @@
                 <li th:if="${rol == 'ADMIN'}" class="navbar__dropdown-row">
                     <a href="/admin/users" class="navbar__dropdown-link navbar__dropdown-link--hover">Administrar usuarios</a>
                 </li>
+                <li th:if="${rol == 'PROFESSIONAL'}" class="navbar__dropdown-row">
+                    <a href="/professional/dashboard" class="navbar__dropdown-link navbar__dropdown-link--hover">Administrar profesional</a>
+                </li>
                 <li th:if="${session.userSession != null}" class="navbar__dropdown-row">
                     <a href="/logout" class="navbar__dropdown-link navbar__dropdown-link--hover">Logout</a>
                 </li>
