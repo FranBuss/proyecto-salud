@@ -1,9 +1,18 @@
 package com.equipoUno.proyectoSalud.controllers;
 
+import com.equipoUno.proyectoSalud.dto.MedicalRecordDTO;
 import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
+import com.equipoUno.proyectoSalud.entities.Appointment;
+import com.equipoUno.proyectoSalud.entities.MedicalRecord;
+import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
+import com.equipoUno.proyectoSalud.enumerations.BloodType;
+import com.equipoUno.proyectoSalud.enumerations.Gender;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
+import com.equipoUno.proyectoSalud.repositories.AppointmentRepository;
+import com.equipoUno.proyectoSalud.servicies.AppointmentServiceImplement;
+import com.equipoUno.proyectoSalud.servicies.MedicalRecordImplement;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalService;
 import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +23,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/professional")
@@ -23,10 +34,16 @@ public class ProfessionalController {
     private final ProfessionalService professionalService;
     private final UserServiceImplement userService;
 
+    private final AppointmentServiceImplement appointmentServiceImplement;
+
+    private final MedicalRecordImplement medicalRecordImplement;
+
     @Autowired
-    public ProfessionalController(ProfessionalService professionalService, UserServiceImplement userService) {
+    public ProfessionalController(AppointmentServiceImplement appointmentServiceImplement, MedicalRecordImplement medicalRecordImplement, ProfessionalService professionalService, UserServiceImplement userService) {
         this.professionalService = professionalService;
         this.userService = userService;
+        this.medicalRecordImplement = medicalRecordImplement;
+        this.appointmentServiceImplement = appointmentServiceImplement;
     }
 
     @GetMapping("/{id}")
@@ -38,39 +55,48 @@ public class ProfessionalController {
         }
         return null;
     }
+//
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @GetMapping("/create")
+//    public String professionalRegister(){
+//        return "professional_form";
+//    }
+//
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @PostMapping("/create")
+//    public String create(@RequestParam ProfessionalDTO professionalDTO, ModelMap model){
+//        try {
+//
+//            professionalService.createProfessional(professionalDTO);
+//            model.put("success", "The professional has been created correctly");
+//
+//        } catch (MiException ex){
+//
+//            model.put("error", ex.getMessage());
+//            return "professional_form";
+//
+//        }
+//        return "index";
+//    }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/create")
-    public String professionalRegister(){
-        return "professional_form";
+    @GetMapping("/dashboard")
+    public String professionalDashboard(HttpSession session, ModelMap model){
+        userService.getUserData(session, model);
+        return "professional_dash";
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/create")
-    public String create(@RequestParam ProfessionalDTO professionalDTO, ModelMap model){
-        try {
 
-            professionalService.createProfessional(professionalDTO);
-            model.put("success", "The professional has been created correctly");
-
-        } catch (MiException ex){
-
-            model.put("error", ex.getMessage());
-            return "professional_form";
-
-        }
-        return "index";
+    @GetMapping("/dashboard")
+    public String professionalDashboard(HttpSession session, ModelMap model){
+        userService.getUserData(session, model);
+        return "professional_dash";
     }
 
 
     //Update a Professional
-    @PostMapping(value = ("/update/{id}"))
-    public String update(@RequestBody @PathVariable String id) throws MiException {
-        Professional professionalUpdate = professionalService.updateProfessional(id);
-        if (professionalUpdate != null) {
-            return "/admin/professionals";
-        } else {
-            return "/error";
-        }
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable("id") String id, @ModelAttribute("professionalDTO") ProfessionalDTO professionalDTO) throws MiException {
+       professionalService.updateProfessional(id, professionalDTO);
+       return "redirect:/profile";
     }
 
 
@@ -80,19 +106,17 @@ public class ProfessionalController {
         return "/admin/professionals";
     }
 
-    @PostMapping(value = "/updateDropOut/{id}", params = "_method=put")
-    public String updateDropOut(@PathVariable String id)  throws MiException {
-        ProfessionalDTO professionalUpdate = professionalService.updateDropOut(id);
-        if (professionalUpdate != null) {
-            return "/admin/professionals";
-        } else {
-            return "/error";
-        }
+    @PostMapping(value = "/updateDropOut/{id}")
+    public String updateDropOut(@PathVariable("id") String id)  throws MiException {
+        professionalService.updateDropOut(id);
+        return "redirect:/professional/dashboard";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/changeRolToProfessional/{userId}")
-    public String assignProfessionalUser(@PathVariable String userId, ModelMap model){
-        model.put("user", userService.getOne(userId));
+    public String assignProfessionalUser(@PathVariable String userId, HttpSession session, ModelMap model){
+        model = userService.getUserData(session, model);
+        model.put("newProfessional", userService.getOne(userId));
         ProfessionalDTO professionalDTO = new ProfessionalDTO();
         model.put("professionalDTO", professionalDTO);
         Specialization[] specializations = Specialization.values();
@@ -105,6 +129,46 @@ public class ProfessionalController {
         userService.assignProfessionalUser(userId, professionalDTO);
         return "redirect:/admin/users";
     }
+
+
+//    //PRUEBA
+//    @GetMapping("/medicalRecords/{id}")
+//    public String listMedicalRecords(@PathVariable String id, ModelMap model){
+//        List<MedicalRecord> medicalRecords = medicalRecordImplement.getMedicalRecordsByPatient(id);
+//        model.put("medicalRecords", medicalRecords);
+//        return "medicalRecords";
+//    }
+//
+//    //PRUEBA
+//    @GetMapping("/medicalRecord/form/{appId}")
+//    public String medicalRecordForm(@PathVariable String appId, ModelMap model){
+//        Optional<Appointment> appointment = appointmentServiceImplement.getAppointmentById(appId);
+//        if (appointment.isPresent()){
+//            MedicalRecordDTO medicalRecordDTO = new MedicalRecordDTO();
+//            model.put("medicalRecordDTO", medicalRecordDTO);
+//            BloodType[] bloodTypes = BloodType.values();
+//            model.put("bloodTypes", bloodTypes);
+//            Gender[] genders = Gender.values();
+//            model.put("genders", genders);
+//            return "medicalRecord_form";
+//        }
+//
+//        //CAMBIAR NO SE A DONDE IR :(
+//        return "redirect:/index";
+//
+//    }
+//
+//    //AGREGADO TAMBIEN CORREGIR
+//    @PostMapping("/medicalRecord/create/{appId}")
+//    public String assignMedicalRecord(@PathVariable("appId") String appId, @ModelAttribute("medicalRecordDTO")MedicalRecordDTO medicalRecordDTO){
+//        Optional<Appointment> appointment = appointmentServiceImplement.getAppointmentById(appId);
+//        if (appointment.isPresent()){
+//            Patient patient = appointment.get().getPatient();
+//            medicalRecordImplement.createMedicalRecord(patient.getId(), medicalRecordDTO);
+//        }
+//
+//        return null;
+//    }
 
 
 }

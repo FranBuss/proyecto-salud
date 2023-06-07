@@ -8,9 +8,9 @@
 }
 
 .form-login {
-    border-radius: 15%;
-    width: 20%;
-    height: 41%;
+    border-radius: 20px;
+    width: 400px;
+    height: 380px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -139,58 +139,4 @@
 .form-login__reg-a {
     font-weight: bold;
     color: var(--azul-oscuro);
-}
-
-@media screen and (max-width: 1500px) {
-    .form-login {
-        width: 30%;
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    .form-login {
-        width: 35%;
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    .form-login {
-        width: 40%;
-    }
-}
-
-@media screen and (max-width: 800px) {
-    .form-login {
-        width: 50%;
-    }
-}
-
-@media screen and (max-width: 650px) {
-    .form-login {
-        width: 60%;
-    }
-}
-
-@media screen and (max-width: 450px) {
-    .form-login {
-        width: 70%;
-    }
-}
-
-@media screen and (max-height: 850px) {
-    .form-login {
-        height: 45%;
-    }
-}
-
-@media screen and (max-height: 750px) {
-    .form-login {
-        height: 50%;
-    }
-}
-
-@media screen and (max-height: 700px) {
-    .form-login {
-        height: 55%;
-    }
 }

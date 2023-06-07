@@ -1,12 +1,12 @@
 package com.equipoUno.proyectoSalud.enumerations;
 
 public enum Specialization {
-    PEDIATRICS("Pediatra"),
-    GYNECOLOGY("Ginecologo"),
-    CLINIC("Clinico"),
-    CARDIOLOGY("Cardiologo");
+    PEDIATRICS("Pediatria"),
+    GYNECOLOGY("Ginecologia"),
+    CLINIC("Clinica"),
+    CARDIOLOGY("Cardiologia");
 
-    private final String displayName;
+    private String displayName;
 
     Specialization(String displayName){
         this.displayName = displayName;

@@ -21,75 +21,75 @@
     <th:block th:replace="/fragments/navbar :: navbar"></th:block>
     <div class="cont-sidebar">
         <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
-            <!-- <a href="/" class="mb-3 mb-md-0 me-md-auto text-center text-decoration-none"> -->
-                <span class="fs-4 text-center sidebar__title">Administración</span>
-            <!-- </a> -->
+            <span class="fs-3 text-center sidebar__title">Administración</span>
             <hr>
-            <ul class="nav nav-pills flex-column mb-auto sidebar__ul">
-                <li class="nav-item sidebar__li">
-                    <a id="appointment" class="nav-link sidebar__link sidebar__link--active" aria-current="page">
-                        <i class="fa-solid fa-calendar-days me-2 sidebar__icon"></i>
+            <ul id="sidebar-ul" class="nav nav-pills flex-column mb-auto sidebar__ul">
+                <li class="sidebar__li">
+                    <a href="/appointment/patientAppointments" id="appointments" class="nav-link sidebar__link sidebar__link--active">
+                        <i id="appointments-icon" class="fa-solid fa-calendar-days me-2 sidebar__icon sidebar__icon--active"></i>
                         Ver turnos
                     </a>
                 </li>
                 <li class="sidebar__li">
-                    <a id="getAppointment" class="nav-link sidebar__link">
-                        <i class="fa-regular fa-calendar-check me-2 sidebar__icon"></i>
+                    <a href="/patient/appointments" id="getAppointment" class="nav-link sidebar__link">
+                        <i id="getAppointment-icon" class="fa-regular fa-calendar-check me-2 sidebar__icon"></i>
                         Sacar turno
                     </a>
                 </li>
                 <li class="sidebar__li">
-                    <a href="#" class="nav-link sidebar__link sidebar__link--padding">
-                        <i class="fa-solid fa-clock-rotate-left me-2 sidebar__icon"></i>
+                    <a id="editAppointment" class="nav-link sidebar__link sidebar__link--padding">
+                        <i id="editAppointment-icon" class="fa-solid fa-clock-rotate-left me-2 sidebar__icon"></i>
                         Modificar turno
                     </a>
                 </li>
                 <li class="sidebar__li">
-                    <a href="#" class="nav-link sidebar__link">
-                        <i class="fa-solid fa-clipboard-user me-2 sidebar__icon"></i>
+                    <a id="editContact" class="nav-link sidebar__link">
+                        <i id="editContact-icon" class="fa-solid fa-clipboard-user me-2 sidebar__icon"></i>
                         Modificar contacto
                     </a>
                 </li>
             </ul>
-            <!-- <hr>
-            <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>mdo</strong>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
-                </ul>
-            </div> -->
         </div>
         <div class="appointment-view">
-
+            <div th:if="${page == 'patientAppointments'}" class="getAppointment">
+                <table th:if="${appointments != null}" class="getAppointment__table2">
+                    <thead class="table2__thead">
+                        <tr class="table2__thead-row">
+                            <th class="table2__thead-cell">Medico</th>
+                            <th class="table2__thead-cell">Horario</th>
+                            <th class="table2__thead-cell">Dia semanal</th>
+                            <th class="table2__thead-cell">Fecha</th>
+                            <th class="table2__thead-cell"></th>
+                            <th class="table2__thead-cell"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="table2__tbody">
+                        <tr th:each="appointment : ${appointments}" class="table2__tbody-row">
+                            <td th:text="${appointment.professional.user.name + ' ' + appointment.professional.user.surname}"></td>
+                            <td th:text="${appointment.appointment}" class="table2__tbody-cell"></td>
+                            <td th:text="${appointment.day}" class="table2__tbody-cell"></td>
+                            <td th:text="${appointment.date}" class="table2__tbody-cell"></td>
+                            <td class="table2__tbody-cell table2__cell--last">
+                                <a th:href="@{/appointment/allAppointments/__${appointment.id}__}" class="table2__tbody-cell-btn">Modificar</a>
+                            </td>
+                            <td class="table2__tbody-cell table2__cell--last">
+                                <a href="#" class="table2__tbody-cell-btn">Cancelar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div th:if="${appointments == null}">
+                    <p>No tiene turnos asignados</p>
+                </div>
+            </div>
         </div>
     </div>
     <th:block th:replace="/fragments/footer :: footer"></th:block>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
-	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" 
-	crossorigin="anonymous"></script>
-    <script>
-        const appointment = document.getElementById("appointment");
-        appointment.addEventListener("click", () => {
-            let getAppointment = document.getElementById("getAppointment");
-            getAppointment.classList.remove("sidebar__link--active");
-            appointment.classList.add("sidebar__link--active");
-        })
-        const getAppointment = document.getElementById("getAppointment");
-        getAppointment.addEventListener("click", () => {
-            let appointment = document.getElementById("appointment");
-            appointment.classList.remove("sidebar__link--active");
-            getAppointment.classList.add("sidebar__link--active");
-        })
+
+	    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     </script>
+    <script src="/static/js/appointments.js"></script>
+
 </body>
 </html>

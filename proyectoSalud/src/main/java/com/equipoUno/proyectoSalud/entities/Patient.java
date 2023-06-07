@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "patients")
@@ -23,9 +24,9 @@ public class Patient {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "appointment_id")
-    private Appointment appointment;
+    @OneToMany
+    @JoinColumn(name = "idPatient")
+    private List<Appointment> appointment;
 
     @Column(name = "health_insurance")
     @Enumerated(EnumType.STRING)
@@ -34,8 +35,8 @@ public class Patient {
     @Column(name = "contact")
     private String contact;
 
-//    @OneToOne
-//    @JoinColumn(name = "clinic_history_id")
-//    private ClinicHistory clinicHistory;
+    @OneToMany
+    @JoinColumn(name = "idPatient")
+    private List<MedicalRecord> medicalRecords;
 
 }

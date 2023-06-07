@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -38,26 +39,20 @@ public class Appointment {
     @Column(name = "appointment")
     private LocalTime appointment;
 
+    @Column(name = "day")
+    private String day;
+
+    @Column(name = "date")
+    private LocalDate date;
+
     @Column(name = "duration")
     private int duration = 30;
 
-    @Column(name = "state")
+    @Column(name = "state",  columnDefinition = "TINYINT", length = 1)
     private boolean state;
 
     @Column(name = "comments")
     private String comments;
 
-//    @ElementCollection
-//    @Column(name = "available_day")
-//    @Enumerated(EnumType.STRING)
-//    private Set<DayOfWeek> availableDays = new HashSet<>(Arrays.asList(
-//            DayOfWeek.MONDAY,
-//            DayOfWeek.TUESDAY,
-//            DayOfWeek.WEDNESDAY,
-//            DayOfWeek.THURSDAY,
-//            DayOfWeek.FRIDAY
-//    ));
-
-    private String day;
 
 }

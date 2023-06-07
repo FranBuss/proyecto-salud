@@ -1,0 +1,9 @@
+<div th:if="${page = 'getAppointment'}" th:fragment="getAppointmentView" class="getAppointment">
+    <th:block th:replace="/fragments/getAppointmentForm :: getAppointmentForm"></th:block>
+    <th:block th:replace="/fragments/getAppointmentPage1 :: getAppointmentPage1"></th:block>
+    <th:block th:replace="/fragments/getAppointmentPage2 :: getAppointmentPage2"></th:block>
+    <th:block th:replace="/fragments/getAppointmentPage3 :: getAppointmentPage3"></th:block>
+    <div th:if="${page == 'getAppointmentSuccess'}">
+        <p th:text="${success}"></p>
+    </div>
+</div>

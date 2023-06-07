@@ -4,32 +4,42 @@
             <i id="navbar__icon" class="fa-solid fa-bars navbar__icon"></i>
         </div>
         <div class="navbar__cont-title">
-            <a href="/" class="navbar__title">ProyectoSalud</a>
+            <!-- <a href="/" class="navbar__title">ProyectoSalud</a> -->
+            <a href="/">
+                <img src="/static/img/logo-medilink.png" alt="image">
+            </a>
         </div>
     </div>
+    <div id="navbar__links" class="navbar__links navbar--active">
+        <a href="/" class="navbar__link">Inicio</a>
+        <a href="/searcher" class="navbar__link">Buscador</a>
+        <a th:if="${session.userSession == null}" href="/login" class="navbar__link">Login</a>
+        <a th:if="${session.userSession == null}" href="/register" class="navbar__link">Registro</a>
+    </div>
     <div id="navbar__cont-sd" class="navbar__cont-sd">
-        <div id="navbar__links" class="navbar__links navbar--active">
-            <a href="/" class="navbar__link">Inicio</a>
-            <a href="/searcher" class="navbar__link">Buscador</a>
-            <a th:if="${session.userSession == null}" href="/login" class="navbar__link">Login</a>
-            <a th:if="${session.userSession == null}" href="/register" class="navbar__link">Registro</a>
-        </div>
-        <div id="navbar__cont-dropdown" class="navbar__cont-dropdown navbar--active">
-            <div class="navbar__useradmin">
-                <a th:if="${role == null}" th:text="${'Bienvenido/a Usuario'}" class="navbar__useradmin-title"></a>
-                <a th:if="${role == 'PATIENT' || role == 'PROFESSIONAL'}" th:text="${'Bienvenido/a ' + name}" class="navbar__useradmin-title"></a>
-                <a th:if="${role == 'ADMIN'}" th:text="${'Bienvenido/a Admin'}" class="navbar__useradmin-title"></a>
-                <i id="navbar__useradmin-icon" class="fa-solid fa-circle-chevron-down navbar__useradmin-icon"></i>
+        <div id="navbar__cont-dropdown" class="navbar__dropdown-cont navbar--active">
+            <div class="navbar__dropdown-profile-cont">
+                <img th:if="${user == null}" src="/static/img/profile.png" alt="image" class="navbar__dropdown-img">
+                <img th:if="${user != null && image == null}" src="/static/img/profile.png" alt="image" class="navbar__dropdown-img">
+                <img th:if="${user != null && image != null}" th:src="@{/image/__${user.id}__}" alt="image" class="navbar__dropdown-img">
+                <div class="navbar__dropdown-name-cont">
+                    <a th:if="${user == null}" th:text="${'Bienvenido/a Usuario'}" class="navbar__dropdown-name"></a>
+                    <a th:if="${user != null}" th:text="${user.name + ' ' + user.surname}" class="navbar__dropdown-name"></a>
+                    <i th:if="${session.userSession != null}" id="navbar__useradmin-icon" class="fa-solid fa-circle-chevron-down navbar__dropdown-icon"></i>
+                </div>
             </div>
-            <ul id="navbar__dropdown" class="navbar__dropdown--d-none">
-                <li class="navbar__dropdown-row">
-                    <a href="/patient/appointments" class="navbar__dropdown-link">Administrar turnos</a>
+            <ul th:if="${session.userSession != null}" id="navbar__dropdown" class="navbar__dropdown--d-none">
+                <li th:if="${session.userSession != null && activePatient == true}" class="navbar__dropdown-row">
+                    <a href="/appointment/patientAppointments" class="navbar__dropdown-link">Administrar turnos</a>
                 </li>
                 <li th:if="${session.userSession != null}" class="navbar__dropdown-row">
                     <a href="/profile" class="navbar__dropdown-link">Administrar cuenta</a>
                 </li>
-                <li sec:authorize="hasRole('ROLE_ADMIN')" class="navbar__dropdown-row">
-                    <a href="/admin/users" class="navbar__dropdown-link navbar__dropdown-link--hover">Administrar Usuario</a>
+                <li th:if="${rol == 'ADMIN'}" class="navbar__dropdown-row">
+                    <a href="/admin/users" class="navbar__dropdown-link navbar__dropdown-link--hover">Administrar usuarios</a>
+                </li>
+                <li th:if="${rol == 'PROFESSIONAL'}" class="navbar__dropdown-row">
+                    <a href="/professional/dashboard" class="navbar__dropdown-link navbar__dropdown-link--hover">Administrar profesional</a>
                 </li>
                 <li th:if="${session.userSession != null}" class="navbar__dropdown-row">
                     <a href="/logout" class="navbar__dropdown-link navbar__dropdown-link--hover">Logout</a>
@@ -37,34 +47,5 @@
             </ul>
         </div>
     </div>
-    <script>
-        const dropdown_icon = document.getElementById("navbar__useradmin-icon");
-        dropdown_icon.addEventListener("click", () => {
-            let nav_dropdown = document.getElementById("navbar__dropdown");
-            nav_dropdown.classList.toggle("navbar__dropdown--d-none");
-            nav_dropdown.classList.toggle("navbar__dropdown--active");
-            dropdown_icon.classList.toggle("fa-circle-chevron-down");
-            dropdown_icon.classList.toggle("fa-circle-chevron-up");
-        })
-
-        const navbar__icon = document.getElementById("navbar__icon");
-        navbar__icon.addEventListener("click", () => {
-            navbar__icon.classList.toggle("fa-bars");
-            navbar__icon.classList.toggle("fa-bars-staggered");
-
-            let nav_links = document.getElementById("navbar__links");
-            let nav_contDropdown = document.getElementById("navbar__cont-dropdown");
-            nav_links.classList.toggle("navbar--active");
-            nav_contDropdown.classList.toggle("navbar--active");
-
-            let responsiveDropdown = document.getElementById("navbar__cont-sd");
-            responsiveDropdown.classList.toggle("navbar__cont-sd--border");
-        })
-
-        addHoverLastChild();
-        function addHoverLastChild() {
-            const nav_dropdown = document.getElementById("navbar__dropdown");
-            nav_dropdown.lastElementChild.children[0].classList.add("navbar__dropdown-link--hover");
-        }
-    </script>
+    <script src="/static/js/navbar.js"></script>
 </nav>

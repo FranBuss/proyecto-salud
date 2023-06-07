@@ -1,137 +1,82 @@
 <!DOCTYPE html>
-<html
-  lang="es"
-  xmlns:th="https://www.thymeleaf.org"
-  xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/css/style.css" />
-    <link rel="stylesheet" href="/static/css/register.css" />
-    <script
-      src="https://kit.fontawesome.com/5f27d919b8.js"
-      crossorigin="anonymous"
-    ></script>
-    <title>Register</title>
-  </head>
-  <body>
-    <main class="cont-form">
-      <form
-        action="/api/auth/register"
-        method="POST"
-        th:object="${userDTO}"
-        class="form-register"
-      >
-        <p class="form-register__ini">REGISTRO</p>
-        <div class="form-register__cont-inp">
-          <div class="form-register__cont-name">
-            <p class="form-register__name">Nombre</p>
-            <input
-              type="text"
-              th:field="*{name}"
-              id="form_name"
-              name="name"
-              class="form-register__name-inp"
-            />
-          </div>
-          <div class="form-register__cont-surname">
-            <p class="form-register__surname">Apellido</p>
-            <input
-              type="text"
-              th:field="*{surname}"
-              id="form_surname"
-              name="surname"
-              class="form-register__surname-inp"
-            />
-          </div>
-          <div class="form-register__cont-email">
-            <p class="form-register__email">Correo electrónico</p>
-            <div class="form-register__cont-email-inp">
-              <input
-                type="text"
-                th:field="*{email}"
-                id="form_email"
-                name="email_inp"
-                class="form-register__email-inp"
-              />
-              <select
-                th:field="*{emailSuffix}"
-                id="form_emailsuffix"
-                name="email_select"
-                class="form-register__email-select"
-              >
-                <option value="" id="0">Seleccione una opción</option>
-                <option
-                  th:each="suffix : ${T(com.equipoUno.proyectoSalud.enumerations.EmailDomain).values()}"
-                  th:value="${suffix}"
-                  th:text="${suffix.value}"
-                ></option>
-              </select>
-            </div>
-          </div>
-          <div class="form-register__cont-pass">
-            <p class="form-register__pass">Contraseña</p>
-            <div class="form-register__cont-pass-inp">
-              <input
-                type="password"
-                th:field="*{password}"
-                name="password"
-                class="form-register__pass-inp form-register__pass-inp--eye"
-                id="form_password"
-              />
-              <div class="form-register__cont-eye" id="cont-pass-eye">
-                <i
-                  class="fa-regular fa-eye-slash form-register__eye"
-                  id="pass-eye"
-                ></i>
-              </div>
-            </div>
-          </div>
-          <div class="form-register__cont-pass">
-            <p class="form-register__pass">Confirmar contraseña</p>
-            <div class="form-register__cont-pass-inp">
-              <input
-                type="password"
-                th:field="*{confpassword}"
-                name="password"
-                class="form-register__pass-inp form-register__pass-inp--eye"
-                id="form_confpassword"
-              />
-              <div class="form-register__cont-eye" id="cont-confirmPass-eye">
-                <i
-                  class="fa-regular fa-eye-slash form-register__eye"
-                  id="confirmPass-eye"
-                ></i>
-              </div>
-            </div>
-          </div>
-          <div
-            id="cont-error"
-            class="form-register__cont-error form-register__cont-error--hidden"
-          >
-            <p id="form-error" class="form-register__error"></p>
-          </div>
-          <div class="form-register__cont-submit">
-            <button
-              type="submit"
-              id="form_submit"
-              class="form-register__submit--disabled"
-              disabled
-            >
-              Registrarse
-            </button>
-          </div>
-        </div>
-        <p class="form-register__log">
-          Si ya tenes cuenta podes
-          <a href="/login" class="form-register__log-a">ingresar</a>.
-        </p>
-      </form>
-    </main>
-    <script src="/static/js/register.js"></script>
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
-    <th:block th:replace="/fragments/error :: error"></th:block>
-  </body>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="/static/css/style.css" />
+	<link rel="stylesheet" href="/static/css/register.css" />
+	<script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>
+	<title>Register</title>
+</head>
+
+<body>
+	<main class="cont-form">
+		<form action="/api/auth/register" method="POST" th:object="${userDTO}" class="form-register">
+			<p class="form-register__ini">REGISTRO</p>
+			<div class="form-register__cont-inp">
+				<div class="form-register__cont-name">
+					<p class="form-register__name">Nombre</p>
+					<input type="text" th:field="*{name}" id="form_name" name="name" class="form-register__name-inp" />
+				</div>
+				<div class="form-register__cont-surname">
+					<p class="form-register__surname">Apellido</p>
+					<input type="text" th:field="*{surname}" id="form_surname" name="surname"
+						class="form-register__surname-inp" />
+				</div>
+				<div class="form-register__cont-email">
+					<p class="form-register__email">Correo electrónico</p>
+					<div class="form-register__cont-email-inp">
+						<input type="text" th:field="*{email}" id="form_email" name="email_inp"
+							class="form-register__email-inp" />
+						<select th:field="*{emailSuffix}" id="form_emailsuffix" name="email_select"
+							class="form-register__email-select">
+							<option value="" id="0">Seleccione una opción</option>
+							<option
+								th:each="suffix : ${T(com.equipoUno.proyectoSalud.enumerations.EmailDomain).values()}"
+								th:value="${suffix}" th:text="${suffix.value}"></option>
+						</select>
+					</div>
+				</div>
+				<div class="form-register__cont-pass">
+					<p class="form-register__pass">Contraseña</p>
+					<div class="form-register__cont-pass-inp">
+						<input type="password" th:field="*{password}" name="password"
+							class="form-register__pass-inp form-register__pass-inp--eye" id="form_password" />
+						<div class="form-register__cont-eye" id="cont-pass-eye">
+							<i class="fa-regular fa-eye-slash form-register__eye" id="pass-eye"></i>
+						</div>
+					</div>
+				</div>
+				<div class="form-register__cont-pass">
+					<p class="form-register__pass">Confirmar contraseña</p>
+					<div class="form-register__cont-pass-inp">
+						<input type="password" th:field="*{confpassword}" name="password"
+							class="form-register__pass-inp form-register__pass-inp--eye" id="form_confpassword" />
+						<div class="form-register__cont-eye" id="cont-confirmPass-eye">
+							<i class="fa-regular fa-eye-slash form-register__eye" id="confirmPass-eye"></i>
+						</div>
+					</div>
+				</div>
+				<div id="cont-error" class="form-register__cont-error form-register__cont-error--hidden">
+					<p id="form-error" class="form-register__error"></p>
+				</div>
+				<div class="form-register__cont-submit">
+					<button type="submit" id="form_submit" class="form-register__submit--disabled" disabled>
+						Registrarse
+					</button>
+				</div>
+			</div>
+			<p class="form-register__log">
+				Si ya tenes cuenta podes
+				<a href="/login" class="form-register__log-a">ingresar</a>.
+			</p>
+		</form>
+	</main>
+	<script src="/static/js/register.js"></script>
+
+	<th:block th:replace="/fragments/error :: error"></th:block>
+</body>
+
 </html>

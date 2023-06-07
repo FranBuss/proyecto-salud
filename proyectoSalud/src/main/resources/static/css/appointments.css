@@ -1,38 +1,47 @@
 .cont-sidebar {
-    height: 640px;
+    height: 73vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(
-        var(--blanco), var(--gris), var(--celeste));
+    background-image: linear-gradient(var(--blanco), var(--gris), var(--celeste));
 }
 
 .sidebar {
     width: 20%;
     height: 80%;
     border-radius: 20px;
-    color: var(--blanco);
-    background-color: var(--celeste);
+    -webkit-box-shadow: 0px 0px 50px -15px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 50px -15px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 50px -15px rgba(0, 0, 0, 0.75);
+    background-color: transparent;
 }
 
-.sidebar__title,
-.sidebar__link,
-.sidebar__icon {
-    color: var(--blanco);
+.sidebar__title {
+    color: var(--celeste-oscuro);
     cursor: default;
 }
 
+.sidebar__link,
+.sidebar__icon {
+    font-size: 18px;
+    color: var(--celeste-oscuro);
+    cursor: pointer;
+}
+
 .sidebar__link:hover {
-    color: black;
+    color: var(--azul-oscuro);
 }
 
-.sidebar__link--active:hover {
-    color: whitesmoke;
-}
-
-.sidebar__link--active {
-    color: whitesmoke;
+.sidebar__link--active,
+.sidebar__icon--active {
+    color: var(--blanco);
     background-color: var(--celeste-oscuro);
+}
+
+.sidebar__link--active:hover,
+.sidebar__icon--active:hover {
+    color: whitesmoke;
+    cursor: default;
 }
 
 .sidebar__link--padding {
@@ -42,8 +51,155 @@
 .appointment-view {
     width: 40%;
     height: 80%;
-    border: 2px solid var(--celeste-oscuro);
     border-radius: 20px;
     margin-left: 20px;
-    background-color: var(--gris-oscuro);
+    -webkit-box-shadow: 0px 0px 45px -15px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 45px -15px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 45px -15px rgba(0, 0, 0, 0.75);
+    background-color: transparent;
+}
+
+/* GetAppointments */
+.getAppointment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.getAppointment__form {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.getAppointment__label {
+    color: var(--celeste-oscuro);
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.getAppointment__select {
+    height: 30px;
+    border: 0;
+    border-bottom: 1px solid var(--celeste-oscuro);
+    background-color: transparent;
+}
+
+.getAppointment__select-btn {
+    color: var(--blanco);
+    background-color: var(--celeste-oscuro);
+    margin-left: 5px;
+    padding: 0 5px;
+    height: 30px;
+}
+
+.getAppointment__select-cont {
+    display: flex;
+    align-items: center;
+}
+
+/* Table */
+.table-wrapper1 {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    height: auto;
+    max-height: 444px;
+    margin-top: 20px;
+    overflow: auto;
+}
+
+.table-wrapper2 {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    height: auto;
+    max-height: 444px;
+    margin-top: 20px;
+    overflow: auto;
+    /* border-bottom: 3px solid var(--celeste-oscuro); */
+}
+
+.getAppointment__table1,
+.getAppointment__table2 {
+    width: 100%;
+    height: 100%;
+    /* border-collapse: collapse; */
+
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--celeste-oscuro);
+}
+
+.table1__thead,
+.table2__thead {
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+.table1__thead-cell,
+.table2__thead-cell {
+    color: var(--blanco);
+    background-color: var(--celeste-oscuro);
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid var(--blanco);
+}
+
+.table1__tbody-cell,
+.table2__tbody-cell {
+    text-align: center;
+    border: 1px solid var(--celeste-oscuro);
+    background-color: var(--blanco);
+    height: 26px;
+}
+
+.table1__cell--last,
+.table2__cell--last {
+    border: 1px solid var(--blanco);
+    border-collapse: collapse;
+    position: relative;
+    overflow: hidden;
+    width: 100px;
+}
+
+.table1__tbody-cell-btn,
+.table2__tbody-cell-btn {
+    text-decoration: none;
+    color: var(--blanco);
+    background-color: var(--celeste-oscuro);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.table1__tbody-cell-btn:hover,
+.table2__tbody-cell-btn:hover {
+    background-color: var(--azul-oscuro);
+    transition: 0.5s ease;
+}
+
+.table2__tbody-cell--disable {
+    text-align: center;
+    border: 1px solid var(--gris-oscuro);
+    border-collapse: collapse;
+    position: relative;
+    overflow: hidden;
+    width: 100px;
+    height: 26px;
+}
+
+.table1__tbody-cell-btn--disable {
+    color: var(--gris);
+    text-decoration: none;
+    background-color: var(--blanco);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: default;
 }

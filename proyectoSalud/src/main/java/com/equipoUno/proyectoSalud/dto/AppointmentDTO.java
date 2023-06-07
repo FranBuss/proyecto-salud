@@ -25,6 +25,5 @@ public class AppointmentDTO {
     private String comments;
     private LocalTime startTime;
     private LocalTime endTime;
-    private Set<DayOfWeek> availableDays;
 
 }
