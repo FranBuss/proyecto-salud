@@ -33,7 +33,9 @@ public class AppointmentServiceImplement implements AppointmentService {
     private ProfessionalServiceImplement professionalServiceImplement;
 
     @Autowired
-    public AppointmentServiceImplement(PatientRepository patientRepository, ProfessionalServiceImplement professionalServiceImplement ,ModelMapper modelMapper, AppointmentRepository appointmentRepository){
+    public AppointmentServiceImplement(PatientRepository patientRepository,
+            ProfessionalServiceImplement professionalServiceImplement, ModelMapper modelMapper,
+            AppointmentRepository appointmentRepository) {
 
         this.modelMapper = modelMapper;
         this.appointmentRepository = appointmentRepository;
@@ -41,9 +43,9 @@ public class AppointmentServiceImplement implements AppointmentService {
         this.patientRepository = patientRepository;
     }
 
-    public void assignAppointment(Patient patient, String AppId){
+    public void assignAppointment(Patient patient, String AppId) {
         Optional<Appointment> appointmentResponse = appointmentRepository.findById(AppId);
-        if (appointmentResponse.isPresent()){
+        if (appointmentResponse.isPresent()) {
             Appointment appointment = appointmentResponse.get();
             appointment.setState(false);
             appointment.setPatient(patient);
@@ -67,9 +69,8 @@ public class AppointmentServiceImplement implements AppointmentService {
                 Appointment appointment = new Appointment();
                 appointment.setProfessional(professional);
                 appointment.setState(true);
-              
-                appointment.setDay(currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("es","ES")));
 
+                appointment.setDay(currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("es", "ES")));
 
                 appointment.setAppointment(appointmentDateTime.toLocalTime());
                 appointment.setDate(appointmentDateTime.toLocalDate());
@@ -95,7 +96,7 @@ public class AppointmentServiceImplement implements AppointmentService {
     }
 
     @Override
-    public Optional<Appointment> getAppointmentById(String id){
+    public Optional<Appointment> getAppointmentById(String id) {
         return appointmentRepository.findById(id);
     }
 
@@ -106,26 +107,48 @@ public class AppointmentServiceImplement implements AppointmentService {
 
     @Override
     @Transactional
-    public void deleteAppointmentAvailable(String id){
+    public void deleteAppointmentAvailable(String id) {
         appointmentRepository.deleteAllAppointmentsAvailable(id);
     }
 
+    @Override
+    public String getProfessionalByIdAppointment(String id) {
 
-//    public AppointmentDTO updateAppointmentDate(String id,AppointmentDTO dto, LocalDateTime newTime) throws MiException {
-//        List<LocalDateTime> availableAppointments = generateAppointments(dto);
-//
-//        if (availableAppointments.contains(newTime)) {
-//            Appointment appointment = appointmentRepository.findById(dto.getId())
-//                    .orElseThrow(()->new MiException("No se encontró el turno"));
-//            appointment.setAppointment(newTime);
-//            appointmentRepository.save(appointment);
-//            return modelMapper.map(appointment, AppointmentDTO.class);
-//        } else {
-//            throw new MiException("El nuevo horario no está disponible");
-//        }
-//    }
+        try {
+            return appointmentRepository.getProfessionalByIdAppointment(id);
+        } catch (Exception e) {
 
+            e.printStackTrace();
+        }
 
+        return "";
 
+    };
+
+    @Override
+    public void resetAppointmentById(String id) {
+
+        try {
+            appointmentRepository.enableAppointment(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    };
+
+    // public AppointmentDTO updateAppointmentDate(String id,AppointmentDTO dto,
+    // LocalDateTime newTime) throws MiException {
+    // List<LocalDateTime> availableAppointments = generateAppointments(dto);
+    //
+    // if (availableAppointments.contains(newTime)) {
+    // Appointment appointment = appointmentRepository.findById(dto.getId())
+    // .orElseThrow(()->new MiException("No se encontró el turno"));
+    // appointment.setAppointment(newTime);
+    // appointmentRepository.save(appointment);
+    // return modelMapper.map(appointment, AppointmentDTO.class);
+    // } else {
+    // throw new MiException("El nuevo horario no está disponible");
+    // }
+    // }
 
 }
