@@ -35,8 +35,8 @@ public class Patient {
     @Column(name = "contact")
     private String contact;
 
-//    @OneToOne
-//    @JoinColumn(name = "clinic_history_id")
-//    private ClinicHistory clinicHistory;
+    @OneToMany
+    @JoinColumn(name = "idPatient")
+    private List<MedicalRecord> medicalRecords;
 
 }
