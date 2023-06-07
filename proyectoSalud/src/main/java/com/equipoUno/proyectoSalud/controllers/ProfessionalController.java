@@ -131,44 +131,44 @@ public class ProfessionalController {
     }
 
 
-    //PRUEBA
-    @GetMapping("/medicalRecords/{id}")
-    public String listMedicalRecords(@PathVariable String id, ModelMap model){
-        List<MedicalRecord> medicalRecords = medicalRecordImplement.getMedicalRecordsByPatient(id);
-        model.put("medicalRecords", medicalRecords);
-        return "medicalRecords";
-    }
-
-    //PRUEBA
-    @GetMapping("/medicalRecord/form/{appId}")
-    public String medicalRecordForm(@PathVariable String appId, ModelMap model){
-        Optional<Appointment> appointment = appointmentServiceImplement.getAppointmentById(appId);
-        if (appointment.isPresent()){
-            MedicalRecordDTO medicalRecordDTO = new MedicalRecordDTO();
-            model.put("medicalRecordDTO", medicalRecordDTO);
-            BloodType[] bloodTypes = BloodType.values();
-            model.put("bloodTypes", bloodTypes);
-            Gender[] genders = Gender.values();
-            model.put("genders", genders);
-            return "medicalRecord_form";
-        }
-
-        //CAMBIAR NO SE A DONDE IR :(
-        return "redirect:/index";
-
-    }
-
-    //AGREGADO TAMBIEN CORREGIR
-    @PostMapping("/medicalRecord/create/{appId}")
-    public String assignMedicalRecord(@PathVariable("appId") String appId, @ModelAttribute("medicalRecordDTO")MedicalRecordDTO medicalRecordDTO){
-        Optional<Appointment> appointment = appointmentServiceImplement.getAppointmentById(appId);
-        if (appointment.isPresent()){
-            Patient patient = appointment.get().getPatient();
-            medicalRecordImplement.createMedicalRecord(patient.getId(), medicalRecordDTO);
-        }
-
-        return null;
-    }
+//    //PRUEBA
+//    @GetMapping("/medicalRecords/{id}")
+//    public String listMedicalRecords(@PathVariable String id, ModelMap model){
+//        List<MedicalRecord> medicalRecords = medicalRecordImplement.getMedicalRecordsByPatient(id);
+//        model.put("medicalRecords", medicalRecords);
+//        return "medicalRecords";
+//    }
+//
+//    //PRUEBA
+//    @GetMapping("/medicalRecord/form/{appId}")
+//    public String medicalRecordForm(@PathVariable String appId, ModelMap model){
+//        Optional<Appointment> appointment = appointmentServiceImplement.getAppointmentById(appId);
+//        if (appointment.isPresent()){
+//            MedicalRecordDTO medicalRecordDTO = new MedicalRecordDTO();
+//            model.put("medicalRecordDTO", medicalRecordDTO);
+//            BloodType[] bloodTypes = BloodType.values();
+//            model.put("bloodTypes", bloodTypes);
+//            Gender[] genders = Gender.values();
+//            model.put("genders", genders);
+//            return "medicalRecord_form";
+//        }
+//
+//        //CAMBIAR NO SE A DONDE IR :(
+//        return "redirect:/index";
+//
+//    }
+//
+//    //AGREGADO TAMBIEN CORREGIR
+//    @PostMapping("/medicalRecord/create/{appId}")
+//    public String assignMedicalRecord(@PathVariable("appId") String appId, @ModelAttribute("medicalRecordDTO")MedicalRecordDTO medicalRecordDTO){
+//        Optional<Appointment> appointment = appointmentServiceImplement.getAppointmentById(appId);
+//        if (appointment.isPresent()){
+//            Patient patient = appointment.get().getPatient();
+//            medicalRecordImplement.createMedicalRecord(patient.getId(), medicalRecordDTO);
+//        }
+//
+//        return null;
+//    }
 
 
 }

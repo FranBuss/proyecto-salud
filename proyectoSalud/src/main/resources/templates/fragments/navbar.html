@@ -30,7 +30,7 @@
             </div>
             <ul th:if="${session.userSession != null}" id="navbar__dropdown" class="navbar__dropdown--d-none">
                 <li th:if="${session.userSession != null && activePatient == true}" class="navbar__dropdown-row">
-                    <a href="/patient/appointments" class="navbar__dropdown-link">Administrar turnos</a>
+                    <a href="/appointment/patientAppointments" class="navbar__dropdown-link">Administrar turnos</a>
                 </li>
                 <li th:if="${session.userSession != null}" class="navbar__dropdown-row">
                     <a href="/profile" class="navbar__dropdown-link">Administrar cuenta</a>

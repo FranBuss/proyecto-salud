@@ -1,0 +1,28 @@
+<div th:if="${page == 'getAppointment1'}" th:fragment="getAppointmentPage1" class="table-wrapper1">
+    <table class="getAppointment__table1">
+        <thead class="table1__thead">
+            <tr class="table1__thead-row">
+                <th class="table1__thead-cell">Nombre</th>
+                <th class="table1__thead-cell">Especialidad</th>
+                <th class="table1__thead-cell">Horario</th>
+                <th class="table1__thead-cell">Costo</th>
+                <th class="table1__thead-cell">Calificación</th>
+                <th class="table1__thead-cell"></th>
+            </tr>
+        </thead>
+        <tbody class="table1__tbody">
+            <tr th:each="professional : ${professionals}" class="table1__tbody-row">
+                <td th:text="${professional.user.name + ' ' + professional.user.surname}"
+                    class="table1__tbody-cell"></td>
+                <td th:text="${professional.specialization.displayName}" class="table1__tbody-cell"></td>
+                <td th:text="${professional.entryTime + ' - ' + professional.exitTime}" class="table1__tbody-cell">
+                </td>
+                <td th:text="${professional.charge}" class="table1__tbody-cell"></td>
+                <td th:text="${professional.qualification}" class="table1__tbody-cell"></td>
+                <td class="table1__tbody-cell table1__cell--last"><a
+                        th:href="@{/appointment/allAppointments/__${professional.id}__}"
+                        class="table1__tbody-cell-btn">Ver turnos disponibles</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -8,6 +8,7 @@ import com.equipoUno.proyectoSalud.exceptions.MiException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface AppointmentService {
 
@@ -15,13 +16,17 @@ public interface AppointmentService {
 
     List<Appointment> getAppointmentsByProfessional(String id);
 
+    List<Appointment> getAppointmentsByPatient(String id);
+
     void deleteAppointment(String id);
 
     void deleteAppointmentAvailable(String id);
 
     void assignAppointment(Patient patient, String AppId);
 
-    Appointment getAppointmentById(String id);
+    Optional<Appointment> getAppointmentById(String id);
+
+//    Appointment getAppointmentById(String id);
 
 //    boolean isAppointmentAvailable(AppointmentDTO dto);
 //

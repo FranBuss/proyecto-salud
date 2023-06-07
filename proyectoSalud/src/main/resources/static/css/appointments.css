@@ -181,3 +181,25 @@
     background-color: var(--azul-oscuro);
     transition: 0.5s ease;
 }
+
+.table2__tbody-cell--disable {
+    text-align: center;
+    border: 1px solid var(--gris-oscuro);
+    border-collapse: collapse;
+    position: relative;
+    overflow: hidden;
+    width: 100px;
+    height: 26px;
+}
+
+.table1__tbody-cell-btn--disable {
+    color: var(--gris);
+    text-decoration: none;
+    background-color: var(--blanco);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: default;
+}
