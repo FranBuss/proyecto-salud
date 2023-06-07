@@ -85,13 +85,6 @@ public class ProfessionalController {
         return "professional_dash";
     }
 
-    @GetMapping("/dashboard")
-    public String professionalDashboard(HttpSession session, ModelMap model){
-        userService.getUserData(session, model);
-        return "professional_dash";
-    }
-
-
     //Update a Professional
     @PostMapping("/update/{id}")
     public String update(@PathVariable("id") String id, @ModelAttribute("professionalDTO") ProfessionalDTO professionalDTO) throws MiException {

@@ -23,32 +23,7 @@
         <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
             <span class="fs-3 text-center sidebar__title">Administración</span>
             <hr>
-            <ul id="sidebar-ul" class="nav nav-pills flex-column mb-auto sidebar__ul">
-                <li class="sidebar__li">
-                    <a href="/appointment/patientAppointments" id="appointments" class="nav-link sidebar__link">
-                        <i id="appointments-icon" class="fa-solid fa-calendar-days me-2 sidebar__icon"></i>
-                        Ver turnos
-                    </a>
-                </li>
-                <li class="sidebar__li">
-                    <a href="/patient/appointments" id="getAppointment" class="nav-link sidebar__link sidebar__link--active">
-                        <i id="getAppointment-icon" class="fa-regular fa-calendar-check me-2 sidebar__icon sidebar__icon--active"></i>
-                        Sacar turno
-                    </a>
-                </li>
-                <li class="sidebar__li">
-                    <a id="editAppointment" class="nav-link sidebar__link sidebar__link--padding">
-                        <i id="editAppointment-icon" class="fa-solid fa-clock-rotate-left me-2 sidebar__icon"></i>
-                        Modificar turno
-                    </a>
-                </li>
-                <li class="sidebar__li">
-                    <a id="editContact" class="nav-link sidebar__link">
-                        <i id="editContact-icon" class="fa-solid fa-clipboard-user me-2 sidebar__icon"></i>
-                        Modificar contacto
-                    </a>
-                </li>
-            </ul>
+            <th:block th:replace="/fragments/appointmentSidebar :: sidebar"></th:block>
         </div>
         <div class="appointment-view">
             <div class="getAppointment">
