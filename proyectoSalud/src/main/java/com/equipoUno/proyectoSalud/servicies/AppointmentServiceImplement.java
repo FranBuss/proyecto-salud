@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -44,16 +45,14 @@ public class AppointmentServiceImplement implements AppointmentService {
         this.patientRepository = patientRepository;
     }
 
-    public AppointmentDTO assignAppointment(AppointmentDTO dto, Patient patient, String appointmentId){
-        Optional<Appointment> appointmentResponse = appointmentRepository.findById(appointmentId);
+    public void assignAppointment(Patient patient, String AppId){
+        Optional<Appointment> appointmentResponse = appointmentRepository.findById(AppId);
         if (appointmentResponse.isPresent()){
-            Appointment appointment = modelMapper.map(dto, Appointment.class);
+            Appointment appointment = appointmentResponse.get();
             appointment.setState(false);
             appointment.setPatient(patient);
             appointmentRepository.save(appointment);
-            return modelMapper.map(appointment, AppointmentDTO.class);
         }
-        return null;
     }
 
     public void generateAppointments(Professional professional) {
@@ -92,11 +91,17 @@ public class AppointmentServiceImplement implements AppointmentService {
     }
 
     @Override
+    public Appointment getAppointmentById(String id) {
+        return appointmentRepository.getAppointmentById(id);
+    }
+
+    @Override
     public void deleteAppointment(String id) {
         appointmentRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public void deleteAppointmentAvailable(String id){
         appointmentRepository.deleteAllAppointmentsAvailable(id);
     }

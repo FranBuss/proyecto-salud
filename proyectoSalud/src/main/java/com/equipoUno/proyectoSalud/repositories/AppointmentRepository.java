@@ -2,6 +2,7 @@ package com.equipoUno.proyectoSalud.repositories;
 
 import com.equipoUno.proyectoSalud.entities.Appointment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -16,8 +17,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, String
     @Query("SELECT a FROM Appointment a ORDER BY a.date ASC, a.appointment ASC")
     public List<Appointment> getAllAppointmentsByOrder();
 
+    @Modifying
     @Query("DELETE FROM Appointment a WHERE a.state = true AND a.professional.id = :id")
-    public List<Appointment> deleteAllAppointmentsAvailable(@Param("id") String id);
+    public void deleteAllAppointmentsAvailable(@Param("id") String id);
   
 //    @Query("SELECT a FROM Appointment a JOIN a.professional AS p " +
 //            "WHERE a.professional.id = :professionalId AND p.id = :professionalId" +
@@ -29,4 +31,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, String
             " ORDER BY a.date ASC, a.appointment ASC")
     public List<Appointment> getAssingAppointment(@Param("professionalId") String id);
 
+    public Appointment getAppointmentById(String id);
 }

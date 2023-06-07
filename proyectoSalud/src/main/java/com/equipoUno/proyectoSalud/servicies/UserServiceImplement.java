@@ -191,8 +191,13 @@ public class UserServiceImplement implements UserService, UserDetailsService {
             model.put("user", null);
             model.put("image", null);
             model.put("rol", null);
+            model.put("activePatient", null);
         } else {
             User loggedUser = (User) session.getAttribute("userSession");
+            Optional<Patient> patientResponse = patientRepository.getPatientByUserId(loggedUser.getId());
+            if (patientResponse.isPresent()) {
+                model.put("activePatient", true);
+            }
             model.put("user", loggedUser);
             model.put("rol", loggedUser.getRol().toString());
             if (loggedUser.getImage() != null) {

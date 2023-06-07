@@ -72,3 +72,21 @@ editContact.addEventListener("click", () => {
     getApp_icon.classList.remove("sidebar__icon--active");
     editApp_icon.classList.remove("sidebar__icon--active");
 })
+
+// const colHTML_btn = document.getElementsByClassName("table2__tbody-cell-btn");
+// const arr_btn = Array.from(colHTML_btn);
+// arr_btn.forEach(e => {
+//     e.addEventListener("click", (e) => {
+//         e.preventDefault();
+//         let full_id = e.target.getAttribute("href");
+//         let id = full_id.split("/")[3];
+//         window.location.href = `/appointment/assignAppointments/${id}`;
+//     })
+// });
+// document.getElementById("getAppointment-btn").addEventListener("click", (e) => {
+//     let full_id = e.target.getAttribute("id");
+//     console.log(full_id);
+// });
+// function accederURL() {
+//     window.location.href = "/mi-ruta";
+//   }
