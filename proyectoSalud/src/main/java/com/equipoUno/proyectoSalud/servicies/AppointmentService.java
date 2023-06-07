@@ -26,13 +26,18 @@ public interface AppointmentService {
 
     Optional<Appointment> getAppointmentById(String id);
 
-//    Appointment getAppointmentById(String id);
+    String getProfessionalByIdAppointment(String id);
 
-//    boolean isAppointmentAvailable(AppointmentDTO dto);
-//
-//    List<AppointmentDTO> occupiedAppointmentsDTO();
-//
-//    AppointmentDTO updateAppointmentDate(String id, AppointmentDTO dto, LocalDateTime newTime) throws MiException;
-//
-//    List<AppointmentDTO> availableAppointments();
+    void resetAppointmentById(String id);
+
+    // Appointment getAppointmentById(String id);
+
+    // boolean isAppointmentAvailable(AppointmentDTO dto);
+    //
+    // List<AppointmentDTO> occupiedAppointmentsDTO();
+    //
+    // AppointmentDTO updateAppointmentDate(String id, AppointmentDTO dto,
+    // LocalDateTime newTime) throws MiException;
+    //
+    // List<AppointmentDTO> availableAppointments();
 }
