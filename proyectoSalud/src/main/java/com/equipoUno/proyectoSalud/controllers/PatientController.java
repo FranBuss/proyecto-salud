@@ -42,15 +42,6 @@ public class PatientController {
       return "/register";
     }
 
-//    @PostMapping(value = "/update/{id}", params = "_method=put")
-//    public String updatePatient(@PathVariable String id) {
-//        Patient updatedPatient = patientService.updatePatient(id);
-//        if (updatedPatient != null) {
-//            return "/professionals/patients";
-//        } else {
-//            return "/error";
-//        }
-//    }
 
     @PostMapping(value = "/delete/{id}", params = "_method=delete")
     public String deletePatient(@PathVariable String id) {
