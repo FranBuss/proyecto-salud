@@ -77,9 +77,8 @@ public class AppointmentController {
         return "getAppointment";
     }
 
-    @GetMapping("/patientAppointments")
-    public String listPatientAppointments(HttpSession session, ModelMap model) {
-        System.out.println("entre");
+    @GetMapping("/patientAppointments/{action}")
+    public String listPatientAppointments(@PathVariable String action, HttpSession session, ModelMap model) {
         User user = (User) session.getAttribute("userSession");
         Patient patient = patientService.getPatientByUserId(user.getId());
         List<Appointment> appointments = appointmentService.getAppointmentsByPatient(patient.getId());
@@ -88,8 +87,14 @@ public class AppointmentController {
         } else {
             model.put("appointments", null);
         }
-        model.put("page", "patientAppointments");
-        return "appointments";
+        if (action.equals("list")) {
+            model.put("page", "listAppointments");
+            return "appointments";
+        } else if (action.equals("modify")) {
+            model.put("page", "modifyAppointment");
+            return "editAppointment";
+        }
+        return null;
     }
 
     @GetMapping("/modify/{id}")
