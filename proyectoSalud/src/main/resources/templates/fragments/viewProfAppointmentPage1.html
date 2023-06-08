@@ -1,0 +1,16 @@
+<div th:if="${page == 'listProfAppointments1'}" th:fragment="createRecord" class="table-wrapper2">
+    <div>
+        <p>Datos de la consulta</p>
+        <p>Horario: <span th:text="${appointment.appointment}"></span></p>
+        <p>Dia: <span th:text="${appointment.day}"></span></p>
+        <p>Fecha: <span th:text="${appointment.date}"></span></p>
+        <p>Paciente: 
+            <span th:text="${appointment.patient.user.name + 
+                ' ' + appointment.patient.user.surname}">
+            </span>
+        </p>
+        <p>Comentario del paciente:</p>
+        <p th:text="${appointment.comments}"></p>
+        <a th:href="@{/professional/medicalRecord/form/__${appointment.id}__}">Crear ficha</a>
+    </div>
+</div>

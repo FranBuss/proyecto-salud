@@ -15,74 +15,36 @@
 	<link rel="stylesheet" href="/static/css/footer.css">
     <link rel="stylesheet" href="/static/css/appointments.css">
     <title>Dashboard professional</title>
-    <!--<script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>-->
+    <script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <th:block th:replace="/fragments/navbar :: navbar"></th:block>
     <div class="cont-sidebar">
         <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
-                 <span class="fs-3 text-center sidebar__title"></span>
-              <hr>
-            <ul class="nav nav-pills flex-column mb-auto sidebar__ul">
-                <li class="nav-item sidebar__li">
-                    <a id="appointments" class="nav-link sidebar__link sidebar__link--active">
-                        <i id="apps_icon" class="fa-solid fa-calendar-days me-2 sidebar__icon sidebar__icon--active"></i>
-                        Ver turnos
-                    </a>
-                </li>
-                <li class="sidebar__li">
-                    <a id="getAppointment" class="nav-link sidebar__link">
-                        <i id="getApp_icon" class="fa-regular fa-calendar-check me-2 sidebar__icon"></i>
-                        Modificar Datos
-                    </a>
-                </li>
-                <li class="sidebar__li">
-                    <a id="editAppointment" class="nav-link sidebar__link sidebar__link--padding">
-                        <i id="editApp_icon" class="fa-solid fa-clock-rotate-left me-2 sidebar__icon"></i>
-                        Pausar
-                    </a>
-                </li>
-               
-            </ul>
-            
+            <span class="fs-3 text-center sidebar__title">Administración</span>
+            <hr>
+            <th:block th:replace="/fragments/profAppointmentSidebar :: sidebar"></th:block>
         </div>
-
         <div class="appointment-view">
             <div class="getAppointment">
-                <table class="getAppointment__table">
-                    <thead class="getAppointment__thead">
-                        <tr class="getAppointment__thead-row">
-                            <th class="getAppointment__thead-cell">Nombre</th>
-                            <th class="getAppointment__thead-cell">Horario</th>
-                            <th class="getAppointment__thead-cell">Dia semanal</th>
-                            <th class="getAppointment__thead-cell">Fecha</th>
-                            <th class="getAppointment__thead-cell">Estado</th>
-                            <th class="getAppointment__thead-cell">Historia Clinica</th>
-                            <th class="getAppointment__thead-cell"></th>
-                        </tr>
-                    </thead>
-                    <tbody class="getAppointment__tbody">
-                        <tr th:each="appointment : ${appointments}" class="getAppointment__tbody-row">
-                            <td th:text="${appointment.patient.name +' '+ appointment.patient.surname}" class="getAppointment__tbody-cell"></td>
-                            <td th:text="${appointment.appointment}" class="getAppointment__tbody-cell"></td>
-                            <td th:text="${appointment.day}" class="getAppointment__tbody-cell"></td>
-                            <td th:text="${appointment.date}" class="getAppointment__tbody-cell"></td>
-                            <td th:text="${appointment.state}" class="getAppointment__tbody-cell"></td>
-                            <td class="getAppointment__tbody-cell"><a th:href="${appointment.id}" id="getAppointment-btn">Seleccionar</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                
+                <div th:if="${page == 'listProfAppointments' && appointments == null}">
+                    <p>No tiene turnos asignados</p>
+                </div>
+                <th:block th:replace="/fragments/viewProfAppointment :: profAppointments"></th:block>
+                <th:block th:replace="/fragments/viewProfAppointmentPage1 :: createRecord"></th:block>
+                <th:block th:replace="/fragments/viewProfAppointmentPage2 :: addRecord"></th:block>
+                <div th:if="${page == 'listProfAppointments3'}" class="table-wrapper2">
+                    <div>
+                        <p th:text="${success}"></p>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-    
+    </div>
     <th:block th:replace="/fragments/footer :: footer"></th:block>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
 	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" 
 	crossorigin="anonymous"></script>
-    <!--<script src="/static/js/appointments.js"></script>-->
 </body>
 </html>

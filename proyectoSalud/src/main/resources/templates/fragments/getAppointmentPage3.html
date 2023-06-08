@@ -9,6 +9,8 @@
                 ' ' + appointment.professional.user.surname}">
             </span>
         </p>
+        <p>Agregar comentario:</p>
+        <textarea name="comment" cols="30" rows="5"></textarea>
         <button type="submit">Confirmar</button>
     </form>
     <form th:if="${page == 'modifyAppointment2'}" th:action="@{/appointment/confirmModify/accepted/__${appointment.id}__}" method="POST">
@@ -22,6 +24,7 @@
             </span>
         </p>
         <input type="hidden" name="oldAppId" th:value="${oldAppId}">
+        <textarea name="comment" cols="30" rows="5"></textarea>
         <button type="submit">Confirmar</button>
     </form>
 </div>

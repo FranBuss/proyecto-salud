@@ -29,7 +29,7 @@
                 </div>
             </div>
             <ul th:if="${session.userSession != null}" id="navbar__dropdown" class="navbar__dropdown--d-none">
-                <li th:if="${session.userSession != null && activePatient == true}" class="navbar__dropdown-row">
+                <li th:if="${session.userSession != null && activePatient == true && rol == 'PATIENT'}" class="navbar__dropdown-row">
                     <a th:href="@{/appointment/patientAppointments/__${'list'}__}" class="navbar__dropdown-link">Administrar turnos</a>
                 </li>
                 <li th:if="${session.userSession != null}" class="navbar__dropdown-row">
@@ -38,8 +38,8 @@
                 <li th:if="${rol == 'ADMIN'}" class="navbar__dropdown-row">
                     <a href="/admin/users" class="navbar__dropdown-link navbar__dropdown-link--hover">Administrar usuarios</a>
                 </li>
-                <li th:if="${rol == 'PROFESSIONAL'}" class="navbar__dropdown-row">
-                    <a href="/professional/dashboard" class="navbar__dropdown-link navbar__dropdown-link--hover">Administrar profesional</a>
+                <li th:if="${session.userSession != null && rol == 'PROFESSIONAL'}" class="navbar__dropdown-row">
+                    <a href="/professional/dashboard" class="navbar__dropdown-link navbar__dropdown-link--hover">Panel de profesional</a>
                 </li>
                 <li th:if="${session.userSession != null}" class="navbar__dropdown-row">
                     <a href="/logout" class="navbar__dropdown-link navbar__dropdown-link--hover">Logout</a>

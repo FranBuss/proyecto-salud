@@ -1,0 +1,12 @@
+<ul th:fragment="sidebar" class="nav nav-pills flex-column mb-auto sidebar__ul">
+    <li class="nav-item sidebar__li">
+        <a th:if="${page == 'listProfAppointments'}" id="appointments" class="nav-link sidebar__link sidebar__link--active">
+            <i id="apps_icon" class="fa-solid fa-calendar-days me-2 sidebar__icon sidebar__icon--active"></i>
+            Ver turnos
+        </a>
+        <a th:if="${page != 'listProfAppointments'}" id="appointments" class="nav-link sidebar__link sidebar__link--active">
+            <i id="apps_icon" class="fa-solid fa-calendar-days me-2 sidebar__icon sidebar__icon--active"></i>
+            Ver turnos
+        </a>
+    </li>
+</ul>

@@ -32,9 +32,11 @@
                         <thead class="table2__thead">
                             <tr class="table2__thead-row">
                                 <th class="table2__thead-cell">Medico</th>
+                                <th class="table2__thead-cell">Especialidad</th>
                                 <th class="table2__thead-cell">Horario</th>
-                                <th class="table2__thead-cell">Dia semanal</th>
+                                <th class="table2__thead-cell">Dia</th>
                                 <th class="table2__thead-cell">Fecha</th>
+                                <th class="table2__thead-cell">Costo</th>
                                 <th class="table2__thead-cell"></th>
                                 <!-- <th class="table2__thead-cell"></th> -->
                             </tr>
@@ -42,9 +44,11 @@
                         <tbody class="table2__tbody">
                             <tr th:each="appointment : ${appointments}" class="table2__tbody-row">
                                 <td th:text="${appointment.professional.user.name + ' ' + appointment.professional.user.surname}" class="table2__tbody-cell"></td>
+                                <td th:text="${appointment.professional.specialization.displayName}" class="table2__tbody-cell"></td>
                                 <td th:text="${appointment.appointment}" class="table2__tbody-cell"></td>
                                 <td th:text="${appointment.day}" class="table2__tbody-cell"></td>
                                 <td th:text="${appointment.date}" class="table2__tbody-cell"></td>
+                                <td th:text="${appointment.professional.charge}" class="table2__tbody-cell"></td>
                                 <!-- <td class="table2__tbody-cell table2__cell--last">
                                     <a th:href="@{/appointment/allAppointments/__${appointment.id}__}" class="table2__tbody-cell-btn">Modificar</a>
                                 </td> -->

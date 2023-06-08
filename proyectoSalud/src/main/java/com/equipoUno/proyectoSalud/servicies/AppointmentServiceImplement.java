@@ -1,7 +1,5 @@
 package com.equipoUno.proyectoSalud.servicies;
 
-import com.equipoUno.proyectoSalud.dto.AppointmentDTO;
-
 import com.equipoUno.proyectoSalud.entities.Appointment;
 import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
@@ -10,7 +8,6 @@ import com.equipoUno.proyectoSalud.repositories.PatientRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -43,16 +40,19 @@ public class AppointmentServiceImplement implements AppointmentService {
         this.patientRepository = patientRepository;
     }
 
-    public void assignAppointment(Patient patient, String AppId) {
+    @Override
+    public void assignAppointment(Patient patient, String AppId, String comment) {
         Optional<Appointment> appointmentResponse = appointmentRepository.findById(AppId);
         if (appointmentResponse.isPresent()) {
             Appointment appointment = appointmentResponse.get();
             appointment.setState(false);
             appointment.setPatient(patient);
+            appointment.setComments(comment);
             appointmentRepository.save(appointment);
         }
     }
 
+    @Override
     public void generateAppointments(Professional professional) {
         LocalTime entryTime = professional.getEntryTime();
         LocalTime exitTime = professional.getExitTime();
@@ -103,6 +103,12 @@ public class AppointmentServiceImplement implements AppointmentService {
     @Override
     public void deleteAppointment(String id) {
         appointmentRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUsedAppointmentById(String id) {
+        appointmentRepository.deleteAppointmentById(id);
     }
 
     @Override

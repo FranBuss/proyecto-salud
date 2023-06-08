@@ -22,7 +22,7 @@ public interface AppointmentService {
 
     void deleteAppointmentAvailable(String id);
 
-    void assignAppointment(Patient patient, String AppId);
+    void assignAppointment(Patient patient, String AppId, String comment);
 
     Optional<Appointment> getAppointmentById(String id);
 
@@ -31,6 +31,8 @@ public interface AppointmentService {
     List<Appointment> getAppointmentsByProfessionalId(String professionalId);
 
     void resetAppointmentById(String id);
+
+    void deleteUsedAppointmentById(String id);
 
     // Appointment getAppointmentById(String id);
 

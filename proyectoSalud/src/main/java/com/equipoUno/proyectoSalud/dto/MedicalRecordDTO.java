@@ -32,6 +32,6 @@ public class MedicalRecordDTO {
     @Enumerated(EnumType.STRING)
     private BloodType bloodType;
 
-    private String observation;
+    private String observations;
 
 }
