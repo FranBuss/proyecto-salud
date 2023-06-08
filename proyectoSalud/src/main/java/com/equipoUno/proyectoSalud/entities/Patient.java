@@ -39,4 +39,6 @@ public class Patient {
     @JoinColumn(name = "idPatient")
     private List<MedicalRecord> medicalRecords;
 
+    private Long dni;
+
 }

@@ -8,10 +8,7 @@ import com.equipoUno.proyectoSalud.enumerations.Gender;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.repositories.AppointmentRepository;
-import com.equipoUno.proyectoSalud.servicies.AppointmentServiceImplement;
-import com.equipoUno.proyectoSalud.servicies.MedicalRecordImplement;
-import com.equipoUno.proyectoSalud.servicies.ProfessionalService;
-import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
+import com.equipoUno.proyectoSalud.servicies.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,17 +27,18 @@ public class ProfessionalController {
 
     private final ProfessionalService professionalService;
     private final UserServiceImplement userService;
-
     private final AppointmentServiceImplement appointmentService;
-
-    private final MedicalRecordImplement medicalRecordImplement;
+    private final MedicalRecordImplement medicalRecordService;
+    private final PatientServiceImplement patientService;
 
     @Autowired
-    public ProfessionalController(AppointmentServiceImplement appointmentService, MedicalRecordImplement medicalRecordImplement, ProfessionalService professionalService, UserServiceImplement userService) {
+    public ProfessionalController(AppointmentServiceImplement appointmentService, MedicalRecordImplement medicalRecordService,
+                                  ProfessionalService professionalService, UserServiceImplement userService, PatientServiceImplement patientService) {
         this.professionalService = professionalService;
         this.userService = userService;
-        this.medicalRecordImplement = medicalRecordImplement;
+        this.medicalRecordService = medicalRecordService;
         this.appointmentService = appointmentService;
+        this.patientService = patientService;
     }
 
     @GetMapping("/dashboard")
@@ -89,13 +87,15 @@ public class ProfessionalController {
     }
 
     @PostMapping("/medicalRecord/create/{appId}")
-    public String assignMedicalRecord(@PathVariable("appId") String appId, @ModelAttribute("medicalRecordDTO") MedicalRecordDTO medicalRecordDTO,
+    public String assignMedicalRecord(@PathVariable("appId") String appId, @RequestParam("dni") Long dni, @ModelAttribute("medicalRecordDTO") MedicalRecordDTO medicalRecordDTO,
                                       HttpSession session, ModelMap model){
         model = userService.getUserData(session, model);
         Optional<Appointment> appointmentRes = appointmentService.getAppointmentById(appId);
-        if (appointmentRes.isPresent()){
+        User user = (User) session.getAttribute("userSession");
+        Professional professional = professionalService.getProfessionalByUserId(user.getId());
+        if (appointmentRes.isPresent()) {
             Patient patient = appointmentRes.get().getPatient();
-            medicalRecordImplement.createMedicalRecord(patient, medicalRecordDTO);
+            medicalRecordService.createMedicalRecord(dni, patient, professional, medicalRecordDTO);
             appointmentService.deleteUsedAppointmentById(appId);
         }
         model.put("page", "listProfAppointments3");
@@ -103,14 +103,32 @@ public class ProfessionalController {
         return "professional_dash";
     }
 
-    //    //PRUEBA
-//    @GetMapping("/medicalRecords/{id}")
-//    public String listMedicalRecords(@PathVariable String id, ModelMap model){
-//        List<MedicalRecord> medicalRecords = medicalRecordImplement.getMedicalRecordsByPatient(id);
-//        model.put("medicalRecords", medicalRecords);
-//        return "medicalRecords";
-//    }
-//
+    @GetMapping("/medicalHistory/patients/view")
+    public String viewPatientsFromMedicalHistory(ModelMap model, HttpSession session) {
+        model = userService.getUserData(session, model);
+        List<Patient> patients = patientService.getPatientsWithMedicalRecord();
+        model.put("patients", patients);
+        model.put("page", "medicalHistory");
+        return "medicalHistory";
+    }
+
+    @GetMapping("/medicalHistory/patient/{id}")
+    public String listMedicalRecords(@PathVariable String id, ModelMap model, HttpSession session){
+        model = userService.getUserData(session, model);
+        List<MedicalRecord> medicalRecords = medicalRecordService.getMedicalRecordsByPatient(id);
+        model.put("medicalRecords", medicalRecords);
+        model.put("page", "medicalHistory1");
+        return "medicalHistory";
+    }
+
+    @GetMapping("/medicalHistory/medicalRecord/{id}")
+    public String viewMedicalRecord(@PathVariable String id, ModelMap model, HttpSession session) {
+        model = userService.getUserData(session, model);
+        MedicalRecord medicalRecord = medicalRecordService.getMedicalRecordById(id);
+        model.put("medicalRecord", medicalRecord);
+        model.put("page", "medicalHistory2");
+        return "medicalHistory";
+    }
 
     //Update a Professional
     @PostMapping("/update/{id}")

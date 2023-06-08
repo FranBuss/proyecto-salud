@@ -85,7 +85,13 @@ public class PatientServiceImplement implements PatientService {
                 .collect(Collectors.toList());
     }
 
-
-
-
+    @Override
+    public List<Patient> getPatientsWithMedicalRecord() {
+        List<Object[]> objects = patientRepository.getPatientsWithMedicalRecord();
+        List<Patient> patients = new ArrayList<>();
+        for (Object[] object : objects) {
+            patients.add((Patient) object[0]);
+        }
+        return patients;
+    }
 }

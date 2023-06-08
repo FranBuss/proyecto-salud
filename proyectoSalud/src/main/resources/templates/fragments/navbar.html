@@ -19,11 +19,11 @@
     <div id="navbar__cont-sd" class="navbar__cont-sd">
         <div id="navbar__cont-dropdown" class="navbar__dropdown-cont navbar--active">
             <div class="navbar__dropdown-profile-cont">
-                <img th:if="${user == null}" src="/static/img/profile.png" alt="image" class="navbar__dropdown-img">
+                <!-- <img th:if="${user == null}" src="/static/img/profile.png" alt="image" class="navbar__dropdown-img"> -->
                 <img th:if="${user != null && image == null}" src="/static/img/profile.png" alt="image" class="navbar__dropdown-img">
                 <img th:if="${user != null && image != null}" th:src="@{/image/__${user.id}__}" alt="image" class="navbar__dropdown-img">
                 <div class="navbar__dropdown-name-cont">
-                    <a th:if="${user == null}" th:text="${'Bienvenido/a Usuario'}" class="navbar__dropdown-name"></a>
+                    <!-- <a th:if="${user == null}" th:text="${'Bienvenido/a Usuario'}" class="navbar__dropdown-name"></a> -->
                     <a th:if="${user != null}" th:text="${user.name + ' ' + user.surname}" class="navbar__dropdown-name"></a>
                     <i th:if="${session.userSession != null}" id="navbar__useradmin-icon" class="fa-solid fa-circle-chevron-down navbar__dropdown-icon"></i>
                 </div>

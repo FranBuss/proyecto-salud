@@ -1,0 +1,26 @@
+<div th:fragment="viewMedicalHistory" th:if="${page == 'medicalHistory' && patients != null}" class="table-wrapper2">
+    <table th:if="${patients != null}" class="getAppointment__table2">
+        <thead class="table2__thead">
+            <tr class="table2__thead-row">
+                <th class="table2__thead-cell">DNI</th>
+                <th class="table2__thead-cell">Nombre</th>
+                <th class="table2__thead-cell">Apellido</th>
+                <th class="table2__thead-cell">Contacto</th>
+                <th class="table2__thead-cell">Obra Social</th>
+                <th class="table2__thead-cell"></th>
+            </tr>
+        </thead>
+        <tbody class="table2__tbody">
+            <tr th:each="patient : ${patients}" class="table2__tbody-row">
+                <td th:text="${patient.dni}" class="table2__tbody-cell"></td>
+                <td th:text="${patient.user.name}" class="table2__tbody-cell"></td>
+                <td th:text="${patient.user.surname}" class="table2__tbody-cell"></td>
+                <td th:text="${patient.contact}" class="table2__tbody-cell"></td>
+                <td th:text="${patient.healthInsurance}" class="table2__tbody-cell"></td>
+                <td class="table2__tbody-cell table2__cell--last">
+                    <a th:href="@{/professional/medicalHistory/patient/__${patient.id}__}" class="table2__tbody-cell-btn">Ver historia</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

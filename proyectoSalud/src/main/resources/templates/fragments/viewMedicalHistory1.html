@@ -1,0 +1,24 @@
+<div th:fragment="viewMedicalHistory1" th:if="${page == 'medicalHistory1'}" class="table-wrapper2">
+    <table class="getAppointment__table2">
+        <thead class="table2__thead">
+            <tr class="table2__thead-row">
+                <th class="table2__thead-cell">Nombre</th>
+                <th class="table2__thead-cell">Contacto</th>
+                <th class="table2__thead-cell">Obra Social</th>
+                <th class="table2__thead-cell">Medico</th>
+                <th class="table2__thead-cell"></th>
+            </tr>
+        </thead>
+        <tbody class="table2__tbody">
+            <tr th:each="record : ${medicalRecords}" class="table2__tbody-row">
+                <td th:text="${record.patient.user.name + ' ' + record.patient.user.surname}" class="table2__tbody-cell"></td>
+                <td th:text="${record.patient.contact}" class="table2__tbody-cell"></td>
+                <td th:text="${record.healthInsurance}" class="table2__tbody-cell"></td>
+                <td th:text="${record.professional.user.name + ' ' + record.professional.user.surname}" class="table2__tbody-cell"></td>
+                <td class="table2__tbody-cell table2__cell--last">
+                    <a th:href="@{/professional/medicalHistory/medicalRecord/__${record.id}__}" class="table2__tbody-cell-btn">Ver</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
