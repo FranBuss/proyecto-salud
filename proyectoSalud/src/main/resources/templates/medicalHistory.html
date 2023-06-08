@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="/static/css/navbar.css">
 	<link rel="stylesheet" href="/static/css/footer.css">
     <link rel="stylesheet" href="/static/css/appointments.css">
-    <title>Administración de turnos</title>
+    <title>Administrador de profesional</title>
     <script src="https://kit.fontawesome.com/5f27d919b8.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -23,23 +23,28 @@
         <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
             <span class="fs-3 text-center sidebar__title">Administración</span>
             <hr>
-            <th:block th:replace="/fragments/appointmentSidebar :: sidebar"></th:block>
+            <th:block th:replace="/fragments/profAppointmentSidebar :: sidebar"></th:block>
         </div>
         <div class="appointment-view">
             <div class="getAppointment">
-                <th:block th:replace="/fragments/modifyAppointments :: modifyAppointment"></th:block>
-                <th:block th:replace="/fragments/getAppointmentPage2 :: getAppointmentPage2"></th:block>
-                <th:block th:replace="/fragments/getAppointmentPage3 :: getAppointmentPage3"></th:block>
-                <div th:if="${page == 'editAppointmentSuccess'}">
-                    <p th:text="${success}"></p>
+                <th:block th:replace="/fragments/viewMedicalHistory :: viewMedicalHistory"></th:block>
+                <th:block th:replace="/fragments/viewMedicalHistory1 :: viewMedicalHistory1"></th:block>
+                <th:block th:replace="/fragments/viewMedicalHistory2 :: viewMedicalHistory2"></th:block>
+                <div th:if="${page == 'viewMedicalHistory' && patients == null}">
+                    <p>No hay pacientes agregados.</p>
                 </div>
+                <!-- <div th:if="${page == 'listProfAppointments3'}" class="table-wrapper2">
+                    <div>
+                        <p th:text="${success}"></p>
+                    </div>
+                </div> -->
             </div>
         </div>
     </div>
+    </div>
     <th:block th:replace="/fragments/footer :: footer"></th:block>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
-	    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
-    <script src="/static/js/appointments.js"></script>
+	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" 
+	crossorigin="anonymous"></script>
 </body>
 </html>

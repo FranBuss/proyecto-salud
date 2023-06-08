@@ -143,7 +143,7 @@ public class AppointmentController {
         appointmentService.resetAppointmentById(oldId);
         Patient patient = patientService.getPatientByUserId(user.getId());
         appointmentService.assignAppointment(patient, id, comment);
-        model.put("success", "El turno ha sido confirmado.");
+        model.put("success", "El turno ha sido modificado con exito.");
         model.put("page", "editAppointmentSuccess");
         return "editAppointment";
     }

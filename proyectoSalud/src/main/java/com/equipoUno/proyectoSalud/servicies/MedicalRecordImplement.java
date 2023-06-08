@@ -3,6 +3,7 @@ package com.equipoUno.proyectoSalud.servicies;
 import com.equipoUno.proyectoSalud.dto.MedicalRecordDTO;
 import com.equipoUno.proyectoSalud.entities.MedicalRecord;
 import com.equipoUno.proyectoSalud.entities.Patient;
+import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.repositories.MedicalRecordRepository;
 import com.equipoUno.proyectoSalud.repositories.PatientRepository;
 import org.modelmapper.ModelMapper;
@@ -30,14 +31,16 @@ public class MedicalRecordImplement implements MedicalRecordService {
         this.patientRepository = patientRepository;
     }
 
-    public MedicalRecordDTO createMedicalRecord(Patient patient, MedicalRecordDTO medicalRecordDTO) {
+    public MedicalRecordDTO createMedicalRecord(Long dni, Patient patient, Professional professional, MedicalRecordDTO medicalRecordDTO) {
         MedicalRecord medicalRecord = modelMapper.map(medicalRecordDTO, MedicalRecord.class);
         medicalRecord.setPatientName(patient.getUser().getName() + " " + patient.getUser().getSurname());
         medicalRecord.setDate(LocalDate.now());
         medicalRecord.setHealthInsurance(patient.getHealthInsurance());
         medicalRecord.setPatient(patient);
+        medicalRecord.setProfessional(professional);
         medicalRecordRepository.save(medicalRecord);
         patient.getMedicalRecords().add(medicalRecord);
+        patient.setDni(dni);
         patientRepository.save(patient);
 
         return modelMapper.map(medicalRecord, MedicalRecordDTO.class);
@@ -47,6 +50,14 @@ public class MedicalRecordImplement implements MedicalRecordService {
         List<MedicalRecord> medicalRecords = medicalRecordRepository.getMedicalRecordsByPatient(id);
         return medicalRecords.stream().map(medicalRecord -> modelMapper.map(medicalRecord, MedicalRecord.class))
                 .collect(Collectors.toList());
+    }
+
+    public MedicalRecord getMedicalRecordById(String id) {
+        Optional<MedicalRecord> medicalRecordRes = medicalRecordRepository.findById(id);
+        if (medicalRecordRes.isPresent()) {
+            return medicalRecordRes.get();
+        }
+        return null;
     }
 
 }

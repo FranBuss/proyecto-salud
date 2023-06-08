@@ -1,12 +1,22 @@
 <ul th:fragment="sidebar" class="nav nav-pills flex-column mb-auto sidebar__ul">
     <li class="nav-item sidebar__li">
-        <a th:if="${page == 'listProfAppointments'}" id="appointments" class="nav-link sidebar__link sidebar__link--active">
+        <a th:if="${page == 'listProfAppointments' || page == 'listProfAppointments1' || page == 'listProfAppointments2' || page == 'listProfAppointments3'}" href="/professional/dashboard" id="appointments" class="nav-link sidebar__link sidebar__link--active">
             <i id="apps_icon" class="fa-solid fa-calendar-days me-2 sidebar__icon sidebar__icon--active"></i>
             Ver turnos
         </a>
-        <a th:if="${page != 'listProfAppointments'}" id="appointments" class="nav-link sidebar__link sidebar__link--active">
-            <i id="apps_icon" class="fa-solid fa-calendar-days me-2 sidebar__icon sidebar__icon--active"></i>
+        <a th:if="${page != 'listProfAppointments' && page != 'listProfAppointments1' && page != 'listProfAppointments2' && page != 'listProfAppointments3'}" href="/professional/dashboard"  id="appointments" class="nav-link sidebar__link">
+            <i id="apps_icon" class="fa-solid fa-calendar-days me-2 sidebar__icon"></i>
             Ver turnos
+        </a>
+    </li>
+    <li class="nav-item sidebar__li">
+        <a th:if="${page == 'medicalHistory' || page == 'medicalHistory1' || page == 'medicalHistory2'}" href="/professional/medicalHistory/patients/view" id="appointments" class="nav-link sidebar__link sidebar__link--active">
+            <i id="apps_icon" class="fa-solid fa-file-waveform me-2 sidebar__icon sidebar__icon--active"></i>
+            Historias clinicas
+        </a>
+        <a th:if="${page != 'medicalHistory' && page != 'medicalHistory1' && page != 'medicalHistory2'}" href="/professional/medicalHistory/patients/view"  id="appointments" class="nav-link sidebar__link">
+            <i id="apps_icon" class="fa-solid fa-file-waveform me-2 sidebar__icon"></i>
+            Historias clinicas
         </a>
     </li>
 </ul>

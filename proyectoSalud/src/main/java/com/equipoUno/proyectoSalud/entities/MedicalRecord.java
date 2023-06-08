@@ -26,6 +26,10 @@ public class MedicalRecord {
     @JoinColumn(name = "idPatient")
     private Patient patient;
 
+    @ManyToOne
+    @JoinColumn(name = "idProfessional")
+    private Professional professional;
+
     @Column(name="patient_name")
     private String patientName;
 
@@ -47,5 +51,8 @@ public class MedicalRecord {
 
     private String observations;
 
+    private float height;
+
+    private float weight;
 }
 
