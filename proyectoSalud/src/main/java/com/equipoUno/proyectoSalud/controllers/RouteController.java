@@ -7,7 +7,6 @@ import com.equipoUno.proyectoSalud.entities.Image;
 import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
-import com.equipoUno.proyectoSalud.enumerations.EmailDomain;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.servicies.*;
@@ -35,7 +34,8 @@ public class RouteController {
     private final ProfessionalServiceImplement professionalService;
 
     @Autowired
-    public RouteController(UserServiceImplement userService, PatientServiceImplement patientService, ProfessionalServiceImplement professionalService){
+    public RouteController(UserServiceImplement userService, PatientServiceImplement patientService,
+            ProfessionalServiceImplement professionalService) {
         this.userService = userService;
         this.patientService = patientService;
         this.professionalService = professionalService;
@@ -71,7 +71,7 @@ public class RouteController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/admin/users")
-    public String users(HttpSession session, ModelMap model){
+    public String users(HttpSession session, ModelMap model) {
         model = userService.getUserData(session, model);
         List<User> users = userService.findAllUsers();
         model.addAttribute("users", users);
@@ -80,9 +80,9 @@ public class RouteController {
 
     @PreAuthorize("hasAnyRole('ROLE_PROFESSIONAL')")
     @GetMapping("/professionals/patients")
-    public String patients(Model model){
+    public String patients(Model model) {
         List<PatientDTO> patients = patientService.findAllPatients();
-        model.addAttribute("patients",patients);
+        model.addAttribute("patients", patients);
         return "patients";
     }
 
@@ -90,12 +90,12 @@ public class RouteController {
     public String register(Model model) {
         UserDTO userDTO = new UserDTO();
         model.addAttribute("userDTO", userDTO);
-        model.addAttribute("emailDomain", EmailDomain.values());
         return "register";
     }
 
     @GetMapping("/searcher")
-    public String searcher(HttpSession session, ModelMap model, @RequestParam Map<String, String> queryParams) throws MiException {
+    public String searcher(HttpSession session, ModelMap model, @RequestParam Map<String, String> queryParams)
+            throws MiException {
         model = userService.getUserData(session, model);
         Specialization[] specializations = Specialization.values();
         model.addAttribute("specializations", specializations);
@@ -122,7 +122,7 @@ public class RouteController {
 
     @PreAuthorize("hasAnyRole('ROLE_PATIENT', 'ROLE_ADMIN', 'ROLE_PROFESSIONAL')")
     @GetMapping("/profile")
-    public String perfil(ModelMap model, HttpSession session){
+    public String perfil(ModelMap model, HttpSession session) {
         User user = (User) session.getAttribute("userSession");
         model = userService.getUserData(session, model);
         UserDTO userDTO = new UserDTO();
@@ -152,10 +152,10 @@ public class RouteController {
         return "getAppointment";
     }
 
-//    @GetMapping("/patient/getAppointment")
-//    public String getAppointments() {
-//        return "getAppointment";
-//    }
+    // @GetMapping("/patient/getAppointment")
+    // public String getAppointments() {
+    // return "getAppointment";
+    // }
 
     @GetMapping("/history")
     public String history() {

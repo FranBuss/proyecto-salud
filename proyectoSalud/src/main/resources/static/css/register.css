@@ -70,14 +70,6 @@
     display: flex;
 }
 
-.form-register__email-inp {
-    width: 70%;
-}
-
-.form-register__select-inp {
-    width: 30%;
-}
-
 .form-register__cont-pass-inp {
     display: flex;
     width: 100%;

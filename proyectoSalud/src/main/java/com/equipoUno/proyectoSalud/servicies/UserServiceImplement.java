@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,9 +46,10 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     private final AppointmentServiceImplement appointmentServiceImplement;
 
     @Autowired
-    public UserServiceImplement(AppointmentServiceImplement appointmentServiceImplement, ProfessionalRepository professionalRepository, PatientRepository patientRepository,
-                                UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder,
-                                ImageServiceImplement imageServiceImplement, AppointmentRepository appointmentRepository) {
+    public UserServiceImplement(AppointmentServiceImplement appointmentServiceImplement,
+            ProfessionalRepository professionalRepository, PatientRepository patientRepository,
+            UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder,
+            ImageServiceImplement imageServiceImplement, AppointmentRepository appointmentRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -64,7 +64,6 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     public UserDTO registerUser(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         user.setRol(Rol.PATIENT);
-        user.setEmail(userDTO.getEmail().concat(userDTO.getEmailSuffix().getValue()));
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         MultipartFile imageFile = userDTO.getImageFile();
         if (imageFile != null && !imageFile.isEmpty()) {
@@ -79,20 +78,12 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         return modelMapper.map(savedUser, UserDTO.class);
     }
 
-//    public void validateEmail(String email) {
-//        Optional<User> userResponse = Optional.ofNullable(userRepository.findByEmail(email));
-//        if (userResponse.isPresent()) {
-//            throw new MiException("El correo ingresado ya existe,");
-//        }
-//    }
-
     @Override
     public User updateUser(String id, UserDTO userDTO, User userSession) throws MiException {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (userDTO.getEmail() != null && !userDTO.getEmail().isEmpty()) {
-                user.setEmail(userDTO.getEmail().concat(userDTO.getEmailSuffix().getValue()));
                 userSession.setEmail(user.getEmail());
             }
             if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
@@ -157,8 +148,8 @@ public class UserServiceImplement implements UserService, UserDetailsService {
             patientRepository.save(patient);
         }
 
-//        Patient savePatient = patientRepository.save(patient);
-//        return modelMapper.map(savePatient, PatientDTO.class);
+        // Patient savePatient = patientRepository.save(patient);
+        // return modelMapper.map(savePatient, PatientDTO.class);
 
         return null;
     }

@@ -10,13 +10,12 @@ import org.springframework.ui.ModelMap;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public interface UserService{
+public interface UserService {
 
-
-//    void register(MultipartFile file, String name, String email, String password, String password2) throws MiException;
+    // void register(MultipartFile file, String name, String email, String password,
+    // String password2) throws MiException;
 
     UserDTO registerUser(UserDTO userDTO);
-
 
     User updateUser(String id, UserDTO userDTO, User userSession) throws MiException;
 
@@ -32,8 +31,10 @@ public interface UserService{
 
     ModelMap getUserData(HttpSession session, ModelMap model);
 
-//    void validate(String name, String email, String password, String password2) throws MiException;
+    // void validate(String name, String email, String password, String password2)
+    // throws MiException;
 
-//    void updateUser(String id ,String name, String email, String password, String password2) throws MiException;
+    // void updateUser(String id ,String name, String email, String password, String
+    // password2) throws MiException;
 
 }

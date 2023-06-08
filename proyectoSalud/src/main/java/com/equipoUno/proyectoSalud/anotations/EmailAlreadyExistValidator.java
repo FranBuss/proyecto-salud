@@ -20,10 +20,10 @@ public class EmailAlreadyExistValidator implements ConstraintValidator<EmailAlre
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
 
-        if (email != null & !email.isEmpty()) {
+        if (email != null && !email.isEmpty()) {
 
             try {
-                User userDB = userRepository.findByEmailLike(email);
+                User userDB = userRepository.findByEmail(email);
 
                 if (userDB != null) {
                     context.disableDefaultConstraintViolation();
@@ -39,6 +39,8 @@ public class EmailAlreadyExistValidator implements ConstraintValidator<EmailAlre
                 return false;
             }
 
+        } else {
+            return false;
         }
 
         return true;

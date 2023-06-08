@@ -2,14 +2,12 @@ package com.equipoUno.proyectoSalud.dto;
 
 import com.equipoUno.proyectoSalud.anotations.EmailAlreadyExist;
 import com.equipoUno.proyectoSalud.anotations.FileExtension;
-import com.equipoUno.proyectoSalud.enumerations.EmailDomain;
+import com.equipoUno.proyectoSalud.anotations.ValidEmail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.*;
 
 @Data
@@ -17,21 +15,15 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 public class UserDTO {
 
-
     @Pattern(regexp = "^[a-zA-Z]{3,13}$", message = "El nombre debe tener entre 3 y 15 caracteres.")
     private String name;
 
     @Pattern(regexp = "^[a-zA-Z]{3,13}$", message = "El apellido debe tener entre 3 y 15 caracteres.")
     private String surname;
 
-    // Regex: Solo letras, números y (.,-,_)
-    @Pattern(regexp = "^[a-zA-Z0-9._-]{6,30}$", message = "El email solo puede contener -,_,.,letras y/o números.")
+    @ValidEmail()
     @EmailAlreadyExist()
     private String email;
-
-    @NotNull(message = "Tiene que seleccionar un dominio válido.")
-    @Enumerated(EnumType.STRING)
-    private EmailDomain emailSuffix;
 
     // Regex: Al menos una maýuscula, una minúscula, un número, un caracter especial
     // y entre 6 y 10 caracteres.

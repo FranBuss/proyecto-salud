@@ -1,9 +1,14 @@
 package com.equipoUno.proyectoSalud.controllers;
 
+import java.util.List;
 import com.equipoUno.proyectoSalud.dto.UserDTO;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.servicies.UserServiceImplement;
+
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,21 +27,25 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(@Validated @ModelAttribute("userDTO") UserDTO userDTO,
-                           BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
-            System.out.println(bindingResult.toString());
-            model.addAttribute("error", bindingResult.toString());
+
+            List<String> errorMessages = bindingResult.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+
+            model.addAttribute("errors", errorMessages);
             return "register";
         }
-//        try {
-            userService.registerUser(userDTO);
-            return "redirect:/login";
-//        } catch (MiException e) {
-//            model.addAttribute("error", e.getMessage());
-//            model.addAttribute("userDTO", userDTO);
-//            return "register";
-//        }
+        // try {
+        userService.registerUser(userDTO);
+        return "redirect:/login";
+        // } catch (MiException e) {
+        // model.addAttribute("error", e.getMessage());
+        // model.addAttribute("userDTO", userDTO);
+        // return "register";
+        // }
     }
 
     @GetMapping("/login")
