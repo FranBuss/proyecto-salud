@@ -24,12 +24,15 @@
         </a>
     </li>
     <li class="sidebar__li">
-        <a th:if="${page == 'modifyAppointment'}" th:href="@{/appointment/patientAppointments/__${'modify'}__}" 
+        <a th:if="${page == 'modifyAppointment' || page == 'modifyAppointment1' || page == 'modifyAppointment2'}" 
+            th:href="@{/appointment/patientAppointments/__${'modify'}__}" 
             id="editAppointment" class="nav-link sidebar__link sidebar__link--padding sidebar__link--active">
             <i id="editAppointment-icon" class="fa-solid fa-clock-rotate-left me-2 sidebar__icon sidebar__icon--active"></i>
             Modificar turno
         </a>
-        <a th:if="${page != 'modifyAppointment'}" th:href="@{/appointment/patientAppointments/__${'modify'}__}" id="editAppointment" class="nav-link sidebar__link sidebar__link--padding">
+        <a th:if="${page != 'modifyAppointment' && page != 'modifyAppointment1' && page != 'modifyAppointment2'}" 
+            th:href="@{/appointment/patientAppointments/__${'modify'}__}" 
+            id="editAppointment" class="nav-link sidebar__link sidebar__link--padding">
             <i id="editAppointment-icon" class="fa-solid fa-clock-rotate-left me-2 sidebar__icon"></i>
             Modificar turno
         </a>

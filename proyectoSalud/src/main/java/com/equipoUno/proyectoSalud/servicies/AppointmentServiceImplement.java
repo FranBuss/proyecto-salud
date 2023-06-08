@@ -113,28 +113,28 @@ public class AppointmentServiceImplement implements AppointmentService {
 
     @Override
     public String getProfessionalByIdAppointment(String id) {
-
         try {
             return appointmentRepository.getProfessionalByIdAppointment(id);
         } catch (Exception e) {
-
             e.printStackTrace();
         }
-
         return "";
-
     };
 
     @Override
+    @Transactional
     public void resetAppointmentById(String id) {
-
         try {
             appointmentRepository.enableAppointment(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-    };
+    @Override
+    public List<Appointment> getAppointmentsByProfessionalId(String professionalId) {
+        return appointmentRepository.findByProfessionalId(professionalId);
+    }
 
     // public AppointmentDTO updateAppointmentDate(String id,AppointmentDTO dto,
     // LocalDateTime newTime) throws MiException {

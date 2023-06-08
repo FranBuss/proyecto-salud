@@ -28,6 +28,8 @@ public interface AppointmentService {
 
     String getProfessionalByIdAppointment(String id);
 
+    List<Appointment> getAppointmentsByProfessionalId(String professionalId);
+
     void resetAppointmentById(String id);
 
     // Appointment getAppointmentById(String id);

@@ -26,8 +26,8 @@
             <th:block th:replace="/fragments/appointmentSidebar :: sidebar"></th:block>
         </div>
         <div class="appointment-view">
-            <div th:if="${page == 'modifyAppointment'}" class="getAppointment">
-                <div class="table-wrapper2">
+            <div class="getAppointment">
+                <div th:if="${page == 'modifyAppointment'}" class="table-wrapper2">
                     <table th:if="${appointments != null}" class="getAppointment__table2">
                         <thead class="table2__thead">
                             <tr class="table2__thead-row">
@@ -46,7 +46,7 @@
                                 <td th:text="${appointment.day}" class="table2__tbody-cell"></td>
                                 <td th:text="${appointment.date}" class="table2__tbody-cell"></td>
                                 <td class="table2__tbody-cell table2__cell--last">
-                                    <a th:href="@{/appointment/allAppointments/__${appointment.id}__}" class="table2__tbody-cell-btn">Modificar</a>
+                                    <a th:href="@{/appointment/modify/__${appointment.id}__}" class="table2__tbody-cell-btn">Modificar</a>
                                 </td>
                                 <!-- <td class="table2__tbody-cell table2__cell--last">
                                     <a href="#" class="table2__tbody-cell-btn">Cancelar</a>
@@ -54,6 +54,11 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <th:block th:replace="/fragments/getAppointmentPage2 :: getAppointmentPage2"></th:block>
+                <th:block th:replace="/fragments/getAppointmentPage3 :: getAppointmentPage3"></th:block>
+                <div th:if="${page == 'editAppointmentSuccess'}">
+                    <p th:text="${success}"></p>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
-<div th:if="${page == 'getAppointment3'}" th:fragment="getAppointmentPage3">
-    <form th:action="@{/appointment/assignAppointments/__${appointment.id}__}" method="POST">
+<div th:if="${page == 'getAppointment3' || page == 'modifyAppointment2'}" th:fragment="getAppointmentPage3">
+    <form th:if="${page == 'getAppointment3'}" th:action="@{/appointment/assignAppointments/__${appointment.id}__}" method="POST">
         <p>Desea confirmar el turno</p>
         <p>Horario: <span th:text="${appointment.appointment}"></span></p>
         <p>Dia: <span th:text="${appointment.day}"></span></p>
@@ -9,6 +9,19 @@
                 ' ' + appointment.professional.user.surname}">
             </span>
         </p>
+        <button type="submit">Confirmar</button>
+    </form>
+    <form th:if="${page == 'modifyAppointment2'}" th:action="@{/appointment/confirmModify/accepted/__${appointment.id}__}" method="POST">
+        <p>Desea confirmar el turno</p>
+        <p>Horario: <span th:text="${appointment.appointment}"></span></p>
+        <p>Dia: <span th:text="${appointment.day}"></span></p>
+        <p>Fecha: <span th:text="${appointment.date}"></span></p>
+        <p>Medico: 
+            <span th:text="${appointment.professional.user.name + 
+                ' ' + appointment.professional.user.surname}">
+            </span>
+        </p>
+        <input type="hidden" name="oldAppId" th:value="${oldAppId}">
         <button type="submit">Confirmar</button>
     </form>
 </div>
