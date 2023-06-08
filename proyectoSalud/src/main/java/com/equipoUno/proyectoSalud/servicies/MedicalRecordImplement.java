@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class MedicalRecordImplement implements MedicalRecordService{
+public class MedicalRecordImplement implements MedicalRecordService {
 
 
     private final ModelMapper modelMapper;
@@ -24,33 +24,26 @@ public class MedicalRecordImplement implements MedicalRecordService{
     private final PatientRepository patientRepository;
 
     @Autowired
-    public MedicalRecordImplement(PatientRepository patientRepository, MedicalRecordRepository medicalRecordRepository, ModelMapper modelMapper){
+    public MedicalRecordImplement(PatientRepository patientRepository, MedicalRecordRepository medicalRecordRepository, ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
         this.medicalRecordRepository = medicalRecordRepository;
         this.patientRepository = patientRepository;
     }
 
-    public MedicalRecordDTO  createMedicalRecord(String patientId, MedicalRecordDTO medicalRecordDTO){
-        Optional<Patient> patient = patientRepository.findById(patientId);
-        if (patient.isPresent()){
-            MedicalRecord medicalRecord = modelMapper.map(medicalRecordDTO, MedicalRecord.class);
+    public MedicalRecordDTO createMedicalRecord(Patient patient, MedicalRecordDTO medicalRecordDTO) {
+        MedicalRecord medicalRecord = modelMapper.map(medicalRecordDTO, MedicalRecord.class);
+        medicalRecord.setPatientName(patient.getUser().getName() + " " + patient.getUser().getSurname());
+        medicalRecord.setDate(LocalDate.now());
+        medicalRecord.setHealthInsurance(patient.getHealthInsurance());
+        medicalRecord.setPatient(patient);
+        medicalRecordRepository.save(medicalRecord);
+        patient.getMedicalRecords().add(medicalRecord);
+        patientRepository.save(patient);
 
-            medicalRecord.setDate(LocalDate.now());
-
-            medicalRecord.setPatient(patient.get());
-
-            medicalRecord.setHealthInsurance(patient.get().getHealthInsurance());
-            medicalRecord.setPatientName(patient.get().getUser().getName());
-
-            medicalRecordRepository.save(medicalRecord);
-
-            return modelMapper.map(medicalRecord, MedicalRecordDTO.class);
-        }
-
-        return null;
+        return modelMapper.map(medicalRecord, MedicalRecordDTO.class);
     }
 
-    public List<MedicalRecord> getMedicalRecordsByPatient(String id){
+    public List<MedicalRecord> getMedicalRecordsByPatient(String id) {
         List<MedicalRecord> medicalRecords = medicalRecordRepository.getMedicalRecordsByPatient(id);
         return medicalRecords.stream().map(medicalRecord -> modelMapper.map(medicalRecord, MedicalRecord.class))
                 .collect(Collectors.toList());

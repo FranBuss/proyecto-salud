@@ -1,0 +1,24 @@
+<div th:fragment="profAppointments" th:if="${page == 'listProfAppointments'}" class="table-wrapper2">
+    <table th:if="${appointments != null}" class="getAppointment__table2">
+        <thead class="table2__thead">
+            <tr class="table2__thead-row">
+                <th class="table2__thead-cell">Paciente</th>
+                <th class="table2__thead-cell">Horario</th>
+                <th class="table2__thead-cell">Dia semanal</th>
+                <th class="table2__thead-cell">Fecha</th>
+                <th class="table2__thead-cell"></th>
+            </tr>
+        </thead>
+        <tbody class="table2__tbody">
+            <tr th:each="appointment : ${appointments}" class="table2__tbody-row">
+                <td th:text="${appointment.patient.user.name + ' ' + appointment.patient.user.surname}" class="table2__tbody-cell"></td>
+                <td th:text="${appointment.appointment}" class="table2__tbody-cell"></td>
+                <td th:text="${appointment.day}" class="table2__tbody-cell"></td>
+                <td th:text="${appointment.date}" class="table2__tbody-cell"></td>
+                <td class="table2__tbody-cell table2__cell--last">
+                    <a th:href="@{/professional/appointment/view/__${appointment.id}__}" class="table2__tbody-cell-btn">Ver consulta</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

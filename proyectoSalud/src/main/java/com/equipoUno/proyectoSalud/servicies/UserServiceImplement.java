@@ -63,6 +63,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     @Override
     public UserDTO registerUser(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
+        validateEmail(userDTO.getEmail().concat(userDTO.getEmailSuffix().getValue()));
         user.setRol(Rol.PATIENT);
         user.setEmail(userDTO.getEmail().concat(userDTO.getEmailSuffix().getValue()));
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -77,7 +78,13 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         }
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDTO.class);
+    }
 
+    public void validateEmail(String email) {
+        Optional<User> userResponse = Optional.ofNullable(userRepository.findByEmail(email));
+        if (userResponse.isPresent()) {
+//            throw new MiException("El correo ingresado ya existe,");
+        }
     }
 
     @Override

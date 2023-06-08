@@ -35,11 +35,13 @@ public interface AppointmentRepository extends JpaRepository<Appointment, String
     public List<Appointment> getAssingAppointment(@Param("professionalId") String id);
 
     @Modifying
-    @Query("UPDATE Appointment a SET a.state = true, a.patient.id = null WHERE a.id = :appointmentId")
+    @Query("UPDATE Appointment a SET a.state = true, a.patient.id = null, a.comments = null WHERE a.id = :appointmentId")
     public void enableAppointment(@Param("appointmentId") String id);
 
     @Query("SELECT a.professional.id FROM Appointment a WHERE a.id = :appointmentId")
     public String getProfessionalByIdAppointment(@Param("appointmentId") String id);
 
-    // public Appointment getAppointmentById(String id);
+    @Modifying
+    @Query("DELETE FROM Appointment a WHERE a.id = :appId")
+    public void deleteAppointmentById(@Param("appId") String id);
 }

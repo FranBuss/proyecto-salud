@@ -2,6 +2,7 @@ package com.equipoUno.proyectoSalud.servicies;
 
 import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
+import com.equipoUno.proyectoSalud.entities.Appointment;
 import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -31,16 +33,19 @@ public class ProfessionalServiceImplement implements ProfessionalService{
     private final AppointmentServiceImplement appointmentService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final AppointmentRepository appointmentRepository;
 
     @Autowired
-    public ProfessionalServiceImplement(UserRepository userRepository, ProfessionalRepository professionalRepository, @Lazy AppointmentServiceImplement appointmentService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public ProfessionalServiceImplement(UserRepository userRepository, ProfessionalRepository professionalRepository,
+                                        @Lazy AppointmentServiceImplement appointmentService, ModelMapper modelMapper,
+                                        AppointmentRepository appointmentRepository, PasswordEncoder passwordEncoder) {
         this.professionalRepository = professionalRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.appointmentService = appointmentService;
         this.userRepository = userRepository;
+        this.appointmentRepository = appointmentRepository;
     }
-
 
     @Override
     public ProfessionalDTO getProfessional(String id){
@@ -133,7 +138,8 @@ public class ProfessionalServiceImplement implements ProfessionalService{
         return null;
     }
 
-    public Professional getProfessionalByUserId(String id){
+    @Override
+    public Professional getProfessionalByUserId(String id) {
         Optional<Professional> professionalResponse = professionalRepository.getProfessionalByUserId(id);
         if (professionalResponse.isPresent()){
             Professional professional = professionalResponse.get();
@@ -142,4 +148,10 @@ public class ProfessionalServiceImplement implements ProfessionalService{
         return null;
     }
 
+    @Override
+    public List<Appointment> getAssignAppointment(String professionalId){
+        List<Appointment> appointments = appointmentRepository.getAssingAppointment(professionalId);
+        return appointments.stream().map(appointment -> modelMapper.map(appointment, Appointment.class))
+                .collect(Collectors.toList());
+    }
 }

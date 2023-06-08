@@ -74,11 +74,11 @@ public class AppointmentController {
     }
 
     @PostMapping("/assignAppointments/{appId}")
-    public String assignAppointment(@PathVariable String appId, HttpSession session, ModelMap model) {
+    public String assignAppointment(@PathVariable String appId, @RequestParam("comment") String comment, HttpSession session, ModelMap model) {
         model = userService.getUserData(session, model);
         User user = (User) session.getAttribute("userSession");
         Patient patient = patientService.getPatientByUserId(user.getId());
-        appointmentService.assignAppointment(patient, appId);
+        appointmentService.assignAppointment(patient, appId, comment);
         model.put("success", "El turno ha sido confirmado.");
         model.put("page", "getAppointmentSuccess");
         return "getAppointment";
@@ -137,12 +137,12 @@ public class AppointmentController {
     }
 
     @PostMapping("/confirmModify/accepted/{id}")
-    public String acceptConfirmModify(@PathVariable String id, @RequestParam("oldAppId") String oldId, ModelMap model, HttpSession session) {
+    public String acceptConfirmModify(@PathVariable String id, @RequestParam("oldAppId") String oldId, @RequestParam("comment") String comment, ModelMap model, HttpSession session) {
         model = userService.getUserData(session, model);
         User user = (User) session.getAttribute("userSession");
         appointmentService.resetAppointmentById(oldId);
         Patient patient = patientService.getPatientByUserId(user.getId());
-        appointmentService.assignAppointment(patient, id);
+        appointmentService.assignAppointment(patient, id, comment);
         model.put("success", "El turno ha sido confirmado.");
         model.put("page", "editAppointmentSuccess");
         return "editAppointment";

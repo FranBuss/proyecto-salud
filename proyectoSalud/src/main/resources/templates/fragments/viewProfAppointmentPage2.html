@@ -1,0 +1,24 @@
+<div th:fragment="addRecord" th:if="${page == 'listProfAppointments2'}" class="table-wrapper2">
+    <form th:action="@{/professional/medicalRecord/create/__${appointment.id}__}" method="POST" th:object="${medicalRecordDTO}">
+        <p>Cargar datos de consulta de <span th:text="${appointment.patient.user.name + ' ' + appointment.patient.user.surname}"></span></p>
+        <p>Edad: <input type="number" th:field="*{age}"></p>
+        <p>Genero:
+            <select th:field="*{gender}">
+                <option value="Seleccione">Seleccione una opción</option>
+                <option th:each="gender : ${genders}" th:value="${gender}" th:text="${gender.value}"></option>
+            </select>
+        </p>
+        <p>Tipo de sangre:
+            <select th:field="*{bloodType}">
+                <option value="Seleccione">Seleccione una opción</option>
+                <option th:each="blood : ${bloodTypes}" th:value="${blood}" th:text="${blood}"></option>
+            </select>
+        </p>
+        <p>Fecha: <span th:text="${appointment.date}"></span></p>
+        <p>Obra social: <span th:text="${appointment.patient.healthInsurance}"></span></p>
+        <p>Observaciones:
+            <textarea th:field="*{observations}" cols="30" rows="5"></textarea>
+        </p>
+        <button type="submit">Agregar ficha</button>
+    </form>
+</div>

@@ -2,10 +2,7 @@ package com.equipoUno.proyectoSalud.controllers;
 
 import com.equipoUno.proyectoSalud.dto.MedicalRecordDTO;
 import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
-import com.equipoUno.proyectoSalud.entities.Appointment;
-import com.equipoUno.proyectoSalud.entities.MedicalRecord;
-import com.equipoUno.proyectoSalud.entities.Patient;
-import com.equipoUno.proyectoSalud.entities.Professional;
+import com.equipoUno.proyectoSalud.entities.*;
 import com.equipoUno.proyectoSalud.enumerations.BloodType;
 import com.equipoUno.proyectoSalud.enumerations.Gender;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
@@ -34,56 +31,86 @@ public class ProfessionalController {
     private final ProfessionalService professionalService;
     private final UserServiceImplement userService;
 
-    private final AppointmentServiceImplement appointmentServiceImplement;
+    private final AppointmentServiceImplement appointmentService;
 
     private final MedicalRecordImplement medicalRecordImplement;
 
     @Autowired
-    public ProfessionalController(AppointmentServiceImplement appointmentServiceImplement, MedicalRecordImplement medicalRecordImplement, ProfessionalService professionalService, UserServiceImplement userService) {
+    public ProfessionalController(AppointmentServiceImplement appointmentService, MedicalRecordImplement medicalRecordImplement, ProfessionalService professionalService, UserServiceImplement userService) {
         this.professionalService = professionalService;
         this.userService = userService;
         this.medicalRecordImplement = medicalRecordImplement;
-        this.appointmentServiceImplement = appointmentServiceImplement;
+        this.appointmentService = appointmentService;
     }
-
-    @GetMapping("/{id}")
-    public String getProfessional(@PathVariable String id, ModelMap model) {
-        ProfessionalDTO professionalDTO = professionalService.getProfessional(id);
-        if (professionalDTO != null){
-            model.put("professionalDTO", professionalDTO);
-            return "professional_view";
-        }
-        return null;
-    }
-//
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-//    @GetMapping("/create")
-//    public String professionalRegister(){
-//        return "professional_form";
-//    }
-//
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-//    @PostMapping("/create")
-//    public String create(@RequestParam ProfessionalDTO professionalDTO, ModelMap model){
-//        try {
-//
-//            professionalService.createProfessional(professionalDTO);
-//            model.put("success", "The professional has been created correctly");
-//
-//        } catch (MiException ex){
-//
-//            model.put("error", ex.getMessage());
-//            return "professional_form";
-//
-//        }
-//        return "index";
-//    }
 
     @GetMapping("/dashboard")
     public String professionalDashboard(HttpSession session, ModelMap model){
-        userService.getUserData(session, model);
+        model = userService.getUserData(session, model);
+        User user = (User) session.getAttribute("userSession");
+        Professional professional = professionalService.getProfessionalByUserId(user.getId());
+        List<Appointment> appointments = professionalService.getAssignAppointment(professional.getId());
+        if (!appointments.isEmpty()) {
+            model.put("appointments", appointments);
+        } else {
+            model.put("appointments", null);
+        }
+        model.put("page", "listProfAppointments");
         return "professional_dash";
     }
+
+    @GetMapping("/appointment/view/{id}")
+    public String viewAppointment(@PathVariable String id, ModelMap model, HttpSession session) {
+        model = userService.getUserData(session, model);
+        Optional<Appointment> appointmentResponse = appointmentService.getAppointmentById(id);
+        if (appointmentResponse.isPresent()) {
+            Appointment appointment = appointmentResponse.get();
+            model.put("appointment", appointment);
+            model.put("page", "listProfAppointments1");
+        }
+        return "professional_dash";
+    }
+
+    @GetMapping("/medicalRecord/form/{appId}")
+    public String medicalRecordForm(@PathVariable String appId, ModelMap model, HttpSession session){
+        model = userService.getUserData(session, model);
+        Optional<Appointment> appointmentResponse = appointmentService.getAppointmentById(appId);
+        if (appointmentResponse.isPresent()) {
+            Appointment appointment = appointmentResponse.get();
+            model.put("appointment", appointment);
+        }
+        MedicalRecordDTO medicalRecordDTO = new MedicalRecordDTO();
+        BloodType[] bloodTypes = BloodType.values();
+        Gender[] genders = Gender.values();
+        model.put("medicalRecordDTO", medicalRecordDTO);
+        model.put("bloodTypes", bloodTypes);
+        model.put("genders", genders);
+        model.put("page", "listProfAppointments2");
+        return "professional_dash";
+    }
+
+    @PostMapping("/medicalRecord/create/{appId}")
+    public String assignMedicalRecord(@PathVariable("appId") String appId, @ModelAttribute("medicalRecordDTO") MedicalRecordDTO medicalRecordDTO,
+                                      HttpSession session, ModelMap model){
+        model = userService.getUserData(session, model);
+        Optional<Appointment> appointmentRes = appointmentService.getAppointmentById(appId);
+        if (appointmentRes.isPresent()){
+            Patient patient = appointmentRes.get().getPatient();
+            medicalRecordImplement.createMedicalRecord(patient, medicalRecordDTO);
+            appointmentService.deleteUsedAppointmentById(appId);
+        }
+        model.put("page", "listProfAppointments3");
+        model.put("success", "La ficha se ha cargado con exito.");
+        return "professional_dash";
+    }
+
+    //    //PRUEBA
+//    @GetMapping("/medicalRecords/{id}")
+//    public String listMedicalRecords(@PathVariable String id, ModelMap model){
+//        List<MedicalRecord> medicalRecords = medicalRecordImplement.getMedicalRecordsByPatient(id);
+//        model.put("medicalRecords", medicalRecords);
+//        return "medicalRecords";
+//    }
+//
 
     //Update a Professional
     @PostMapping("/update/{id}")
@@ -123,45 +150,13 @@ public class ProfessionalController {
         return "redirect:/admin/users";
     }
 
-
-//    //PRUEBA
-//    @GetMapping("/medicalRecords/{id}")
-//    public String listMedicalRecords(@PathVariable String id, ModelMap model){
-//        List<MedicalRecord> medicalRecords = medicalRecordImplement.getMedicalRecordsByPatient(id);
-//        model.put("medicalRecords", medicalRecords);
-//        return "medicalRecords";
-//    }
-//
-//    //PRUEBA
-//    @GetMapping("/medicalRecord/form/{appId}")
-//    public String medicalRecordForm(@PathVariable String appId, ModelMap model){
-//        Optional<Appointment> appointment = appointmentServiceImplement.getAppointmentById(appId);
-//        if (appointment.isPresent()){
-//            MedicalRecordDTO medicalRecordDTO = new MedicalRecordDTO();
-//            model.put("medicalRecordDTO", medicalRecordDTO);
-//            BloodType[] bloodTypes = BloodType.values();
-//            model.put("bloodTypes", bloodTypes);
-//            Gender[] genders = Gender.values();
-//            model.put("genders", genders);
-//            return "medicalRecord_form";
-//        }
-//
-//        //CAMBIAR NO SE A DONDE IR :(
-//        return "redirect:/index";
-//
-//    }
-//
-//    //AGREGADO TAMBIEN CORREGIR
-//    @PostMapping("/medicalRecord/create/{appId}")
-//    public String assignMedicalRecord(@PathVariable("appId") String appId, @ModelAttribute("medicalRecordDTO")MedicalRecordDTO medicalRecordDTO){
-//        Optional<Appointment> appointment = appointmentServiceImplement.getAppointmentById(appId);
-//        if (appointment.isPresent()){
-//            Patient patient = appointment.get().getPatient();
-//            medicalRecordImplement.createMedicalRecord(patient.getId(), medicalRecordDTO);
-//        }
-//
-//        return null;
-//    }
-
-
+    @GetMapping("/{id}")
+    public String getProfessional(@PathVariable String id, ModelMap model) {
+        ProfessionalDTO professionalDTO = professionalService.getProfessional(id);
+        if (professionalDTO != null){
+            model.put("professionalDTO", professionalDTO);
+            return "professional_view";
+        }
+        return null;
+    }
 }
