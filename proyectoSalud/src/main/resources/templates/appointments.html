@@ -49,21 +49,27 @@
                                     <a th:href="@{/appointment/allAppointments/__${appointment.id}__}" class="table2__tbody-cell-btn">Modificar</a>
                                 </td> -->
                                 <td class="table2__tbody-cell table2__cell--last">
-                                    <a href="#" class="table2__tbody-cell-btn">Cancelar</a>
+                                    <a th:href="@{/appointment/delete/confirm/__${appointment.id}__}" class="table2__tbody-cell-btn">Cancelar</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div th:if="${appointments == null}">
-                    <p>No tiene turnos asignados</p>
-                </div>
+            </div>
+            <div th:if="${page == 'listAppointments' && appointments == null}">
+                <p>No tiene turnos asignados</p>
+            </div>
+            <div th:if="${page == 'listAppointments1'}">
+                <form th:action="@{/appointment/delete/__${id}__}" method="POST">
+                    <p>¿Seguro desea cancelar el turno?</p>
+                    <button type="submit">Confirmar</button>
+                    <!-- <a href="/"></a> -->
+                </form>
             </div>
         </div>
     </div>
     <th:block th:replace="/fragments/footer :: footer"></th:block>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
-
 	    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     </script>
     <script src="/static/js/appointments.js"></script>
