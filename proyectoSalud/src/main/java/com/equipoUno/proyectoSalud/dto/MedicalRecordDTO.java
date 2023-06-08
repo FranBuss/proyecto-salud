@@ -34,4 +34,7 @@ public class MedicalRecordDTO {
 
     private String observations;
 
+    private float height;
+
+    private float weight;
 }

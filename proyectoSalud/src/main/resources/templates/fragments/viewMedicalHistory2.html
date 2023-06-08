@@ -1,0 +1,15 @@
+<div th:fragment="viewMedicalHistory2" th:if="${page == 'medicalHistory2'}" class="table-wrapper2">
+    <div>
+        <p>Nombre del paciente: <span th:text="${medicalRecord.patientName}"></span></p>
+        <p>Edad: <span th:text="${medicalRecord.age}"></span></p>
+        <p>Peso: <span th:text="${medicalRecord.weight}"></span></p>
+        <p>Altura: <span th:text="${medicalRecord.height}"></span></p>
+        <p>Sexo: <span th:text="${medicalRecord.gender.value}"></span></p>
+        <p>Tipo de sangre: <span th:text="${medicalRecord.bloodType}"></span></p>
+        <p>Obra Social: <span th:text="${medicalRecord.healthInsurance}"></span></p>
+        <p>Fecha de la consulta: <span th:text="${medicalRecord.date}"></span></p>
+        <p>Medico de la consulta: <span th:text="${medicalRecord.professional.user.name + ' ' + medicalRecord.professional.user.surname}"></span></p>
+        <p>Observaciones:</p>
+        <textarea cols="30" rows="5" th:text="${medicalRecord.observations}" readonly></textarea>
+    </div>
+</div>

@@ -1,7 +1,16 @@
 <div th:fragment="addRecord" th:if="${page == 'listProfAppointments2'}" class="table-wrapper2">
     <form th:action="@{/professional/medicalRecord/create/__${appointment.id}__}" method="POST" th:object="${medicalRecordDTO}">
         <p>Cargar datos de consulta de <span th:text="${appointment.patient.user.name + ' ' + appointment.patient.user.surname}"></span></p>
+        <p>Dni:
+            <input type="number" name="dni">
+        </p>
         <p>Edad: <input type="number" th:field="*{age}"></p>
+        <p>Altura (mts):
+            <input type="number" step="0.01" th:field="*{height}">
+        </p>
+        <p>Peso (kg):
+            <input type="number" step="0.01" th:field="*{weight}">
+        </p>
         <p>Genero:
             <select th:field="*{gender}">
                 <option value="Seleccione">Seleccione una opción</option>

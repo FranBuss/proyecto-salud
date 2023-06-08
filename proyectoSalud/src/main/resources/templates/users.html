@@ -48,7 +48,7 @@
 								Registrado
 							</a>
 						</td>
-						<td>
+						<td th:if="${user.rol != T(com.equipoUno.proyectoSalud.enumerations.Rol).PROFESSIONAL}">
 							<a th:href="@{/user/delete(id=${user.id})}">Eliminar</a>
 						</td>
 					</tr>

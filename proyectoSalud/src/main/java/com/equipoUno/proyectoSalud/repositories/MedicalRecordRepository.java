@@ -13,5 +13,4 @@ public interface MedicalRecordRepository extends JpaRepository<MedicalRecord, St
 
     @Query("SELECT m FROM MedicalRecord m WHERE m.patient.id = :patientId ORDER BY m.date")
     public List<MedicalRecord> getMedicalRecordsByPatient(@Param("patientId") String id);
-
 }

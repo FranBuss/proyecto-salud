@@ -18,4 +18,6 @@ public interface PatientService {
 
     void deletePatient(String id);
 
+    List<Patient> getPatientsWithMedicalRecord();
+
 }
