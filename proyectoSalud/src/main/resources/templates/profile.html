@@ -54,10 +54,10 @@
 									<i id="email-cancel-icon" class="fa-solid fa-xmark form-profile__cancel-icon form-profile--hidden"></i>
 								</div>
 								<div id="user-profile__email-inp-cont" class="d-flex mt-1 w-100 user-profile__email-inp-cont form-profile--hidden">
-									<input th:field="*{email}" type="text" name="email" id="user-profile__email-inp" class="form-profile__input user-profile__email-inp" autocomplete="#">
-									<select th:field="*{emailSuffix}" name="email_select" class="user-profile__email-select">
+									<input th:field="*{email}" type="text" id="user-profile__email-inp" class="form-profile__input user-profile__email-inp" autocomplete="#">
+									<!-- <select th:field="*{emailSuffix}" name="email_select" class="user-profile__email-select">
 										<option th:each="suffix : ${T(com.equipoUno.proyectoSalud.enumerations.EmailDomain).values()}" th:value="${suffix}" th:text="${suffix.value}"></option>
-									</select>
+									</select> -->
 								</div>
 							</div>
 							<div class="user-profile__pass-cont">
