@@ -1,4 +1,5 @@
-<form th:if="${page == 'getAppointment' || page == 'getAppointment1'}" th:fragment="getAppointmentForm" action="/appointment/getProfessionals" class="getAppointment__form">
+<form th:if="${page == 'getAppointment' || page == 'getAppointment1'}" th:fragment="getAppointmentForm"
+    action="/appointment/getProfessionals" class="getAppointment__form">
     <label for="getAppointment-select" class="getAppointment__label">Seleccione la especialidad</label>
     <div class="getAppointment__select-cont">
         <select name="specialization" class="getAppointment__select">

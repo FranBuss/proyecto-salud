@@ -1,33 +1,49 @@
 <div th:fragment="addRecord" th:if="${page == 'listProfAppointments2'}" class="table-wrapper2">
-    <form th:action="@{/professional/medicalRecord/create/__${appointment.id}__}" method="POST" th:object="${medicalRecordDTO}">
-        <p>Cargar datos de consulta de <span th:text="${appointment.patient.user.name + ' ' + appointment.patient.user.surname}"></span></p>
-        <p>Dni:
-            <input type="number" name="dni">
-        </p>
-        <p>Edad: <input type="number" th:field="*{age}"></p>
-        <p>Altura (mts):
-            <input type="number" step="0.01" th:field="*{height}">
-        </p>
-        <p>Peso (kg):
-            <input type="number" step="0.01" th:field="*{weight}">
-        </p>
-        <p>Genero:
-            <select th:field="*{gender}">
-                <option value="Seleccione">Seleccione una opción</option>
-                <option th:each="gender : ${genders}" th:value="${gender}" th:text="${gender.value}"></option>
-            </select>
-        </p>
-        <p>Tipo de sangre:
-            <select th:field="*{bloodType}">
-                <option value="Seleccione">Seleccione una opción</option>
-                <option th:each="blood : ${bloodTypes}" th:value="${blood}" th:text="${blood}"></option>
-            </select>
-        </p>
-        <p>Fecha: <span th:text="${appointment.date}"></span></p>
-        <p>Obra social: <span th:text="${appointment.patient.healthInsurance}"></span></p>
-        <p>Observaciones:
-            <textarea th:field="*{observations}" cols="30" rows="5"></textarea>
-        </p>
-        <button type="submit">Agregar ficha</button>
+    <form th:action="@{/professional/medicalRecord/create/__${appointment.id}__}" method="POST"
+        th:object="${medicalRecordDTO}">
+        <p class="text-center mb-4 getAppointment__prof-text">Cargar datos de consulta de <span
+                th:text="${appointment.patient.user.name + ' ' + appointment.patient.user.surname}"></span></p>
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="getAppointment__prof-text--p d-flex align-items-center">Fecha: <span th:text="${appointment.date}"
+                    class="getAppointment__prof-text--span ms-4"></span></p>
+            <p class="getAppointment__prof-text--p">Dni:
+                <input type="number" name="dni" class="ms-4 createRecord__input createRecord--width-dni">
+            </p>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="getAppointment__prof-text--p">Edad: <input type="number" th:field="*{age}"
+                    class="createRecord__input ms-4 createRecord--width"></p>
+            <p class="getAppointment__prof-text--p">Obra social: <span th:text="${appointment.patient.healthInsurance}"
+                    class="getAppointment__prof-text--span ms-4"></span></p>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="getAppointment__prof-text--p">Altura (mts):
+                <input type="number" step="0.01" th:field="*{height}"
+                    class="createRecord__input ms-4 createRecord--width">
+            </p>
+            <p class="getAppointment__prof-text--p">Peso (kg):
+                <input type="number" step="0.01" th:field="*{weight}"
+                    class="createRecord__input ms-4 createRecord--width">
+            </p>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="getAppointment__prof-text--p">Genero:
+                <select th:field="*{gender}" class="createRecord__select ms-2">
+                    <option value="Seleccione">Seleccione</option>
+                    <option th:each="gender : ${genders}" th:value="${gender}" th:text="${gender.value}"></option>
+                </select>
+            </p>
+            <p class="getAppointment__prof-text--p">Sangre:
+                <select th:field="*{bloodType}" class="createRecord__select ms-2">
+                    <option value="Seleccione">Seleccione</option>
+                    <option th:each="blood : ${bloodTypes}" th:value="${blood}" th:text="${blood}"></option>
+                </select>
+            </p>
+        </div>
+        <p class="getAppointment__prof-text--p">Observaciones:</p>
+        <div class="d-flex align-items-center flex-column">
+            <textarea th:field="*{observations}" cols="40" rows="4" class="getAppointment__textarea"></textarea>
+            <button type="submit" class="getAppointment__button mt-3">Agregar ficha</button>
+        </div>
     </form>
 </div>

@@ -76,6 +76,7 @@
 .getAppointment__label {
     color: var(--celeste-oscuro);
     font-size: 20px;
+    font-weight: bold;
     margin-right: 10px;
 }
 
@@ -114,20 +115,9 @@
 .getAppointment__table2 {
     width: 100%;
     height: 100%;
-    /* border-collapse: collapse; */
-
-
     border-collapse: separate;
     border-spacing: 0;
     border: 1px solid var(--celeste-oscuro);
-}
-
-.getAppointment__table3 {
-    /* width: 90%;
-    margin-top: 50px;
-    border-collapse: separate;
-    border-spacing: 0;
-    border: 1px solid var(--celeste-oscuro); */
 }
 
 .table1__thead,
@@ -201,4 +191,93 @@
     width: 100%;
     height: 100%;
     cursor: default;
+}
+
+.appointment__page-alert,
+.getAppointment__prof-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--celeste-oscuro);
+}
+
+.getAppointment__prof-text--p {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--celeste-oscuro);
+    display: flex;
+    justify-content: space-between;
+}
+
+.getAppointment__prof-text--span {
+    color: var(--azul-oscuro);
+    font-weight: 100;
+    font-size: 18px;
+}
+
+.getAppointment__textarea {
+    border: 1px solid var(--celeste-oscuro);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.appointments__button,
+.getAppointment__button {
+    width: 150px;
+    height: 35px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--blanco);
+    background-color: var(--celeste-oscuro);
+    border: none;
+    cursor: pointer;
+}
+
+.createRecord__link {
+    width: 150px;
+    height: 35px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--blanco);
+    background-color: var(--celeste-oscuro);
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    line-height: 35px;
+}
+
+.createRecord__select {
+    font-size: 18px;
+    height: 28px;
+    padding-left: 4px;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid var(--celeste-oscuro);
+}
+
+.createRecord__input {
+    text-align: center;
+    height: 28px;
+    width: 100px;
+    padding: 2px 0 2px 5px;
+    font-size: 18px;
+    border: 0;
+    border-bottom: 2px solid var(--celeste-oscuro);
+    background-color: transparent;
+}
+
+.createRecord--width-dni {
+    width: 130px;
+}
+
+.createRecord--width {
+    width: 85px;
+}
+
+.createRecord__input:focus {
+    border: 1px solid var(--celeste-oscuro);
+}
+
+.wrapper--height {
+    max-height: 392px;
 }

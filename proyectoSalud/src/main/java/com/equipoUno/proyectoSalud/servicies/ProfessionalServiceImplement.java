@@ -1,12 +1,9 @@
 package com.equipoUno.proyectoSalud.servicies;
 
-import com.equipoUno.proyectoSalud.dto.PatientDTO;
 import com.equipoUno.proyectoSalud.dto.ProfessionalDTO;
 import com.equipoUno.proyectoSalud.entities.Appointment;
-import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
-import com.equipoUno.proyectoSalud.enumerations.Rol;
 import com.equipoUno.proyectoSalud.enumerations.Specialization;
 import com.equipoUno.proyectoSalud.exceptions.MiException;
 import com.equipoUno.proyectoSalud.repositories.AppointmentRepository;
@@ -18,11 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 
 @Service
 public class ProfessionalServiceImplement implements ProfessionalService{
@@ -83,18 +78,6 @@ public class ProfessionalServiceImplement implements ProfessionalService{
         return modelMapper.map(professional, ProfessionalDTO.class);
     }
 
-//    @Override
-//    public Professional updateProfessional(String id){
-//        Optional<Professional> professionalInfo = professionalRepository.findById(id);
-//        if (professionalInfo.isPresent()) {
-//            appointmentService.deleteAppointmentAvailable(id);
-//            Professional professional = professionalRepository.save(professionalInfo.get());
-//            appointmentService.generateAppointments(professional);
-//            return professional;
-//        }
-//        return null;
-//    }
-
     public ProfessionalDTO updateProfessional(String userId, ProfessionalDTO professionalDTO){
         User user = userRepository.findById(userId).orElse(null);
         Optional<Professional> professionalResponse = professionalRepository.findByUser(user);
@@ -104,9 +87,7 @@ public class ProfessionalServiceImplement implements ProfessionalService{
                 appointmentService.deleteAppointmentAvailable(professionalResponse.get().getId());
                 professional.setEntryTime(professionalDTO.getEntryTime());
                 professional.setExitTime(professionalDTO.getExitTime());
-
                 appointmentService.generateAppointments(professional);
-
             }
             if (professionalDTO.getCharge() != 0){
                 professional.setCharge(professionalDTO.getCharge());
@@ -118,12 +99,12 @@ public class ProfessionalServiceImplement implements ProfessionalService{
 
 
     @Override
-    public void deleteProfessional(String id) throws MiException {
+    public void deleteProfessional(String id) {
         professionalRepository.deleteById(id);
     }
 
     @Override
-    public ProfessionalDTO updateDropOut(String id) throws MiException {
+    public ProfessionalDTO updateDropOut(String id) {
         Optional<Professional> professionalInfo = professionalRepository.findById(id);
         if (professionalInfo.isPresent()) {
             Professional professional = professionalInfo.get();
@@ -142,16 +123,24 @@ public class ProfessionalServiceImplement implements ProfessionalService{
     public Professional getProfessionalByUserId(String id) {
         Optional<Professional> professionalResponse = professionalRepository.getProfessionalByUserId(id);
         if (professionalResponse.isPresent()){
-            Professional professional = professionalResponse.get();
-            return professional;
+            return professionalResponse.get();
         }
         return null;
     }
 
     @Override
     public List<Appointment> getAssignAppointment(String professionalId){
-        List<Appointment> appointments = appointmentRepository.getAssingAppointment(professionalId);
+        List<Appointment> appointments = appointmentRepository.getAssignAppointment(professionalId);
         return appointments.stream().map(appointment -> modelMapper.map(appointment, Appointment.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Professional getProfessionalById(String id) {
+        Optional<Professional> professionalRes = professionalRepository.findById(id);
+        if (professionalRes.isPresent()) {
+            return professionalRes.get();
+        }
+        return null;
     }
 }
