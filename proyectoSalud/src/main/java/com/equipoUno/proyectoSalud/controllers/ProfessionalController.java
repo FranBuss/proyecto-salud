@@ -46,6 +46,7 @@ public class ProfessionalController {
         model = userService.getUserData(session, model);
         User user = (User) session.getAttribute("userSession");
         Professional professional = professionalService.getProfessionalByUserId(user.getId());
+        System.out.println(professional.getUser().getName());
         List<Appointment> appointments = professionalService.getAssignAppointment(professional.getId());
         if (!appointments.isEmpty()) {
             model.put("appointments", appointments);
@@ -107,7 +108,12 @@ public class ProfessionalController {
     public String viewPatientsFromMedicalHistory(ModelMap model, HttpSession session) {
         model = userService.getUserData(session, model);
         List<Patient> patients = patientService.getPatientsWithMedicalRecord();
-        model.put("patients", patients);
+        if (!patients.isEmpty()) {
+            model.put("patients", patients);
+        } else {
+            model.put("patients", null);
+            model.put("alert", "No existen fichas cargadas.");
+        }
         model.put("page", "medicalHistory");
         return "medicalHistory";
     }

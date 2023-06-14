@@ -11,9 +11,13 @@ import java.util.List;
 public interface ProfessionalService {
 
     ProfessionalDTO getProfessional(String id);
+
     List<Professional> searchProfessionals();
 
     Professional getProfessionalByUserId(String id);
+
+    Professional getProfessionalById(String id);
+
     List<Appointment> getAssignAppointment(String professionalId);
 
     List<Professional> searchProfessionalsBySpecialization(String specializationString) throws MiException;

@@ -1,15 +1,40 @@
 <div th:fragment="viewMedicalHistory2" th:if="${page == 'medicalHistory2'}" class="table-wrapper2">
-    <div>
-        <p>Nombre del paciente: <span th:text="${medicalRecord.patientName}"></span></p>
-        <p>Edad: <span th:text="${medicalRecord.age}"></span></p>
-        <p>Peso: <span th:text="${medicalRecord.weight}"></span></p>
-        <p>Altura: <span th:text="${medicalRecord.height}"></span></p>
-        <p>Sexo: <span th:text="${medicalRecord.gender.value}"></span></p>
-        <p>Tipo de sangre: <span th:text="${medicalRecord.bloodType}"></span></p>
-        <p>Obra Social: <span th:text="${medicalRecord.healthInsurance}"></span></p>
-        <p>Fecha de la consulta: <span th:text="${medicalRecord.date}"></span></p>
-        <p>Medico de la consulta: <span th:text="${medicalRecord.professional.user.name + ' ' + medicalRecord.professional.user.surname}"></span></p>
-        <p>Observaciones:</p>
-        <textarea cols="30" rows="5" th:text="${medicalRecord.observations}" readonly></textarea>
+    <div class="w-75">
+        <p class="text-center mb-5 getAppointment__prof-text">Ficha de consulta</p>
+        <div class="d-flex justify-content-between">
+            <p class="getAppointment__prof-text--p">Fecha: <span th:text="${medicalRecord.date}"
+                    class="getAppointment__prof-text--span ms-2"></span></p>
+            <p class="getAppointment__prof-text--p">Paciente: <span th:text="${medicalRecord.patientName}"
+                    class="getAppointment__prof-text--span ms-2"></span></p>
+        </div>
+        <div class="d-flex justify-content-between">
+            <p class="getAppointment__prof-text--p">DNI: <span th:text="${medicalRecord.patient.dni}"
+                    class="getAppointment__prof-text--span ms-2"></span></p>
+            <p class="getAppointment__prof-text--p">Edad: <span th:text="${medicalRecord.age}"
+                    class="getAppointment__prof-text--span ms-2"></span></p>
+        </div>
+        <div class="d-flex justify-content-between">
+            <p class="getAppointment__prof-text--p">Altura: <span th:text="${medicalRecord.height}"
+                    class="getAppointment__prof-text--span ms-2"></span></p>
+            <p class="getAppointment__prof-text--p">Peso: <span th:text="${medicalRecord.weight}"
+                    class="getAppointment__prof-text--span ms-2"></span></p>
+        </div>
+        <div class="d-flex justify-content-between">
+            <p class="getAppointment__prof-text--p">Sexo: <span th:text="${medicalRecord.gender.value}"
+                    class="getAppointment__prof-text--span ms-2"></span></p>
+            <p class="getAppointment__prof-text--p">Tipo de sangre: <span th:text="${medicalRecord.bloodType}"
+                    class="getAppointment__prof-text--span ms-2"></span></p>
+        </div>
+        <div class="d-flex justify-content-between">
+            <p class="getAppointment__prof-text--p">Médico consultado: <span
+                    th:text="${medicalRecord.professional.user.name + ' ' + medicalRecord.professional.user.surname}"
+                    class="getAppointment__prof-text--span ms-2"></span>
+            </p>
+            <p class="getAppointment__prof-text--p">Obra Social: <span th:text="${medicalRecord.healthInsurance}"
+                    class="getAppointment__prof-text--span ms-2"></span></p>
+        </div>
+        <p class="getAppointment__prof-text--p">Observaciones: <span th:text="${medicalRecord.observations}"
+                class="getAppointment__prof-text--span ms-2"></span></p>
+
     </div>
 </div>

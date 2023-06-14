@@ -14,34 +14,28 @@ public interface AppointmentRepository extends JpaRepository<Appointment, String
 
     List<Appointment> findByProfessionalId(String professionalId);
 
-    @Query("SELECT a FROM Appointment a ORDER BY a.date ASC, a.appointment ASC")
-    public List<Appointment> getAllAppointmentsByOrder();
-
     @Modifying
     @Query("DELETE FROM Appointment a WHERE a.state = true AND a.professional.id = :id")
-    public void deleteAllAppointmentsAvailable(@Param("id") String id);
+    void deleteAllAppointmentsAvailable(@Param("id") String id);
 
-    // @Query("SELECT a FROM Appointment a JOIN a.professional AS p " +
-    // "WHERE a.professional.id = :professionalId AND p.id = :professionalId" +
-    // " ORDER BY a.date ASC, a.appointment ASC")
     @Query("SELECT a FROM Appointment a WHERE a.professional.id = :professionalId ORDER BY a.date ASC, a.appointment ASC")
-    public List<Appointment> getAppointmentsByProfessional(@Param("professionalId") String id);
+    List<Appointment> getAppointmentsByProfessionalId(@Param("professionalId") String id);
 
     @Query("SELECT a FROM Appointment a WHERE a.patient.id = :patientId ORDER BY a.date ASC, a.appointment ASC")
-    public List<Appointment> getAppointmentsByPatient(@Param("patientId") String id);
+    List<Appointment> getAppointmentsByPatient(@Param("patientId") String id);
 
     @Query("SELECT a FROM Appointment a WHERE a.professional.id = :professionalId AND a.state = FALSE" +
             " ORDER BY a.date ASC, a.appointment ASC")
-    public List<Appointment> getAssingAppointment(@Param("professionalId") String id);
+    List<Appointment> getAssignAppointment(@Param("professionalId") String id);
 
     @Modifying
     @Query("UPDATE Appointment a SET a.state = true, a.patient.id = null, a.comments = null WHERE a.id = :appointmentId")
-    public void enableAppointment(@Param("appointmentId") String id);
+    void enableAppointment(@Param("appointmentId") String id);
 
     @Query("SELECT a.professional.id FROM Appointment a WHERE a.id = :appointmentId")
-    public String getProfessionalByIdAppointment(@Param("appointmentId") String id);
+    String getProfessionalByIdAppointment(@Param("appointmentId") String id);
 
     @Modifying
     @Query("DELETE FROM Appointment a WHERE a.id = :appId")
-    public void deleteAppointmentById(@Param("appId") String id);
+    void deleteAppointmentById(@Param("appId") String id);
 }

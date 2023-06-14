@@ -33,7 +33,6 @@ public class AppointmentServiceImplement implements AppointmentService {
     public AppointmentServiceImplement(PatientRepository patientRepository,
             ProfessionalServiceImplement professionalServiceImplement, ModelMapper modelMapper,
             AppointmentRepository appointmentRepository) {
-
         this.modelMapper = modelMapper;
         this.appointmentRepository = appointmentRepository;
         this.professionalServiceImplement = professionalServiceImplement;
@@ -82,8 +81,8 @@ public class AppointmentServiceImplement implements AppointmentService {
     }
 
     @Override
-    public List<Appointment> getAppointmentsByProfessional(String id) {
-        List<Appointment> appointments = appointmentRepository.getAppointmentsByProfessional(id);
+    public List<Appointment> getAppointmentsByProfessionalId(String id) {
+        List<Appointment> appointments = appointmentRepository.getAppointmentsByProfessionalId(id);
         return appointments.stream().map(appointment -> modelMapper.map(appointment, Appointment.class))
                 .collect(Collectors.toList());
     }
@@ -98,11 +97,6 @@ public class AppointmentServiceImplement implements AppointmentService {
     @Override
     public Optional<Appointment> getAppointmentById(String id) {
         return appointmentRepository.findById(id);
-    }
-
-    @Override
-    public void deleteAppointment(String id) {
-        appointmentRepository.deleteById(id);
     }
 
     @Override
@@ -125,7 +119,7 @@ public class AppointmentServiceImplement implements AppointmentService {
             e.printStackTrace();
         }
         return "";
-    };
+    }
 
     @Override
     @Transactional
@@ -135,11 +129,6 @@ public class AppointmentServiceImplement implements AppointmentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public List<Appointment> getAppointmentsByProfessionalId(String professionalId) {
-        return appointmentRepository.findByProfessionalId(professionalId);
     }
 
     // public AppointmentDTO updateAppointmentDate(String id,AppointmentDTO dto,

@@ -1,4 +1,4 @@
-<div th:fragment="viewMedicalHistory" th:if="${page == 'medicalHistory' && patients != null}" class="table-wrapper2">
+<div th:fragment="viewMedicalHistory" th:if="${page == 'medicalHistory'}" class="table-wrapper2">
     <table th:if="${patients != null}" class="getAppointment__table2">
         <thead class="table2__thead">
             <tr class="table2__thead-row">
@@ -18,9 +18,13 @@
                 <td th:text="${patient.contact}" class="table2__tbody-cell"></td>
                 <td th:text="${patient.healthInsurance}" class="table2__tbody-cell"></td>
                 <td class="table2__tbody-cell table2__cell--last">
-                    <a th:href="@{/professional/medicalHistory/patient/__${patient.id}__}" class="table2__tbody-cell-btn">Ver historia</a>
+                    <a th:href="@{/professional/medicalHistory/patient/__${patient.id}__}"
+                        class="table2__tbody-cell-btn">Ver historia</a>
                 </td>
             </tr>
         </tbody>
     </table>
+    <div th:if="${patients == null}">
+        <p th:text="${alert}" class="getAppointment__prof-text"></p>
+    </div>
 </div>

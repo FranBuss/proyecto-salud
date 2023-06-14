@@ -1,16 +1,21 @@
 <div th:if="${page == 'listProfAppointments1'}" th:fragment="createRecord" class="table-wrapper2">
     <div>
-        <p>Datos de la consulta</p>
-        <p>Horario: <span th:text="${appointment.appointment}"></span></p>
-        <p>Dia: <span th:text="${appointment.day}"></span></p>
-        <p>Fecha: <span th:text="${appointment.date}"></span></p>
-        <p>Paciente: 
+        <p class="text-center mb-5 getAppointment__prof-text">Datos de la consulta</p>
+        <p class="getAppointment__prof-text--p">Horario: <span th:text="${appointment.appointment}"
+                class="getAppointment__prof-text--span"></span></p>
+        <!-- <p>Dia: <span th:text="${appointment.day}"></span></p> -->
+        <p class="getAppointment__prof-text--p">Fecha: <span th:text="${appointment.date}"
+                class="getAppointment__prof-text--span"></span></p>
+        <p class="getAppointment__prof-text--p">Paciente:
             <span th:text="${appointment.patient.user.name + 
-                ' ' + appointment.patient.user.surname}">
+                ' ' + appointment.patient.user.surname}" class="getAppointment__prof-text--span">
             </span>
         </p>
-        <p>Comentario del paciente:</p>
-        <p th:text="${appointment.comments}"></p>
-        <a th:href="@{/professional/medicalRecord/form/__${appointment.id}__}">Crear ficha</a>
+        <p class="getAppointment__prof-text--p">Comentario del paciente:</p>
+        <p th:text="${appointment.comments}" class="getAppointment__prof-text--span"></p>
+        <div class="d-flex justify-content-center mt-5">
+            <a th:href="@{/professional/medicalRecord/form/__${appointment.id}__}" class="createRecord__link">Crear
+                ficha</a>
+        </div>
     </div>
 </div>

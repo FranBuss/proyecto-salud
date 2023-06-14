@@ -4,8 +4,6 @@ import com.equipoUno.proyectoSalud.entities.Appointment;
 import com.equipoUno.proyectoSalud.entities.Patient;
 import com.equipoUno.proyectoSalud.entities.Professional;
 import com.equipoUno.proyectoSalud.entities.User;
-import com.equipoUno.proyectoSalud.enumerations.Specialization;
-import com.equipoUno.proyectoSalud.repositories.AppointmentRepository;
 import com.equipoUno.proyectoSalud.servicies.AppointmentServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.PatientServiceImplement;
 import com.equipoUno.proyectoSalud.servicies.ProfessionalServiceImplement;
@@ -37,14 +35,19 @@ public class AppointmentController {
     }
 
     @GetMapping("/getProfessionals")
-    public String getProfessionalsBySpecialty(@RequestParam Specialization specialization, ModelMap model, HttpSession session) {
+    public String getProfessionalsBySpecialty(@RequestParam String specialization, ModelMap model, HttpSession session) {
         model = userService.getUserData(session, model);
-        List<Professional> professionals = professionalService
-                .searchProfessionalsBySpecialization(specialization.toString());
-        if (!professionals.isEmpty()) {
-            model.put("professionals", professionals);
+        if (!specialization.equals("Seleccione")) {
+            List<Professional> professionals = professionalService.searchProfessionalsBySpecialization(specialization);
+            if (!professionals.isEmpty()) {
+                model.put("professionals", professionals);
+            } else {
+                model.put("professionals", null);
+            }
+            model.put("alert", null);
         } else {
             model.put("professionals", null);
+            model.put("alert", "Seleccione una especialidad.");
         }
         model.put("page", "getAppointment1");
         return "getAppointment";
@@ -53,7 +56,9 @@ public class AppointmentController {
     @GetMapping("/allAppointments/{id}")
     public String listAppointments(@PathVariable String id, ModelMap model, HttpSession session) {
         model = userService.getUserData(session, model);
-        List<Appointment> appointments = appointmentService.getAppointmentsByProfessional(id);
+        Professional professional = professionalService.getProfessionalById(id);
+        List<Appointment> appointments = appointmentService.getAppointmentsByProfessionalId(id);
+        model.put("professional", professional);
         model.put("appointments", appointments);
         model.put("page", "getAppointment2");
         return "getAppointment";
@@ -108,8 +113,9 @@ public class AppointmentController {
     @GetMapping("/modify/{id}")
     public String modifyAppointment(@PathVariable String id, ModelMap model, HttpSession session) {
         model = userService.getUserData(session, model);
-        String professionalID = appointmentService.getProfessionalByIdAppointment(id);
-        List<Appointment> appointments = appointmentService.getAppointmentsByProfessionalId(professionalID);
+        String profId = appointmentService.getProfessionalByIdAppointment(id);
+//        List<Appointment> appointments = appointmentService.getAppointmentsByProfessionalId(professionalID);
+        List<Appointment> appointments = appointmentService.getAppointmentsByProfessionalId(profId);
         Optional<Appointment> appointmentsResponse = appointmentService.getAppointmentById(id);
         if (appointmentsResponse.isPresent()) {
             Appointment appointment = appointmentsResponse.get();

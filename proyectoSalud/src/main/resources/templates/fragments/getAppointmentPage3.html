@@ -1,30 +1,46 @@
 <div th:if="${page == 'getAppointment3' || page == 'modifyAppointment2'}" th:fragment="getAppointmentPage3">
-    <form th:if="${page == 'getAppointment3'}" th:action="@{/appointment/assignAppointments/__${appointment.id}__}" method="POST">
-        <p>Desea confirmar el turno</p>
-        <p>Horario: <span th:text="${appointment.appointment}"></span></p>
-        <p>Dia: <span th:text="${appointment.day}"></span></p>
-        <p>Fecha: <span th:text="${appointment.date}"></span></p>
-        <p>Medico: 
-            <span th:text="${appointment.professional.user.name + 
-                ' ' + appointment.professional.user.surname}">
-            </span>
-        </p>
-        <p>Agregar comentario:</p>
-        <textarea name="comment" cols="30" rows="5"></textarea>
-        <button type="submit">Confirmar</button>
+    <form th:if="${page == 'getAppointment3'}" th:action="@{/appointment/assignAppointments/__${appointment.id}__}"
+        method="POST" class="getAppointment__form-confirm">
+        <p class="text-center mb-5 getAppointment__prof-text">Confirmación del turno</p>
+        <div>
+            <p class="getAppointment__prof-text--p">Horario: <span th:text="${appointment.appointment}"
+                    class="getAppointment__prof-text--span"></span></p>
+            <!-- <p>Dia: <span th:text="${appointment.day}"></span></p> -->
+            <p class="getAppointment__prof-text--p">Fecha: <span th:text="${appointment.date}"
+                    class="getAppointment__prof-text--span"></span></p>
+            <p class="getAppointment__prof-text--p">Medico:
+                <span th:text="${appointment.professional.user.name + 
+                        ' ' + appointment.professional.user.surname}" class="getAppointment__prof-text--span">
+                </span>
+            </p>
+            <p class="getAppointment__prof-text--p">Agregar comentario:</p>
+            <textarea name="comment" cols="30" rows="5" class="getAppointment__textarea"></textarea>
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+            <button type="submit" class="getAppointment__button">Confirmar</button>
+        </div>
     </form>
-    <form th:if="${page == 'modifyAppointment2'}" th:action="@{/appointment/confirmModify/accepted/__${appointment.id}__}" method="POST">
-        <p>Desea confirmar el turno</p>
-        <p>Horario: <span th:text="${appointment.appointment}"></span></p>
-        <p>Dia: <span th:text="${appointment.day}"></span></p>
-        <p>Fecha: <span th:text="${appointment.date}"></span></p>
-        <p>Medico: 
-            <span th:text="${appointment.professional.user.name + 
-                ' ' + appointment.professional.user.surname}">
-            </span>
-        </p>
-        <input type="hidden" name="oldAppId" th:value="${oldAppId}">
-        <textarea name="comment" cols="30" rows="5"></textarea>
-        <button type="submit">Confirmar</button>
+    <form th:if="${page == 'modifyAppointment2'}"
+        th:action="@{/appointment/confirmModify/accepted/__${appointment.id}__}" method="POST">
+        <p class="text-center mb-5 getAppointment__prof-text">Confirmación del turno</p>
+        <div>
+            <p class="getAppointment__prof-text--p">Horario: <span th:text="${appointment.appointment}"
+                    class="getAppointment__prof-text--span"></span></p>
+            <!-- <p class="getAppointment__prof-text--p">Dia: <span th:text="${appointment.day}"
+                    class="getAppointment__prof-text--span"></span></p> -->
+            <p class="getAppointment__prof-text--p">Fecha: <span th:text="${appointment.date}"
+                    class="getAppointment__prof-text--span"></span></p>
+            <p class="getAppointment__prof-text--p">Medico:
+                <span th:text="${appointment.professional.user.name + 
+                    ' ' + appointment.professional.user.surname}" class="getAppointment__prof-text--span">
+                </span>
+            </p>
+            <p class="getAppointment__prof-text--p">Agregar comentario:</p>
+            <textarea name="comment" cols="30" rows="5"></textarea>
+            <input type="hidden" name="oldAppId" th:value="${oldAppId}">
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+            <button type="submit" class="getAppointment__button">Confirmar</button>
+        </div>
     </form>
 </div>

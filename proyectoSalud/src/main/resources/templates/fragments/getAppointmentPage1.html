@@ -1,5 +1,5 @@
-<div th:if="${page == 'getAppointment1'}" th:fragment="getAppointmentPage1" class="table-wrapper1">
-    <table class="getAppointment__table1">
+<div th:if="${page == 'getAppointment1' && alert == null}" th:fragment="getAppointmentPage1" class="table-wrapper1">
+    <table th:if="${professionals != null}" class="getAppointment__table1">
         <thead class="table1__thead">
             <tr class="table1__thead-row">
                 <th class="table1__thead-cell">Nombre</th>
@@ -12,11 +12,10 @@
         </thead>
         <tbody class="table1__tbody">
             <tr th:each="professional : ${professionals}" class="table1__tbody-row">
-                <td th:text="${professional.user.name + ' ' + professional.user.surname}"
-                    class="table1__tbody-cell"></td>
-                <td th:text="${professional.specialization.displayName}" class="table1__tbody-cell"></td>
-                <td th:text="${professional.entryTime + ' - ' + professional.exitTime}" class="table1__tbody-cell">
+                <td th:text="${professional.user.name + ' ' + professional.user.surname}" class="table1__tbody-cell">
                 </td>
+                <td th:text="${professional.specialization.displayName}" class="table1__tbody-cell"></td>
+                <td th:text="${professional.entryTime + ' - ' + professional.exitTime}" class="table1__tbody-cell"></td>
                 <td th:text="${professional.charge}" class="table1__tbody-cell"></td>
                 <td th:text="${professional.qualification}" class="table1__tbody-cell"></td>
                 <td class="table1__tbody-cell table1__cell--last"><a
@@ -25,4 +24,12 @@
             </tr>
         </tbody>
     </table>
+    <div th:if="${professionals == null}" class="appointments__page-cont">
+        <p class="appointment__page-alert">No existen profesionales adheridos.</p>
+    </div>
+</div>
+<div th:if="${page == 'getAppointment1' && alert != null}" th:fragment="getAppointmentPage1" class="table-wrapper1">
+    <div th:if="${professionals == null}" class="appointments__page-cont">
+        <p th:text="${alert}" class="appointment__page-alert"></p>
+    </div>
 </div>
